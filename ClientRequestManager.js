@@ -1,3 +1,7 @@
+//Written by Arkam Mazrui for the Cireson web portal
+//arkam.mazrui@nserc-crsng.gc.ca
+//arkam.mazrui@gmail.com
+
 var ClientRequestManager = {
     params_to_url: function(params, enclose_params) {
         if (enclose_params===null){enclose_params=true;}
