@@ -66,6 +66,7 @@ var homepageLocalizer = {
                     if ($("#" + homepageLocalizer.headers[0]).length) {
                         homepageLocalizer.main.setup();
                         homepageLocalizer.main.apply_localizations();
+                        clearInterval(existence_interval);
                     }
                 }, 100);
             }
@@ -73,3 +74,5 @@ var homepageLocalizer = {
     }
 
 }
+
+homepageLocalizer.main.start();
