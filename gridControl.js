@@ -22,6 +22,7 @@ $(document).ready(function() {
         if (!btns_added) {
         grid.bind("dataBound", start);
         grid.bind("dataBound", collapse_collected);
+        grid.bind("group", respond_to_grouping);
         }
     });  
 });
@@ -89,23 +90,56 @@ function add_grid_btns() {
     }
 }
 
+function respond_to_grouping() {
+    let g_l = 0;
+    if (grid._groupRows !== undefined) {
+        g_l = grid._groupRows.length;
+    }
+    let wait = setInterval(function() {
+        if (grid._groupRows !== undefined) {
+        if (grid._groupRows.length != g_l) {
+            refill_map();
+            clearInterval(wait);
+        }
+        }
+    },1);
+}
+
+function refill_map() {
+    map_wipe();
+    collapse_all();
+}
+
+function expand_then_collapse() {
+    expand_all();
+    collapse_all();
+}
+
+function expand_all() {
+    if (grid_active()) {
+        map_wipe();
+        Object.keys(grid_map()).forEach(function(n, i) {
+            grid.expandGroup(grid_map()[n]);
+        });
+    }
+}
+
+function collapse_all() {
+    if (grid_active()) {
+        map_fill();
+        collapse_collected();
+    }
+}
+
 function start_expand_listener() {
     $(".btn-expand-all").on("click", function() {
-        if (grid_active()) {
-            map_wipe();
-            Object.keys(grid_map()).forEach(function(n, i) {
-                grid.expandGroup(grid_map()[n]);
-            });
-        }
+       expand_all();
     });
 }
 
 function start_collapse_listener() {
     $(".btn-collapse-all").on("click", function() {
-        if (grid_active()) {
-            map_fill();
-            collapse_collected();
-        }
+        collapse_all();
     });
 }
 
