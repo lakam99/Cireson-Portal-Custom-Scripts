@@ -7,7 +7,7 @@ $(document).ready(function() {
     
     var ciClasses = [
         {
-            displayName: "Domain User",
+            displayName: "External User",
             classId: "eca3c52a-f273-5cdc-f165-3eb95a2b26cf",
             icon: "fa-user"
         }
@@ -66,10 +66,13 @@ $(document).ready(function() {
 function newCI (classId) {
     ciObject = {
         ObjectStatus: {
-            Id: "acdcedb7-100c-8c91-d664-4629a218bd94"
+            Id: ""
         },
         ClassTypeId: classId,
-        Domain: "nserc",
+        Domain: "SMInternal",
+        UserName: "Billy.Joel",
+        FirstName: "Billy",
+        LastName: "Joel",
         TimeAdded: "0001-01-01T00:00:00.000Z"
     };
     
