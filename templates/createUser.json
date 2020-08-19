@@ -3,6 +3,18 @@
         {
             "fields": [
                 {
+                    "name": "Domain",
+                    "required": true
+                },
+                {
+                    "name": "DistinguishedName",
+                    "required": true
+                },
+                {
+                    "name": "TimeAdded",
+                    "required": true
+                },
+                {
                     "name": "FirstName",
                     "required": true
                 },
