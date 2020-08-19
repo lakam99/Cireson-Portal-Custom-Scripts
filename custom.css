@@ -2,6 +2,10 @@
     list-style-type: none;
 }
 
+legend.createUserLegend {
+  padding-left: 5%;
+}
+
 .switch {
     display: inline-block;
     height: 26px;

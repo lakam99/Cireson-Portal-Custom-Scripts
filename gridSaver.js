@@ -89,7 +89,7 @@ var gridSaver = {
 
         start: function () {
             gridSaver.main.existence_interval = setInterval(function() {
-                if (grid) {
+                if (grid && proper_grid_conditions()) {
                     gridSaver.init_default_state();
                     gridSaver.apply_user_columns();
                     gridSaver.main.activate_listeners();

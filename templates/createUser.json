@@ -1,0 +1,71 @@
+{
+    "createUser":
+        {
+            "fields": [
+                {
+                    "name": "FirstName",
+                    "required": true
+                },
+                {
+                    "name": "Initials",
+                    "required": false
+                },
+                {
+                    "name": "LastName",
+                    "required": true
+                },
+                {
+                    "name": "DisplayName",
+                    "required": false
+                },
+                {
+                    "name": "UserName",
+                    "required": false
+                },
+                {
+                    "name": "UPN",
+                    "required": true
+                },
+                {
+                    "name": "StreetAddress",
+                    "required": false
+                },
+                {
+                    "name": "City",
+                    "required": false
+                },
+                {
+                    "name": "State",
+                    "required": false
+                },
+                {
+                    "name": "ZIP",
+                    "required": false
+                },
+                {
+                    "name": "Country",
+                    "required": false
+                },
+                {
+                    "name": "BusinessPhone",
+                    "required": false
+                },
+                {
+                    "name": "Title",
+                    "required": false
+                },
+                {
+                    "name": "Department",
+                    "required": false
+                },
+                {
+                    "name": "Office",
+                    "required": false
+                },
+                {
+                    "name": "Company",
+                    "required": false
+                }
+            ]
+        }
+}

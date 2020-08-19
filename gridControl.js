@@ -27,9 +27,13 @@ $(document).ready(function() {
     });  
 });
 
+function proper_grid_conditions() {
+    return ($(".k-grouping-header")[0] || $("div.clearfix.ng-scope")[0]);
+}
+
 function start() {
     dom_grid = $("div.grid-container[data-role='grid']")[0];
-    if (dom_grid && ($(".k-grouping-header")[0] || $("div.clearfix.ng-scope")[0])) {
+    if (dom_grid && proper_grid_conditions()) {
         if (dom_grid.id === "") {
             dom_grid.id = "watch_list";
         }
