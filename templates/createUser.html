@@ -1,20 +1,16 @@
 <div data-template="createUser" class="drawerdetails-action">
     <form class="drawerdetails-form">
         <div class="row">
-            <div class="col-lg-12">
-                Please note that inputs with &nbsp;<span class="text-danger">**</span>
-                are required fields.
-            </div>
-        </div>
-        <div class="row">
             <fieldset>
                 <input name="Domain" value="SMInternal" hidden>
                 <input name="DistinguishedName" value="NOTSET" hidden>
                 <input name="TimeAdded" value="0001-01-01T00:00:00.000Z" hidden>
+                <input name="DisplayName" hidden>
+                <input name="UserName" hidden>
                 <legend class="createUserLegend">Identification Information</legend>
                 <div class="col-md-4">
                     <div class="editor-label">
-                        <label><span>First Name&nbsp;<span class="text-danger">**</span></span></label>
+                        <label><span>First Name</span></label>
                     </div>
                     <div class="editor-field">
                         <input name='FirstName' class='k-textbox'>
@@ -32,7 +28,7 @@
                 </div>
                 <div class="col-md-4">
                     <div class="editor-label">
-                        <label><span>Last Name&nbsp;<span class="text-danger">**</span></span></label>
+                        <label><span>Last Name</span></label>
                     </div>
                     <div class="editor-field">
                         <input name='LastName' class='k-textbox'>
@@ -47,23 +43,7 @@
                 <legend class="createUserLegend">System Information</legend>
                 <div class="col-md-7">
                     <div class="editor-label">
-                        <label><span>Display as</span></label>
-                    </div>
-                    <div class="editor-field">
-                        <input name="DisplayName" class="k-textbox">
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="editor-label">
-                        <label><span>Username</span></label>
-                    </div>
-                    <div class="editor-field">
-                        <input name="UserName" class="k-textbox">
-                    </div>
-                </div>
-                <div class="col-md-7">
-                    <div class="editor-label">
-                        <label><span>Email Address&nbsp;<span class="text-danger">**</span></span></label>
+                        <label><span>Email Address</span></label>
                     </div>
                     <div class="editor-field">
                         <input name="UPN" class="k-textbox">

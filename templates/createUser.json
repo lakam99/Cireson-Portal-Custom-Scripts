@@ -28,11 +28,23 @@
                 },
                 {
                     "name": "DisplayName",
-                    "required": false
+                    "required": false,
+                    "generatorFunction": {
+                        "functionLocation": "/CustomSpace/Templates/createUser/generateDisplayName.js",
+                        "functionName": "generateDisplayName",
+                        "parameters": [
+                            "FirstName",
+                            "LastName"
+                        ]
+                    }
                 },
                 {
                     "name": "UserName",
-                    "required": false
+                    "required": false,
+                    "generatorFunction": {
+                        "functionLocation": "/CustomSpace/Templates/createUser/generateUserName.js",
+                        "functionName": "generateUserName"
+                    }
                 },
                 {
                     "name": "UPN",

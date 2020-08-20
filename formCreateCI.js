@@ -28,6 +28,8 @@ var formCreateCI = {
         }
     ],
 
+    helperFunctions: {},
+
     setup: [
         function() {
             formCreateCI.classes.forEach(function(ciClass,i){
@@ -66,6 +68,13 @@ var formCreateCI = {
         },
 
         function() {
+            //Generate generators
+            formCreateCI.classes.forEach(function(c,i){
+                formCreateCI.functionality.generate_generators(c.formJSON[c.name].fields);
+            });
+        },
+
+        function() {
             $('.drawermenu-tile[data-level="0"] > ul').append(formCreateCI.templates[menu1]);
             $('.config-item-drawer0').hover(
                 function () {
@@ -85,16 +94,34 @@ var formCreateCI = {
                 ).click(function () {
                     let this_class_id = this.attributes["data-click-template"].value;
                     formCreateCI.functionality.showClassFormHTML(this_class_id);
+                    formCreateCI.functionality.mark_required_fields(this_class_id);
                     $('.drawermenu-tile[data-level="1"] > ul > li').removeClass('drawermenu-selected');
                     $('.config-item-drawer1').addClass('drawermenu-selected');
-                    formCreateCI.functionality.start_create_listener();
+                    formCreateCI.functionality.start_create_listener(this_class_id);
                 });
             });
         }
     ],
 
     functionality: {
-        start_create_listener: function() {
+        mark_required_fields: function(classId) {
+            $(document).on("form-loaded", function(){
+                $($("form.drawerdetails-form").find(".row")[0]).before(`<div class="row"><div class="col-lg-12">
+                Please note that inputs with &nbsp;<span class="text-danger">**</span>
+                are required fields.</div></div>`);
+                var c = formCreateCI.functionality.getClassAtId(classId);
+                c.formJSON[c.name].fields.forEach(function(field,i){
+                    let input = formCreateCI.functionality.get_input(field.name);
+                    if (field.required && input.is(":visible")) {
+                        input.parent().parent().find(".editor-label").find("span")
+                        .append(`&nbsp;<span class="text-danger">**</span>`);
+                    }
+                });
+                $(document).off("form-loaded");
+            });
+        },
+
+        start_create_listener: function(this_class_id) {
             var btn = $(".drawermenu-createbutton");
             btn.css("display", "block").on("click", (function() {
                 formCreateCI.functionality.commit_new_class(this_class_id);
@@ -125,6 +152,7 @@ var formCreateCI = {
                 dataType: "html",
                 success: function(result) {
                     $(".drawerdetails-actions-box").html(result);
+                    $(document).trigger("form-loaded");
                 }
             });
         },
@@ -133,10 +161,54 @@ var formCreateCI = {
             return $(`input[name='`+name+`']`);
         },
 
+        generate_generators: function(fields) {
+            fields.forEach(function(field,i){
+                if (field.generatorFunction) {
+                    $.ajax({
+                        url: field.generatorFunction.functionLocation,
+                        dataType: "text",
+                        async: false,
+                        success: function(result) {
+                            eval(result);
+                            eval("field.generatorFunction.function = eval(field.generatorFunction.functionName)");
+                        }
+                    });
+                }
+            });
+        },
+
+        generate_value: function(field) {
+            var params = "";
+            var test = null;
+            var l = 0;
+            var value = null;
+            if (field.generatorFunction) {
+                if (field.generatorFunction.parameters) {
+                    l = field.generatorFunction.parameters.length;
+                    field.generatorFunction.parameters.forEach(function(param,i){
+                        test = formCreateCI.functionality.get_input(param);
+                        if (!test.length) {
+                            throw Error("Parameter name " + param + " did not match any inputs.");
+                        } else {
+                            if (i != l-1) {
+                                params += "'" + test.val() +"'" + ",";
+                            } else {
+                                params += "'" + test.val() +"'";
+                            }
+                        }
+                    });
+                }
+                
+                eval("value = field.generatorFunction.function(" + params + ")");
+                formCreateCI.functionality.get_input(field.name).val(value);
+            }
+        },
+
         test_inputs: function(classId) {
             let c = formCreateCI.functionality.getClassAtId(classId);
             let requirement_met = true;
             c.formJSON[c.name].fields.forEach(function(field,i){
+                formCreateCI.functionality.generate_value(field);
                 let input = formCreateCI.functionality.get_input(field.name);
                 if (field.required && !input.val().length) {
                     requirement_met = false;
