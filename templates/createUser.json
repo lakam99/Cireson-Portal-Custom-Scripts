@@ -15,6 +15,17 @@
                     "required": true
                 },
                 {
+                    "name": "Email",
+                    "required": false,
+                    "generatorFunction": {
+                        "functionLocation": "/CustomSpace/Templates/createUser/getEmail.js",
+                        "functionName": "getEmail",
+                        "parameters": [
+                            "UPN"
+                        ]
+                    }
+                },
+                {
                     "name": "FirstName",
                     "required": true
                 },

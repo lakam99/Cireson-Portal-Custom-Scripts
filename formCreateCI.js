@@ -158,7 +158,7 @@ var formCreateCI = {
         },
 
         get_input: function(name) {
-            return $(`input[name='`+name+`']`);
+            return $(`input.CI-Input[name='`+name+`']`);
         },
 
         generate_generators: function(fields) {
