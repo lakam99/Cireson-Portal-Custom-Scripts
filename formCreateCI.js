@@ -87,16 +87,21 @@ var formCreateCI = {
                     formCreateCI.functionality.showClassFormHTML(this_class_id);
                     $('.drawermenu-tile[data-level="1"] > ul > li').removeClass('drawermenu-selected');
                     $('.config-item-drawer1').addClass('drawermenu-selected');
-                    $(".drawermenu-createbutton").css("display", "block").click(function() {
-                        setTimeout(function(){}, 500);
-                        formCreateCI.functionality.commit_new_class(this_class_id);
-                    });
+                    formCreateCI.functionality.start_create_listener();
                 });
             });
         }
     ],
 
     functionality: {
+        start_create_listener: function() {
+            var btn = $(".drawermenu-createbutton");
+            btn.css("display", "block").on("click", (function() {
+                formCreateCI.functionality.commit_new_class(this_class_id);
+                btn.off("click");
+            }));
+        },
+
         getClassAtId: function(classId) {
             var r = null;
             for (var i = 0; i < formCreateCI.classes.length; i++) {
@@ -183,6 +188,7 @@ var formCreateCI = {
                     kendo.alert("Cancelled creation of new configuration item.");
                 });
             }
+            formCreateCI.functionality.start_create_listener();
         }
     },
 
