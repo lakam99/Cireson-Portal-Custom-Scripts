@@ -28,14 +28,7 @@
                 },
                 {
                     "name": "DisplayName",
-                    "required": false,
-                    “generatorFunction”: {
-                        “location”: “/CustomSpace/Templates/CreateUser/generateDisplayName.js”,
-                        “name”: “generateDisplayName”,
-                        “parameters”: [
-                            “FirstName”,
-                            “LastName”
-                        ]
+                    "required": false
                 },
                 {
                     "name": "UserName",
