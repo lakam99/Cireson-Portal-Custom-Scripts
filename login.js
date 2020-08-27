@@ -9,7 +9,8 @@ $(document).ready(function() {
     var wait = setInterval(function() {
         form = $("form");
         if (form) {
-            form.before("<img src='/CustomSpace/logo_nserc.jpg'></img>");
+            form.before("<img src='/CustomSpace/logo_nserc.png'></img>");
+            clearInterval(wait);
         }
-    }, 800);
+    }, 1);
 });

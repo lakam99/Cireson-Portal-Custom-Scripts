@@ -106,9 +106,9 @@ var formCreateCI = {
     functionality: {
         mark_required_fields: function(classId) {
             $(document).on("form-loaded", function(){
-                $($("form.drawerdetails-form").find(".row")[0]).before(`<div class="row"><div class="col-lg-12">
-                Please note that inputs with &nbsp;<span class="text-danger">**</span>
-                are required fields.</div></div>`);
+                $(".drawerdetails-details-box").append(`
+                &nbsp;Please note that inputs with &nbsp;<span class="text-danger">**</span>
+                &nbsp;are required`);
                 var c = formCreateCI.functionality.getClassAtId(classId);
                 c.formJSON[c.name].fields.forEach(function(field,i){
                     let input = formCreateCI.functionality.get_input(field.name);
@@ -145,6 +145,32 @@ var formCreateCI = {
             }
         },
 
+        replace_class(element, prev, _new) {
+            element.removeClass(prev);
+            element.addClass(_new);
+        },
+
+        bind_expand_collapse_listeners: function() {
+            var element = null;
+            var parent = null;
+            var expand = ["k-i-collapse", "expanded"];
+            var collapse = ["k-i-expand", "collapsed"];
+            $(".arkam-expand-collapse").toArray().forEach(function(n,i){
+                $(n).on("click", function(event){
+                    event.preventDefault();
+                    element = $(event.target);
+                    parent = element.parent().parent().find(".expand-collapse-container");
+                    if (element.hasClass(expand[0])) {
+                        formCreateCI.functionality.replace_class(element, expand[0], collapse[0]);
+                        formCreateCI.functionality.replace_class(parent, expand[1], collapse[1]);
+                    } else {
+                        formCreateCI.functionality.replace_class(element, collapse[0], expand[0]);
+                        formCreateCI.functionality.replace_class(parent, collapse[1], expand[1]);
+                    }
+                });
+            });
+        },
+
         showClassFormHTML: function(classId) {
             var c = formCreateCI.functionality.getClassAtId(classId);
             $.ajax({
@@ -152,9 +178,14 @@ var formCreateCI = {
                 dataType: "html",
                 success: function(result) {
                     $(".drawerdetails-actions-box").html(result);
+                    formCreateCI.functionality.bind_expand_collapse_listeners();
                     $(document).trigger("form-loaded");
                 }
             });
+        },
+
+        close: function() {
+            $("img[alt='Close']").click();
         },
 
         get_input: function(name) {
@@ -250,6 +281,7 @@ var formCreateCI = {
                         success: function(result) {
                             kendo.alert(`<a href='/DynamicData/Edit/`+result.BaseId+`'>
                             New configuration item successfully created!</a>`);
+                            formCreateCI.functionality.close();
                         },
                         error: function(o, status, msg) {
                             console.log("An error occured: " + status + ": " + msg);

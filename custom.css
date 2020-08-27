@@ -7,6 +7,14 @@ legend.createUserLegend {
   padding-top: 2%;
 }
 
+.expand-collapse-container.expanded {
+  display: block;
+}
+
+.expand-collapse-container.collapsed {
+  display: none;
+}
+
 .switch {
     display: inline-block;
     height: 26px;

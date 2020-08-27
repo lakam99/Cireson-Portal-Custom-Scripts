@@ -7,92 +7,58 @@
                 <input class="CI-Input" name="TimeAdded" value="0001-01-01T00:00:00.000Z" hidden>
                 <input class="CI-Input" name="DisplayName" hidden>
                 <input class="CI-Input" name="UserName" hidden>
-                <legend class="createUserLegend">Identification Information</legend>
-                <div class="col-md-4">
-                    <div class="editor-label">
-                        <label><span>First Name</span></label>
-                    </div>
-                    <div class="editor-field">
-                        <input class="k-textbox CI-Input" name='FirstName' >
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="padleft10">
+                <legend class="createUserLegend"><a class='k-icon k-i-collapse arkam-expand-collapse' href='#'></a>Identification Information</legend>
+                <div class='expand-collapse-container expanded'>
+                    <div class="col-md-4">
                         <div class="editor-label">
-                            <label><span>Initial</span></label>
+                            <label><span>First Name</span></label>
                         </div>
                         <div class="editor-field">
-                            <input class="k-textbox CI-Input" name='Initials' >
+                            <input class="k-textbox CI-Input" name='FirstName' >
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="padleft10">
+                            <div class="editor-label">
+                                <label><span>Initial</span></label>
+                            </div>
+                            <div class="editor-field">
+                                <input class="k-textbox CI-Input" name='Initials' >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="editor-label">
+                            <label><span>Last Name</span></label>
+                        </div>
+                        <div class="editor-field">
+                            <input class="k-textbox CI-Input" name='LastName' >
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="editor-label">
-                        <label><span>Last Name</span></label>
-                    </div>
-                    <div class="editor-field">
-                        <input class="k-textbox CI-Input" name='LastName' >
-                    </div>
-                </div>
             </fieldset>
 
         </div>
 
         <div class="row">
             <fieldset>
-                <legend class="createUserLegend">System Information</legend>
-                <div class="col-md-7">
-                    <div class="editor-label">
-                        <label><span>Email Address</span></label>
+                <legend class="createUserLegend"><a class='k-icon k-i-collapse arkam-expand-collapse' href='#'></a>Contact Information</legend>
+                <div class="expand-collapse-container expanded">
+                    <div class="col-md-7">
+                        <div class="editor-label">
+                            <label><span>Email Address</span></label>
+                        </div>
+                        <div class="editor-field">
+                            <input class="k-textbox CI-Input" name="UPN" >
+                        </div>
                     </div>
-                    <div class="editor-field">
-                        <input class="k-textbox CI-Input" name="UPN" >
-                    </div>
-                </div>
-            </fieldset>
-        </div>
-
-        <div class="row">
-            <fieldset>
-                <legend class="createUserLegend">Additional Information</legend>
-                <div class="col-lg-7">
-                    <div class="editor-label">
-                        <label><span>Street Address</span></label>
-                    </div>
-                    <div class="editor-field">
-                        <input class="k-textbox CI-Input" name="StreetAddress" >
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="editor-label">
-                        <label><span>City</span></label>
-                    </div>
-                    <div class="editor-field">
-                        <input class="k-textbox CI-Input" name="City" >
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="editor-label">
-                        <label><span>State</span></label>
-                    </div>
-                    <div class="editor-field">
-                        <input class="k-textbox CI-Input" name="State" >
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="editor-label">
-                        <label><span>ZIP</span></label>
-                    </div>
-                    <div class="editor-field">
-                        <input class="k-textbox CI-Input" name="ZIP" >
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="editor-label">
-                        <label><span>Country</span></label>
-                    </div>
-                    <div class="editor-field">
-                        <input class="k-textbox CI-Input" name="Country" >
+                    <div class="col-md-5">
+                        <div class="editor-label">
+                            <label><span>Phone#</span></label>
+                        </div>
+                        <div class="editor-field">
+                            <input class="k-textbox CI-Input" name="BusinessPhone" >
+                        </div>
                     </div>
                 </div>
             </fieldset>
@@ -100,45 +66,87 @@
 
         <div class="row">
             <fieldset>
-                <legend class="createUserLegend">Company Information</legend>
-                <div class="col-md-3">
-                    <div class="editor-label">
-                        <label><span>Phone#</span></label>
+                <legend class="createUserLegend"><a class='k-icon k-i-expand arkam-expand-collapse' href='#'></a>Location Information</legend>
+                <div class="expand-collapse-container collapsed">
+                    <div class="col-lg-7">
+                        <div class="editor-label">
+                            <label><span>Street Address</span></label>
+                        </div>
+                        <div class="editor-field">
+                            <input class="k-textbox CI-Input" name="StreetAddress" >
+                        </div>
                     </div>
-                    <div class="editor-field">
-                        <input class="k-textbox CI-Input" name="BusinessPhone" >
+                    <div class="col-md-3">
+                        <div class="editor-label">
+                            <label><span>City</span></label>
+                        </div>
+                        <div class="editor-field">
+                            <input class="k-textbox CI-Input" name="City" >
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="editor-label">
+                            <label><span>State</span></label>
+                        </div>
+                        <div class="editor-field">
+                            <input class="k-textbox CI-Input" name="State" >
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="editor-label">
+                            <label><span>ZIP</span></label>
+                        </div>
+                        <div class="editor-field">
+                            <input class="k-textbox CI-Input" name="ZIP" >
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="editor-label">
+                            <label><span>Country</span></label>
+                        </div>
+                        <div class="editor-field">
+                            <input class="k-textbox CI-Input" name="Country" >
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-5">
-                    <div class="editor-label">
-                        <label><span>Title</span></label>
+            </fieldset>
+        </div>
+
+        <div class="row">
+            <fieldset>
+                <legend class="createUserLegend"><a class='k-icon k-i-expand arkam-expand-collapse' href='#'></a>Company Information</legend>
+                <div class="expand-collapse-container collapsed">
+                    <div class="col-md-5">
+                        <div class="editor-label">
+                            <label><span>Title</span></label>
+                        </div>
+                        <div class="editor-field">
+                            <input class="k-textbox CI-Input" name="Title" >
+                        </div>
                     </div>
-                    <div class="editor-field">
-                        <input class="k-textbox CI-Input" name="Title" >
+                    <div class="col-md-3">
+                        <div class="editor-label">
+                            <label><span>Department</span></label>
+                        </div>
+                        <div class="editor-field">
+                            <input class="k-textbox CI-Input" name="Department" >
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="editor-label">
-                        <label><span>Department</span></label>
+                    <div class="col-md-3">
+                        <div class="editor-label">
+                            <label><span>Office</span></label>
+                        </div>
+                        <div class="editor-field">
+                            <input class="k-textbox CI-Input" name="Office" >
+                        </div>
                     </div>
-                    <div class="editor-field">
-                        <input class="k-textbox CI-Input" name="Department" >
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="editor-label">
-                        <label><span>Office</span></label>
-                    </div>
-                    <div class="editor-field">
-                        <input class="k-textbox CI-Input" name="Office" >
-                    </div>
-                </div>
-                <div class="col-md-8">
-                    <div class="editor-label">
-                        <label><span>Company</span></label>
-                    </div>
-                    <div class="editor-field">
-                        <input class="k-textbox CI-Input" name="Company" >
+                    <div class="col-md-8">
+                        <div class="editor-label">
+                            <label><span>Company</span></label>
+                        </div>
+                        <div class="editor-field">
+                            <input class="k-textbox CI-Input" name="Company" >
+                        </div>
                     </div>
                 </div>
             </fieldset>
