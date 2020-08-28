@@ -2,7 +2,6 @@
 //arkam.mazrui@nserc-crsng.gc.ca
 //arkam.mazrui@gmail.com
 
-import {map_controller} from "./map_controller.js";
 
 function column(field_name, index, visible) {
     this.field_name = field_name;
@@ -88,7 +87,7 @@ var gridSaver = {
         },
 
         start: function () {
-            gridSaver.main.existence_interval = setInterval(function() {
+            $(document).on("grid-ready", function() {
                 if (grid && proper_grid_conditions()) {
                     gridSaver.init_default_state();
                     gridSaver.apply_user_columns();
@@ -96,7 +95,7 @@ var gridSaver = {
                     clearInterval(gridSaver.main.existence_interval);
                 }
 
-            }, 100);
+            });
         }
     }
 };
