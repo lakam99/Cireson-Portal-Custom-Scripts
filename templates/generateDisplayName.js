@@ -1,3 +1,7 @@
+//Written by Arkam Mazrui for the Cireson web portal
+//arkam.mazrui@nserc-crsng.gc.ca
+//arkam.mazrui@gmail.com
+
 formCreateCI.helperFunctions.get_user = function(name) {
     var req = {userFilter: name, filterByAnalyst: false,
     groupsOnly: false, maxNumberOfResults: 1, fetchAll: false};

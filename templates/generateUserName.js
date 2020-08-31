@@ -1,3 +1,7 @@
+//Written by Arkam Mazrui for the Cireson web portal
+//arkam.mazrui@nserc-crsng.gc.ca
+//arkam.mazrui@gmail.com
+
 formCreateCI.helperFunctions.create_UUID = function(){
     var dt = new Date().getTime();
     var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {

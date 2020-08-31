@@ -1,3 +1,7 @@
+//Written by Arkam Mazrui for the Cireson web portal
+//arkam.mazrui@nserc-crsng.gc.ca
+//arkam.mazrui@gmail.com
+
 var watchListControl = {
 
     properties: {
@@ -17,10 +21,6 @@ var watchListControl = {
     buttons: [
         function() {
             return "<a class='k-button pull-left btn btn-default btn-remove-one'>Remove from Watchlist</a>";
-        },
-
-        function() {
-            return "<a class='k-button pull-left btn btn-default btn-remove-select'>Remove Selected</a>'"
         },
 
         function() {
