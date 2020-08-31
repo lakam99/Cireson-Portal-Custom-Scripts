@@ -41,14 +41,16 @@ function start() {
 
         grid = $(dom_grid).data("kendoGrid");
         $(document).trigger("grid-ready");
+        clearInterval(wait);
 
         if (dom_grid.id !== "watch_list") {
             id_resize = setInterval(resize_columns, 100);
+        } else {
+            return;
         }
         
         add_grid_btns();
         start_icon_listener();
-        clearInterval(wait);
     }
 }
 
@@ -101,16 +103,17 @@ function add_grid_btns() {
 }
 
 function respond_to_grouping() {
+    if (dom_grid.id === "watch_list") {return;}
     let g_l = 0;
     if (grid._groupRows !== undefined) {
         g_l = grid._groupRows.length;
     }
     let wait = setInterval(function() {
         if (grid._groupRows !== undefined) {
-        if (grid._groupRows.length != g_l) {
-            refill_map();
-            clearInterval(wait);
-        }
+            if (grid._groupRows.length != g_l) {
+                refill_map();
+                clearInterval(wait);
+            }
         }
     },1);
 }
