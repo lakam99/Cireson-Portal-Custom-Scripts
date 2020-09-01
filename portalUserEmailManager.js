@@ -33,7 +33,7 @@ var portalUserEmailManager = {
 
         affected_user_email_not_recognized: function() {
             var user_id = portalUserEmailManager.getters.get_affected_user_obj().Id;
-            var url = "/EmailNotification/GetffectedUserEmail?baseId=e8832a86-2a8f-ce5b-eaba-342391e47bdc";
+            var url = "/EmailNotification/GetffectedUserEmail";
             waiter.request("get", url, {baseId: user_id}, false);
             return waiter.get_return().length == 0;
         }
