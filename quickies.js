@@ -6,11 +6,6 @@ var enabled = true;
 var done = false;
 
 $(document).ready(function() {
-    app.custom.formTasks.add('ServiceRequest', 'Test Task', function(formObj, viewModel){
-        console.log(formObj);
-        console.log(viewModel);
-    })
-
     if (loc("/View/02efdc70-55c7-4ba8-9804-ca01631c1a54") && enabled) {
         //disabled
         var key_replace = setInterval(function() {
