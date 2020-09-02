@@ -44,7 +44,8 @@ function start() {
         clearInterval(wait);
 
         if (dom_grid.id !== "watch_list") {
-            id_resize = setInterval(resize_columns, 100);
+            resize_columns();
+            //id_resize = setInterval(resize_columns, 100);
         } else {
             return;
         }
@@ -54,39 +55,10 @@ function start() {
     }
 }
 
-
-function get_title_size() {
-    var view = grid.dataSource.view()[0];
-    if (!view === undefined) {
-        if (view.hasOwnProperty('items')) {
-            view = view.items[0];
-        }
-        return view.Title.length;
-    } else {
-        return 0;
-    }
-}
-
-function get_id_size() {
-    var view = grid.dataSource.view()[0];
-    if (!view === undefined) {
-        if (view.hasOwnProperty('items')) {
-            view = view.items[0];
-        }
-        return view.Id.length;
-    } else {
-        return 0;
-    }
-}
-
 function resize_columns() {
-    var gw = grid.wrapper.width();
-    var id_width = Math.round(gw * (id_percentage / 100));
-    var title_width = Math.round(gw * (title_percentage / 100));
-    grid.resizeColumn(grid.columns[1], id_width);
-    grid.resizeColumn(grid.columns[3], title_width);
-
-    clearInterval(id_resize);
+    for (var i = grid.columns.length - 1; i > -1; i--) {
+        grid.autoFitColumn(i);
+      }
 }
 
 function add_grid_btns() {
@@ -247,6 +219,12 @@ function map_fill() {
 
 function collapse_collected() {
     var map = get_map();
+    if (map === undefined) {
+        kendo.alert(`An error has occured with the grid settings.
+        Apologies for the inconvenience but all grids will be reset.`);
+        map_controller.reset_map();
+        return collapse_collected();
+    }
     map.forEach(function(n, i){
         grid.collapseGroup(grid_map()[n]);
     });

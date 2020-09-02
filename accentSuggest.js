@@ -208,7 +208,7 @@ var accentSuggest = {
             variations.splice(0,1);
             var suggestions = [];
             for (var i = 0; i < variations.length; i++) {
-                let suggestion = await accentSuggest.functionality.request_variation(variations[i]);
+                var suggestion = await accentSuggest.functionality.request_variation(variations[i]);
                 if (suggestion.length) {
                     suggestions.push(suggestion);
                 }
@@ -235,7 +235,7 @@ var accentSuggest = {
         function() {
             //Bind listeners
             accentSuggest.getters.get_page_userpicker_objs().forEach(function(n,i){
-                let timeout = null;
+                var timeout = null;
 
                 $(n.element).on("click", function(){
                     n.popup.open();

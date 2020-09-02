@@ -25,6 +25,10 @@ legend.createUserLegend {
   .switch input {
     display:none;
   }
+
+  .custom-setting-container {
+    margin-bottom: auto;
+  }
   
   .slider {
     background-color: #ccc;

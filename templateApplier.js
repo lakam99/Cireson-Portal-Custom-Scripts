@@ -104,6 +104,7 @@ var templateApplier = {
             }
             var whitelist = templateApplier.getters.get_whitelisted_properties();
             var new_obj = templateApplier.functionality.replace_properties(current_obj, templateObj, whitelist);
+            templateApplier.functionality.set_first_activity_in_progress(new_obj);
             templateApplier.functionality.commit_new_obj(new_obj, current_obj);
 
         },
@@ -123,6 +124,19 @@ var templateApplier = {
             });
 
             return r;
+        },
+
+        set_first_activity_in_progress(obj) {
+            if (obj.Activity.length) {
+                obj.Activity[0].Status.Id = "11fc3cef-15e5-bca4-dee0-9c1155ec8d83";
+                obj.Activity[0].Status.Name = "In Progress";
+            }
+            /**if (obj.Activity && obj.Activity.length) {
+                return templateApplier.functionality.set_first_activity_in_progress(obj.Activity[0]);
+            } else {
+                obj.Status.Id = "11fc3cef-15e5-bca4-dee0-9c1155ec8d83";
+                obj.Status.Name = "In Progress";
+            }**/
         },
 
         request_template_obj: async function(templateId) {
