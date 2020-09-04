@@ -1,0 +1,18 @@
+{
+    "customSettings": [
+        {
+            "name": "darkMode",
+            "displayName": "Dark Mode",
+            "size": "col-md-6",
+            "toggleFunctions": {
+                "functionsLocation": "/CustomSpace/CustomSettings/darkMode/darkMode.js", 
+                "toggleOn": {
+                    "functionName": "darkModeOn"
+                },
+                "toggleOff": {
+                    "functionName": "darkModeOff"
+                }
+            }
+        }
+    ]
+}
