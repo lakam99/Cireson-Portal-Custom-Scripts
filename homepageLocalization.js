@@ -61,7 +61,7 @@ var homepageLocalizer = {
         },
 
         start: function() {
-            if (loc("/View/02efdc70-55c7-4ba8-9804-ca01631c1a54")) {
+            if (window.location.pathname == "/View/02efdc70-55c7-4ba8-9804-ca01631c1a54") {
                 var existence_interval = setInterval(function(){
                     if ($("#" + homepageLocalizer.headers[0]).length) {
                         homepageLocalizer.main.setup();

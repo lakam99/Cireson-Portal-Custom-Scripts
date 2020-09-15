@@ -10,11 +10,11 @@ var formCreateCI = {
 
     templates: [ 
             "/CustomSpace/Templates/createConfigItem/createConfigItem.html",
-            `<div class="drawermenu-tile" data-level="1" style="width: auto; overflow: hidden auto; display: block;">
-                <ul>
-                <!-- Drawer Menu Select type -->
-                <li class="drawermenu-select-type visible-xs"><a><span>Select Type</span></a></li>
-                <!-- Drawer Menu Tile Item THIS SECTION GETS REPEATED FOR EACH MENU ITEM -->`,
+            '<div class="drawermenu-tile" data-level="1" style="width: auto; overflow: hidden auto; display: block;">'+
+                '<ul>'+
+                '<!-- Drawer Menu Select type -->'+
+                '<li class="drawermenu-select-type visible-xs"><a><span>Select Type</span></a></li>'+
+                '<!-- Drawer Menu Tile Item THIS SECTION GETS REPEATED FOR EACH MENU ITEM -->',
     ],
 
     classes: [
@@ -33,10 +33,10 @@ var formCreateCI = {
     setup: [
         function() {
             formCreateCI.classes.forEach(function(ciClass,i){
-                formCreateCI.templates[menu2] += `<li class="drawer-button config-item-drawer1" 
-                data-click="open" data-desc="` + ciClass.displayName + `" data-click-template="`
-                 + ciClass.classId + `"><i class="drawer-icon fa ` + ciClass.icon + `"></i>
-                <span class="drawermenu-tile-link">` + ciClass.displayName + `</span></li>`;
+                formCreateCI.templates[menu2] += '<li class="drawer-button config-item-drawer1"'+
+                'data-click="open" data-desc="' + ciClass.displayName + '" data-click-template="'+
+                 ciClass.classId + '"><i class="drawer-icon fa ' + ciClass.icon + '"></i>'+
+                '<span class="drawermenu-tile-link">' + ciClass.displayName + '</span></li>';
             });
 
             formCreateCI.templates[menu2] += "</ul></div>";
@@ -106,15 +106,15 @@ var formCreateCI = {
     functionality: {
         mark_required_fields: function(classId) {
             $(document).on("form-loaded", function(){
-                $(".drawerdetails-details-box").append(`
-                &nbsp;Please note that inputs with &nbsp;<span class="text-danger">**</span>
-                &nbsp;are required`);
+                $(".drawerdetails-details-box").append(
+                '&nbsp;Please note that inputs with &nbsp;<span class="text-danger">**</span>'+
+                '&nbsp;are required');
                 var c = formCreateCI.functionality.getClassAtId(classId);
                 c.formJSON[c.name].fields.forEach(function(field,i){
                     let input = formCreateCI.functionality.get_input(field.name);
                     if (field.required && input.is(":visible")) {
                         input.parent().parent().find(".editor-label").find("span")
-                        .append(`&nbsp;<span class="text-danger">**</span>`);
+                        .append('&nbsp;<span class="text-danger">**</span>');
                     }
                 });
                 $(document).off("form-loaded");
@@ -145,7 +145,7 @@ var formCreateCI = {
             }
         },
 
-        replace_class(element, prev, _new) {
+        replace_class: function(element, prev, _new) {
             element.removeClass(prev);
             element.addClass(_new);
         },
@@ -189,7 +189,7 @@ var formCreateCI = {
         },
 
         get_input: function(name) {
-            return $(`input.CI-Input[name='`+name+`']`);
+            return $("input.CI-Input[name='"+name+"']");
         },
 
         generate_generators: function(fields) {
@@ -200,8 +200,7 @@ var formCreateCI = {
                         dataType: "text",
                         async: false,
                         success: function(result) {
-                            eval(result);
-                            eval("field.generatorFunction.function = eval(field.generatorFunction.functionName)");
+                            eval(result + ";field.generatorFunction.function = eval(field.generatorFunction.functionName)");
                         }
                     });
                 }
@@ -243,8 +242,8 @@ var formCreateCI = {
                 let input = formCreateCI.functionality.get_input(field.name);
                 if (field.required && !input.val().length) {
                     requirement_met = false;
-                    input.after(`<div class='alert alert-danger .alert-dismissable'>
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Required!</div>`);
+                    input.after("<div class='alert alert-danger .alert-dismissable'>"+
+                    '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Required!</div>');
                 }
             });
             return requirement_met;
@@ -279,8 +278,8 @@ var formCreateCI = {
                         dataType: 'json',
                         data: JSON.stringify(formCreateCI.functionality.get_commit_data(classId)),
                         success: function(result) {
-                            kendo.alert(`<a href='/DynamicData/Edit/`+result.BaseId+`'>
-                            New configuration item successfully created!</a>`);
+                            kendo.alert("<a href='/DynamicData/Edit/"+result.BaseId+"'>"+
+                            'New configuration item successfully created!</a>');
                             formCreateCI.functionality.close();
                         },
                         error: function(o, status, msg) {

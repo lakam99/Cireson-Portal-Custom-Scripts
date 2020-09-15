@@ -33,7 +33,7 @@ function proper_grid_conditions() {
 
 function start() {
     dom_grid = $("div.grid-container[data-role='grid']")[0] || 
-    $(`div[adf-grid-state-id="dashboard-grid_71dab6bd-ba26-4f14-a724-156dff8d5de8_fde873ae-ef48-430f-87f4-35aee5fa19b1_1"]`)[0];
+    $('div[adf-grid-state-id="dashboard-grid_71dab6bd-ba26-4f14-a724-156dff8d5de8_fde873ae-ef48-430f-87f4-35aee5fa19b1_1"]')[0];
     if (dom_grid && proper_grid_conditions()) {
         if (dom_grid.id === "") {
             dom_grid.id = "watch_list";
@@ -55,9 +55,22 @@ function start() {
     }
 }
 
+function get_visible_columns() {
+    var r = [];
+    grid.columns.forEach(function(c){
+        if (!c.hidden) {
+            r.push(c);
+        }
+    });
+    return r;
+}
+
 function resize_columns() {
-    for (var i = grid.columns.length - 1; i > -1; i--) {
+    /**for (var i = grid.columns.length - 1; i > -1; i--) {
         grid.autoFitColumn(i);
+      }**/
+      if (get_visible_columns().length > 8) {
+        grid.autoFitColumn(1);
       }
 }
 
@@ -76,11 +89,11 @@ function add_grid_btns() {
 
 function respond_to_grouping() {
     if (dom_grid.id === "watch_list") {return;}
-    let g_l = 0;
+    var g_l = 0;
     if (grid._groupRows !== undefined) {
         g_l = grid._groupRows.length;
     }
-    let wait = setInterval(function() {
+    var wait = setInterval(function() {
         if (grid._groupRows !== undefined) {
             if (grid._groupRows.length != g_l) {
                 refill_map();
@@ -220,8 +233,8 @@ function map_fill() {
 function collapse_collected() {
     var map = get_map();
     if (map === undefined) {
-        kendo.alert(`An error has occured with the grid settings.
-        Apologies for the inconvenience but all grids will be reset.`);
+        kendo.alert('An error has occured with the grid settings.'+
+        'Apologies for the inconvenience but all grids will be reset.');
         map_controller.reset_map();
         return collapse_collected();
     }

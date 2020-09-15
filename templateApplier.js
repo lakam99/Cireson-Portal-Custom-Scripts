@@ -4,9 +4,9 @@
 
 var templateApplier = {
     properties: {
-        template_applier_html: `<div id='template_applier'></div>`,
-        input_html: `<div id='template_input_container'><input id='template_applier_select'/></div>'`,
-        loader_html: `<div class="k-overlay" id='loader_overlay' style="z-index: 12002; opacity: 0.5;"></div>`,
+        template_applier_html: "<div id='template_applier'></div>",
+        input_html: "<div id='template_input_container'><input id='template_applier_select'/></div>",
+        loader_html: "<div class='k-overlay' id='loader_overlay' style='z-index: 12002; opacity: 0.5;'></div>",
         dialog: {
             width: "502px",
             title: "Apply Template",
@@ -109,8 +109,8 @@ var templateApplier = {
             var selected = templateApplier.getters.get_selected_template_id();
             var templateObj = await templateApplier.functionality.request_template_obj(selected);
             if (templateObj.ClassTypeId !== current_obj.ClassTypeId) {
-                kendo.alert("Cannot apply template with class " + templateObj.ClassName + ` to 
-                object of type ` + current_obj.ClassName + '.');
+                kendo.alert("Cannot apply template with class " + templateObj.ClassName +
+                'to object of type ' + current_obj.ClassName + '.');
                 return;
             }
             var whitelist = templateApplier.getters.get_whitelisted_properties();
@@ -214,8 +214,7 @@ var templateApplier = {
                 templateApplier.functionality.show_loading();
                 templateApplier.functionality.commit_new_obj(new_obj, old_obj, function(result) {
                     templateApplier.functionality.remove_loading();
-                    kendo.alert(`<a href='`+window.location.href+`'>
-                    Template successfully applied!</a>`);
+                    kendo.alert("<a href='"+window.location.href+"'>Template successfully applied!</a>");
                 });
             });
         }

@@ -19,7 +19,7 @@ var hiddenUserFinder = {
             return r;
         },
 
-        create_user_obj(user) {
+        create_user_obj: function(user) {
             return {Id: user.Guid, Name: user.DisplayName, Email: user.UPN};
         },
 
@@ -32,7 +32,7 @@ var hiddenUserFinder = {
             return u1.Id == u2.Id;
         },
 
-        user_array_includes(array, userobj) {
+        user_array_includes: function(array, userobj) {
             var r = false;
             array.forEach(function(user){
                 if (hiddenUserFinder.functionality.user_equals(user, userobj)) {

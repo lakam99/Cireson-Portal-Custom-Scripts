@@ -62,8 +62,8 @@ var accentSuggest = {
         },
 
         get_page_userpickers: function() {
-            return $(`input.input-userpicker, input[data-control-itemtype='ServiceRequest'],
-                    input[data-control-itemtype='Incident']`).toArray();
+            return $("input.input-userpicker, input[data-control-itemtype='ServiceRequest'],"+
+                    "input[data-control-itemtype='Incident']").toArray();
         },
 
         get_page_userpicker_obj: function(element_reference) {

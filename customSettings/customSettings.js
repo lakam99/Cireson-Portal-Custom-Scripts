@@ -33,7 +33,7 @@ var customSettings = {
                                 return s[i];
                             }
                         }
-                        throw Error(`Cannot find setting ${name}.`);
+                        throw Error("Cannot find setting "+name+".");
                     };
                 }
             });
@@ -41,18 +41,16 @@ var customSettings = {
 
         function() {
             customSettings.settings.customSettings.forEach(function(setting){
-                setting.html = `
-                <div class="${setting.size}">
-                    <div class="form-group">
-                        <label class="control-label" for="${setting.name}_container">${setting.displayName}</label>
-                        <div class="container custom-setting-container" name="${setting.name}_container">
-                            <label class="switch" for="${setting.name}">
-                                <input type="checkbox" id="${setting.name}" />
-                                <div class="slider round"></div>
-                            </label>
-                        </div>
-                    </div>
-                </div>`;
+                setting.html = '<div class="'+setting.size+'"><div class="form-group">'+
+                '<label class="control-label" for="'+setting.name+'_container">'+setting.displayName+'</label>'+
+                        '<div class="container custom-setting-container" name="'+setting.name+'_container">'+
+                            '<label class="switch" for="'+setting.name+'">'+
+                                '<input type="checkbox" id="'+setting.name+'" />'+
+                                '<div class="slider round"></div>'+
+                            '</label>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>';
             
                 if (setting.toggleFunctions) {
                     $.ajax({
@@ -60,15 +58,14 @@ var customSettings = {
                         dataType: "text",
                         async: false,
                         success: function(result) {
-                            eval(result);
-                            eval(`setting.toggleFunctions.toggleOn.function =
-                             eval(setting.toggleFunctions.toggleOn.functionName);
-                             setting.toggleFunctions.toggleOff.function = 
-                             eval(setting.toggleFunctions.toggleOff.functionName)`);
+                            eval(result + ";setting.toggleFunctions.toggleOn.function = "+
+                            "eval(setting.toggleFunctions.toggleOn.functionName);"+
+                            "setting.toggleFunctions.toggleOff.function = "+
+                            "eval(setting.toggleFunctions.toggleOff.functionName)");
                         }
                     });
                 } else {
-                    throw Error(`Toggle functions not provided for ${setting.displayName}.`);
+                    throw Error('Toggle functions not provided for '+setting.displayName+'.');
                 }
             });
         }
@@ -76,6 +73,13 @@ var customSettings = {
     ],
 
     functionality: {
+
+        isIE: function() {
+            ua = navigator.userAgent;
+            //https://jsfiddle.net/alvaroAV/svvz7tkn/
+            return ua.indexOf("MSIE ") > -1 || ua.indexOf("Trident/") > -1;
+        },
+
         render: function() {
             var yyy = setInterval(function(){
                 var body = $($(".tab-pane.active").children()[0]);
@@ -88,8 +92,13 @@ var customSettings = {
         
                     //bind listeners
                     customSettings.settings.customSettings.forEach(function(setting){
-                        $(`#${setting.name}`).on("click", function(){
-                            if ($(`#${setting.name}`)[0].checked) {
+                        $('#'+setting.name).on("click", function(){
+                            if (!setting.ieCompatible && customSettings.functionality.isIE()) {
+                                event.preventDefault();
+                                //kendo.alert("This setting is not supported in Internet Explorer.");
+                                return;
+                            }
+                            if ($('#'+setting.name)[0].checked) {
                                 setting.toggleFunctions.toggleOn.function();
                             } else {
                                 setting.toggleFunctions.toggleOff.function();
