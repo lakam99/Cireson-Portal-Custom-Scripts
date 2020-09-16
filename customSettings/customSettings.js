@@ -1,3 +1,7 @@
+//Written by Arkam Mazrui for the Cireson web portal
+//arkam.mazrui@nserc-crsng.gc.ca
+//arkam.mazrui@gmail.com
+
 var customSettings = {
     properties: {
         html: "/CustomSpace/Templates/customSettings/customSettings.html"
@@ -41,11 +45,13 @@ var customSettings = {
 
         function() {
             customSettings.settings.customSettings.forEach(function(setting){
+                var value = customSettings.functionality.get_setting_value(setting.name);
+                if (value) {value = 'checked'} else {value = ''}
                 setting.html = '<div class="'+setting.size+'"><div class="form-group">'+
                 '<label class="control-label" for="'+setting.name+'_container">'+setting.displayName+'</label>'+
                         '<div class="container custom-setting-container" name="'+setting.name+'_container">'+
                             '<label class="switch" for="'+setting.name+'">'+
-                                '<input type="checkbox" id="'+setting.name+'" />'+
+                                '<input type="checkbox" id="'+setting.name+'" '+value+'/>'+
                                 '<div class="slider round"></div>'+
                             '</label>'+
                         '</div>'+
@@ -68,12 +74,38 @@ var customSettings = {
                     throw Error('Toggle functions not provided for '+setting.displayName+'.');
                 }
             });
+        },
+
+        function() {
+            //render setting on each page
+            customSettings.settings.customSettings.forEach(function(setting) {
+                if (customSettings.functionality.get_setting_value(setting.name)) {
+                    setting.toggleFunctions.toggleOn.function();
+                } else {
+                    setting.toggleFunctions.toggleOff.function();
+                }
+            });
         }
 
     ],
 
     functionality: {
 
+        get_setting_value: function(setting_name) {
+            var settings = settings_controller.get_setting(setting_name);
+            if (settings.value === undefined) {
+                settings = {value: false};
+                settings_controller.set_setting(setting_name, settings);
+                return customSettings.functionality.get_setting_value(setting_name);
+            } else {
+                return settings.value;
+            }
+        },
+
+        set_setting_value: function(setting_name, value) {
+            settings_controller.set_setting(setting_name, {value: value});
+        },
+        
         isIE: function() {
             ua = navigator.userAgent;
             //https://jsfiddle.net/alvaroAV/svvz7tkn/
@@ -103,6 +135,7 @@ var customSettings = {
                             } else {
                                 setting.toggleFunctions.toggleOff.function();
                             }
+                            customSettings.functionality.set_setting_value(setting.name, $('#'+setting.name)[0].checked);
                         });
                     });
                 }

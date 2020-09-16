@@ -2,12 +2,12 @@
 /* ----------------- Script Loader --------------- */
 /* ----------------------------------------------- */
 
-var loadScript = function (path, type) {
+var loadScript = function (path) {
 
 	var result = $.Deferred(),
 		script = document.createElement("script");
 	script.async = "async";
-	script.type = type;
+	script.type = "text/javascript";
 	script.src = path;
 	script.onload = script.onreadystatechange = function(_, isAbort) {
 		if (!script.readyState || /loaded|complete/.test(script.readyState)) {
@@ -24,19 +24,8 @@ var loadScript = function (path, type) {
 	
 };
 
-function loadScripts(script_arr, type) {
-	var promises = [];
-	script_arr.forEach(function(script){promises.push(loadScript(script, type))});
-	/**Promise.all(promises).then(function(){
-		$(document).ready(function(){
-				var w8_babel = setInterval(function(){
-					if (babel) {
-						babel.transformScriptTags();
-						clearInterval(w8_babel);
-					}
-				}, 1);
-		})
-	});**/
+function loadScripts(script_arr) {
+	script_arr.forEach(function(script){loadScript(script)});
 }
 
 /* ----------------------------------------------- */
@@ -58,10 +47,13 @@ var scripts = [ "/CustomSpace/Scripts/customSettings/customSettings.js",
 				"/CustomSpace/Scripts/hiddenUserFinder/hiddenUserFinder.js",
 				"/CustomSpace/Scripts/portalUserEmailManager/portalUserEmailManager.js",
 				"/CustomSpace/Scripts/templateApplier/templateApplier.js"];
+
+dependency_arr = [ "https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.11.5/polyfill.min.js",
+					"/CustomSpace/Scripts/settings_controller/settings_controller.js"];
 				
 $("head").append('<meta http-equiv="X-UA-Compatible" content="IE=11, IE=10, IE=9, ie=8, ie=7">');
-/**loadScripts(["/CustomSpace/Scripts/requirejs/requirejs.min.js",
-				"/CustomSpace/Scripts/babel/loadBabel.js"], "text/javascript");**/
-loadScript("https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.11.5/polyfill.min.js", "text/javascript").then(function(){
-	loadScripts(scripts, "text/javascript");
+loadScript(dependency_arr[0]).then(function(){
+	loadScript(dependency_arr[1]).then(function() {
+		loadScripts(scripts);
+	}) 
 });

@@ -5,17 +5,17 @@
 var heading_states = "heading_states";
 var column_states = "column_states";
 
-export var map_controller = {
+var map_controller = {
     get_storage_map: function() {
-        return sessionStorage.getItem("map");
+        return localStorage.getItem("map");
     },
 
     set_storage_map: function(new_map) {
-        sessionStorage.setItem("map", JSON.stringify(new_map));
+        localStorage.setItem("map", JSON.stringify(new_map));
     },
 
     reset_map: function() {
-        sessionStorage.removeItem("map");
+        localStorage.removeItem("map");
     },
 
     get_parsed_map: function() {
