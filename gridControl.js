@@ -65,13 +65,36 @@ function get_visible_columns() {
     return r;
 }
 
+
+var sizing_tools = {
+    
+    int_fontsize: function(element) {
+        return Number($(element).css("font-size").split("px")[0]);
+    },
+
+    element_em: function(element) {
+        var fsize = sizing_tools.int_fontsize(element);
+        var numtext = $(element).text().length;
+        return numtext * Math.round(fsize * 0.0625);
+    },
+
+    element_px: function(element) {
+        return sizing_tools.element_em(element)/0.0625;
+    }
+
+}
+
 function resize_columns() {
-    /**for (var i = grid.columns.length - 1; i > -1; i--) {
-        grid.autoFitColumn(i);
-      }**/
-      if (get_visible_columns().length > 8) {
-        grid.autoFitColumn(1);
-      }
+    var column = null;
+    for (var i = 0; grid.columns.length; i++) {
+        if (grid.columns[i].field == "Id") {
+            column = grid.columns[i];
+            break;
+        }
+    }
+
+    var ex_element = $("td[data-field='Id']")[0];
+    grid.resizeColumn(column, sizing_tools.element_px(ex_element));
 }
 
 function add_grid_btns() {
