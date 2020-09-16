@@ -11,7 +11,7 @@ html, body {
   html *:not(input) {color: #dcdcdc !important}
   html * {background-color: rgb(41, 41, 41, 0.90) !important}
   
-  html *, html *[id], html *[class]:not(.global-search__body) {
+  html *, html *[id], html *[class]:not(.global-search__body):not(.slider.round) {
     box-shadow: none !important;
     text-shadow: none !important;
     border-radius: unset !important;
@@ -30,7 +30,7 @@ html, body {
     background-color: transparent !important;
   }
   
-  input:not([type='button']):not([type='submit']) {
+  input:not([type='button']):not([type='submit']):not(.slider.round) {
     color: #dcdcdc !important;
     background-image: none !important;
     background-color: #333333 !important;
