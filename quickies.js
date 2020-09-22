@@ -4,16 +4,28 @@
 
 var enabled = true;
 var done = false;
+imgs = [
+    {
+        id: "da117d71-69fe-a1ff-5461-459a8465d95d",
+        img: "https://i.imgur.com/CH7ZOQ7.png"
+    },
+    {
+        id: "a6254395-3fa1-1727-dd84-3ca5958dec95",
+        img: "https://www.clker.com/cliparts/8/3/3/4/1195445190322000997molumen_red_round_error_warning_icon.svg.hi.png"
+    }
+]
 
 $(document).ready(function() {
     if (loc("/View/02efdc70-55c7-4ba8-9804-ca01631c1a54") && enabled) {
         //disabled
         var key_replace = setInterval(function() {
-            var key = $("#da117d71-69fe-a1ff-5461-459a8465d95d");
-            if (key.length) {
-                key.find("img").attr("src", "https://i.imgur.com/CH7ZOQ7.png");
-                clearInterval(key_replace);
-            }
+            imgs.forEach(function(img){
+                var key = $("#"+img.id);
+                if (key.length) {
+                    key.find("img").attr("src", img.img);
+                    clearInterval(key_replace);
+                }
+            });
         }, 800);
     }
 
