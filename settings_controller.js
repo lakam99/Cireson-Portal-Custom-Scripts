@@ -37,6 +37,38 @@ var settings_controller = {
         }
     },
 
+    append_setting: function(setting_name, appendee) {
+        var setting = settings_controller.get_setting(setting_name);
+        if (!Array.isArray(setting)) {
+            console.warn("Converting " + setting + " to [].");
+            settings_controller.set_setting(setting_name, []);
+            settings_controller.append_setting(setting_name, appendee);
+        } else {
+            setting.push(appendee);
+            settings_controller.set_setting(setting_name, setting);
+        }
+    },
+
+    de_append_setting: function(setting_name, index) {
+        var setting = settings_controller.get_setting(setting_name);
+        if (!Array.isArray(setting)) {
+            throw Error("Cannot de-append from non-array setting.");
+        } else {
+            setting.splice(index, 1);
+            settings_controller.set_setting(setting_name, setting);
+        }
+    },
+
+    de_append_multiple: function(setting_name, index_arr) {
+        if (!Array.isArray(index_arr)) {
+            throw Error("Second parameter must be array of indexes.");
+        } else {
+            for (var i = index_arr.length - 1; i >= 0; i--) {
+                settings_controller.de_append_setting(setting_name, i);
+            }
+        }
+    },
+
     setup: [
         function () {
             if (!settings_controller.get_parsed_settings()) {

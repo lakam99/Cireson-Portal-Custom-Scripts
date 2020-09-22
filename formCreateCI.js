@@ -280,6 +280,7 @@ var formCreateCI = {
                         success: function(result) {
                             kendo.alert("<a href='/DynamicData/Edit/"+result.BaseId+"'>"+
                             'New configuration item successfully created!</a>');
+                            settings_controller.append_setting("new_config_items", result.BaseId);
                             formCreateCI.functionality.close();
                         },
                         error: function(o, status, msg) {
