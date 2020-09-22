@@ -8,8 +8,8 @@ html, body {
     background-image: none !important;
   }
   
-  html *:not(input) {color: #dcdcdc !important}
-  html * {background-color: rgb(41, 41, 41, 0.90) !important}
+  html *:not(input):not(textarea) {color: #dcdcdc !important}
+  html *{background-color: rgb(41, 41, 41, 0.90) !important}
   
   html *, html *[id], html *[class]:not(.global-search__body):not(.slider.round) {
     box-shadow: none !important;
@@ -17,6 +17,18 @@ html, body {
     border-radius: unset !important;
     border-color: #555555 !important;
     outline-color: #555555 !important;
+  }
+
+  span {
+    background-color: inherit !important;
+  }
+
+  .drawer-drawermenu .k-dropdown-wrap, .drawer-drawermenu .k-textbox, .drawer-drawermenu .k-widget, .drawer-drawermenu input, .drawer-drawermenu textarea {
+    border-style: initial !important;
+  }
+
+  .results-table.table-picker__details tr[role='row'], .results-table.table-picker__filter tr[role='row'] {
+    background-color: rgb(41, 41, 41, 0.90) !important;
   }
   
   img, img[src] {
@@ -30,21 +42,36 @@ html, body {
     background-color: transparent !important;
   }
   
+  ::placeholder {
+    color: black !important;
+  }
+
+  span.k-widget.k-autocomplete.input-userpicker.k-state-default {
+    background-color: #a7a5a5 !important;
+  }
+
+  i {
+    background-color: inherit !important;
+    display: initial !important;
+  }
+
+  .pad-vert-2 {
+    margin: 1% !important;
+  }
+
   input:not([type='button']):not([type='submit']):not(.slider.round) {
-    color: #dcdcdc !important;
     background-image: none !important;
     background-color: #333333 !important;
   }
   
   textarea, textarea[class], input[type='text'], input[type='text'][class] {
-    color: #dcdcdc !important;
     background-color: #a7a5a5 !important;
+    border: 1px solid #dcdcdc !important;
   }
   
   svg:not([fill]) {fill: #7d7d7d !important}
   li, select {background-image: none !important}
   input[type='text'], input[type='search'] {text-indent: 10px}
-  a {background-color: rgba(255, 255, 255, 0.01) !important}
   html cite, html cite *, html cite *[class] {color: #029833 !important}
   svg[fill], button, input[type='button'], input[type='submit'] {opacity: 0.85 !important}
   
