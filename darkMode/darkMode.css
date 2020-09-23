@@ -19,11 +19,29 @@ html, body {
     outline-color: #555555 !important;
   }
 
-  span {
+  span,a.k-button {
+    background-color: transparent !important;
+  }
+
+  span.k-icon {
+    border: none !important;
+  }
+
+  a.k-button,button.k-button:not(a.dropdowntree-button.k-button) {
+    border: 1px solid #008ed6 !important;
+  }
+
+  a.k-button > label {
     background-color: inherit !important;
   }
 
-  .drawer-drawermenu .k-dropdown-wrap, .drawer-drawermenu .k-textbox, .drawer-drawermenu .k-widget, .drawer-drawermenu input, .drawer-drawermenu textarea {
+  button.two-action-input-group__primary-action.k-button, span.k-icon {
+    margin: 2% !important;
+  }
+
+  .drawer-drawermenu .k-dropdown-wrap, .drawer-drawermenu .k-textbox,
+   .drawer-drawermenu .k-widget, .drawer-drawermenu input,
+    .drawer-drawermenu textarea, .content-header__main {
     border-style: initial !important;
   }
 
@@ -50,12 +68,16 @@ html, body {
     background-color: #a7a5a5 !important;
   }
 
-  i {
+  span:has(i.fa) {
+    background-color: inherit !important;
+  }
+
+  i,div.searchIcon[data-control-action='userPickerWindow'] {
     background-color: inherit !important;
     display: initial !important;
   }
 
-  .pad-vert-2 {
+  .pad-vert-2,i.fa {
     margin: 1% !important;
   }
 
