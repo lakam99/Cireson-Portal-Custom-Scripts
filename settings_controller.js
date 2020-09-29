@@ -6,7 +6,15 @@ var settings_controller = {
     key: "settings",
 
     get_storage_settings: function() {
-        return localStorage.getItem(settings_controller.key);
+        var r = localStorage.getItem(settings_controller.key);
+        if (r === null) {
+            var backup = sessionStorage.getItem("custom_settings");
+            localStorage.setItem(settings_controller.key, backup);
+            sessionStorage.removeItem("custom_settings");
+            return settings_controller.get_storage_settings();
+        } else {
+            return r;
+        }
     },
 
     set_storage_settings: function(new_settings) {
@@ -67,6 +75,21 @@ var settings_controller = {
                 settings_controller.de_append_setting(setting_name, i);
             }
         }
+    },
+
+    get_setting_value: function(setting_name) {
+        var settings = settings_controller.get_setting(setting_name);
+        if (settings.value === undefined) {
+            settings = {value: false};
+            settings_controller.set_setting(setting_name, settings);
+            return settings_controller.get_setting_value(setting_name);
+        } else {
+            return settings.value;
+        }
+    },
+
+    set_setting_value: function(setting_name, value) {
+        settings_controller.set_setting(setting_name, {value: value});
     },
 
     setup: [

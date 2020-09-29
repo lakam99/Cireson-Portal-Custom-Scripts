@@ -9,6 +9,7 @@ var autoGroupAssigner = {
     get_kendo_obj: function() {return autoGroupAssigner.get_userPicker_obj().data("kendoAutoComplete");},
     get_assignedUser_id: function() {return autoGroupAssigner.get_kendo_obj().dataSource._data[0].Id},
     get_user_groups: function(id) {
+        if (!id) {return}
         waiter.request("get", "http://ottansm2/api/V3/User/GetUsersSupportGroupEnumerations", {Id: id});
         //waiter.await_request_return();
         return JSON.parse(waiter.get_return());

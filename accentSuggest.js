@@ -269,6 +269,7 @@ var accentSuggest = {
         },
 
         start: function() {
+            if (!settings_controller.get_setting_value("accentSuggest")) {return;}
             var accent_wait = setInterval(function() {
                 if (accentSuggest.getters.get_page_userpicker_objs().length) {
                     accentSuggest.main.setup();

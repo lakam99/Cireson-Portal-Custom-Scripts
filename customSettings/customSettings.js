@@ -45,7 +45,7 @@ var customSettings = {
 
         function() {
             customSettings.settings.customSettings.forEach(function(setting){
-                var value = customSettings.functionality.get_setting_value(setting.name);
+                var value = settings_controller.get_setting_value(setting.name);
                 if (value) {value = 'checked'} else {value = ''}
                 setting.html = '<div class="'+setting.size+'"><div class="form-group">'+
                 '<label class="control-label" for="'+setting.name+'_container">'+setting.displayName+'</label>'+
@@ -58,7 +58,7 @@ var customSettings = {
                     '</div>'+
                 '</div>';
             
-                if (setting.toggleFunctions) {
+                if (setting.toggleFunctions !== undefined) {
                     $.ajax({
                         url: setting.toggleFunctions.functionsLocation,
                         dataType: "text",
@@ -70,8 +70,6 @@ var customSettings = {
                             "eval(setting.toggleFunctions.toggleOff.functionName)");
                         }
                     });
-                } else {
-                    throw Error('Toggle functions not provided for '+setting.displayName+'.');
                 }
             });
         },
@@ -79,31 +77,28 @@ var customSettings = {
         function() {
             //render setting on each page
             customSettings.settings.customSettings.forEach(function(setting) {
-                if (customSettings.functionality.get_setting_value(setting.name)) {
-                    setting.toggleFunctions.toggleOn.function();
-                } else {
-                    setting.toggleFunctions.toggleOff.function();
+                if (setting.toggleFunctions !== undefined) {
+                    if (settings_controller.get_setting_value(setting.name)) {
+                        setting.toggleFunctions.toggleOn.function();
+                    } else {
+                        setting.toggleFunctions.toggleOff.function();
+                    }
                 }
             });
+        },
+
+        function() {
+            //backup current settings
+            customSettings.functionality.backup_storage();
         }
 
     ],
 
     functionality: {
 
-        get_setting_value: function(setting_name) {
-            var settings = settings_controller.get_setting(setting_name);
-            if (settings.value === undefined) {
-                settings = {value: false};
-                settings_controller.set_setting(setting_name, settings);
-                return customSettings.functionality.get_setting_value(setting_name);
-            } else {
-                return settings.value;
-            }
-        },
+        backup_storage: function() {
+            sessionStorage.setItem("custom_settings", settings_controller.get_storage_settings());
 
-        set_setting_value: function(setting_name, value) {
-            settings_controller.set_setting(setting_name, {value: value});
         },
         
         isIE: function() {
@@ -130,12 +125,16 @@ var customSettings = {
                                 //kendo.alert("This setting is not supported in Internet Explorer.");
                                 return;
                             }
-                            if ($('#'+setting.name)[0].checked) {
-                                setting.toggleFunctions.toggleOn.function();
-                            } else {
-                                setting.toggleFunctions.toggleOff.function();
+
+                            if (setting.toggleFunctions !== undefined) {
+                                if ($('#'+setting.name)[0].checked) {
+                                    setting.toggleFunctions.toggleOn.function();
+                                } else {
+                                    setting.toggleFunctions.toggleOff.function();
+                                }
                             }
-                            customSettings.functionality.set_setting_value(setting.name, $('#'+setting.name)[0].checked);
+                            settings_controller.set_setting_value(setting.name, $('#'+setting.name)[0].checked);
+                            customSettings.functionality.backup_storage();
                         });
                     });
                 }
@@ -151,7 +150,7 @@ var customSettings = {
         start: function() {
             $(document).ready(function(){
                 customSettings.main.setup();
-                if (window.location.pathname === "/Settings/User/UserProfile") {
+                if (window.location.pathname.includes("/Settings/User/UserProfile")) {
                     customSettings.functionality.render();
                 }
             });

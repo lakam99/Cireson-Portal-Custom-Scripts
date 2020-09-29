@@ -3,7 +3,7 @@
         {
             "name": "darkMode",
             "displayName": "Dark Mode",
-            "size": "col-md-6",
+            "size": "col-md-4",
             "ieCompatible": false,
             "toggleFunctions": {
                 "functionsLocation": "/CustomSpace/CustomSettings/darkMode/darkMode.js", 
@@ -18,7 +18,7 @@
         {
             "name": "accentKeyboard",
             "displayName": "French Accent Keyboard",
-            "size": "col-md-6",
+            "size": "col-md-4",
             "ieCompatible": true,
             "toggleFunctions": {
                 "functionsLocation": "/CustomSpace/CustomSettings/accentKeyboard/accentKeyboard.js",
@@ -29,6 +29,12 @@
                     "functionName": "accentKeyboardOff"
                 }
             }
+        },
+        {
+            "name": "accentSuggest",
+            "displayName": "French Accent Suggest",
+            "size": "col-md-4",
+            "ieCompatible": true
         }
     ]
 }

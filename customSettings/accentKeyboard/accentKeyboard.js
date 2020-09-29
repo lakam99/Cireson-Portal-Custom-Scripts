@@ -7,6 +7,10 @@ customSettings.helperFunctions.accentKeyboard.keys = [].concat.apply([], [
     accentSuggest.constants.suggest_letters.y]);
 
 customSettings.helperFunctions.accentKeyboard.build_UI = function(e) {
+    if (("#keyboard").length) {
+        $("#keyboard").remove();
+        $("body").off("click");
+    }
     $(e).parent().before(`<div id='keyboard' class='container' style='border: 1px solid white " + 
     "!important; background-color: #333333 !important'></div>`);
     var keys = customSettings.helperFunctions.accentKeyboard.keys;
@@ -31,16 +35,14 @@ var accentKeyboardOn = function() {
             clearInterval(zxi);
             pickers.forEach(function(e){
                 $(e).on("click", function(){
-                    if (!$("#keyboard").length) {
-                        customSettings.helperFunctions.accentKeyboard.build_UI(e);
-                        var parent = $(e).parent().parent().parent()[0];
-                        $(body).on("click", function(ev){
-                            if (!parent.contains(ev.target)) {
-                                $("#keyboard").remove();
-                                $(body).off("click");
-                            }
-                        });
-                    }
+                    customSettings.helperFunctions.accentKeyboard.build_UI(e);
+                    var parent = $("#keyboard").parent().parent()[0];
+                    $(body).on("click", function(ev){
+                        if (!parent.contains(ev.target)) {
+                            $("#keyboard").remove();
+                            $(body).off("click");
+                        }
+                    });
                 });
             });
         }

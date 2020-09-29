@@ -56,6 +56,10 @@ legend.createUserLegend {
     margin: 1% !important;
     }
   
+  input:not(:checked)+.slider {
+    background-color: lightcoral !important;
+  }
+
   input:checked + .slider {
     background-color: #66bb6a !important;
   }
