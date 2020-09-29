@@ -48,6 +48,10 @@ html, body {
   .results-table.table-picker__details tr[role='row'], .results-table.table-picker__filter tr[role='row'] {
     background-color: rgb(41, 41, 41, 0.90) !important;
   }
+
+  span.k-link.k-menu-link:hover {
+    color: #79a086!important;
+  }
   
   img, img[src] {
     z-index: 1;
