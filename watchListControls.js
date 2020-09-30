@@ -172,7 +172,7 @@ var watchListControl = {
 
         request_delete_workitem: function(workitem_id) {
             var req = {workitemId: workitem_id, userId: session.user.Id};
-            var r = ClientRequestManager.send_request("delete", "http://ottansm2/api/V3/WorkItem/DeleteFromWatchlist",
+            var r = ClientRequestManager.send_request("delete", window.location.origin + "/api/V3/WorkItem/DeleteFromWatchlist",
             req, false).then(function(){watchListControl.functionality.refresh_grid()});
         },
 

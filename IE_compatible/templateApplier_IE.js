@@ -31,7 +31,7 @@ var templateApplier = {
           read: {
             dataType: "json",
             type: "get",
-            url: "http://ottansm2/api/V3/Template/GetTemplates",
+            url: window.location.origin + "/api/V3/Template/GetTemplates",
             data: {
               classId: '04b69835-6343-4de2-4b19-6be08c612989'
             }

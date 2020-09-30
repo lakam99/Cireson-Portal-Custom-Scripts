@@ -208,7 +208,7 @@ var accentSuggest = {
                   maxNumberOfResults: max_results,
                   fetchAll: false
                 };
-                url = "http://ottansm2/api/V3/User/GetUserList";
+                url = window.location.origin + "/api/V3/User/GetUserList";
                 method = "get";
                 _context.next = 6;
                 return ClientRequestManager.send_request(method, url, request_data, false);
