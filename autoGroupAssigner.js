@@ -2,8 +2,6 @@
 //arkam.mazrui@nserc-crsng.gc.ca
 //arkam.mazrui@gmail.com
 
-import {waiter} from './apiCaller.js';
-
 var autoGroupAssigner = {
     get_userPicker_obj: function() {return $("[name='AssignedWorkItem']");},
     get_kendo_obj: function() {return autoGroupAssigner.get_userPicker_obj().data("kendoAutoComplete");},
