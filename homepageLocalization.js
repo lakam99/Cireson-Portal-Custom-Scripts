@@ -50,7 +50,9 @@ var homepageLocalizer = {
                 throw Error("Letter arg must be single character.");
             }
             list.forEach(function(n,i){
-                n.text(localization[letter+i]);
+                if (localization[letter+i] !== undefined) {
+                    n.text(localization[letter+i]);
+                }
             });
         },
 

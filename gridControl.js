@@ -104,8 +104,10 @@ function add_grid_btns() {
             reset_btn = $(".margin-t10.btn");
             reset_btn.removeClass(".margin-t10").css("margin", "0px 10px 0px 10px");
         }
-        reset_btn.after("<a class='k-button pull-right btn btn-default btn-expand-all'>" + localization["expand_all"] + "</a>");
-        reset_btn.after("<a class='k-button pull-right btn btn-default btn-collapse-all'>" + localization["collapse_all"] + "</a>");
+        reset_btn.after("<a class='k-button pull-right btn btn-default btn-expand-all'>"
+         + (localization["expand_all"] === undefined ? "Expand All":localization["expand_all"]) + "</a>");
+        reset_btn.after("<a class='k-button pull-right btn btn-default btn-collapse-all'>" 
+        + (localization["collapse_all"] === undefined ? "Collapse All":localization["collapse_all"]) + "</a>");
         btns_added = true;
     }
 }

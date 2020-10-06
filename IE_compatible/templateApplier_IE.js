@@ -133,12 +133,12 @@ var templateApplier = {
               case 9:
                 templateObj = _context.sent;
 
-                if (!(templateObj.ClassTypeId !== current_obj.ClassTypeId)) {
+                if (!(templateObj.ClassName !== current_obj.ClassName)) {
                   _context.next = 13;
                   break;
                 }
 
-                kendo.alert("Cannot apply template with class " + templateObj.ClassName + 'to object of type ' + current_obj.ClassName + '.');
+                kendo.alert("Cannot apply template with class " + templateObj.ClassName + ' to object of type ' + current_obj.ClassName + '.');
                 return _context.abrupt("return");
 
               case 13:
