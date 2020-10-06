@@ -13,7 +13,7 @@ var ticketManipulator = {
     },
 
     deep_copy(obj) {
-        var r = $.extend([], obj);
+        var r = $.extend({}, obj);
         Object.keys(r).forEach(function(property){
             if (r[property] != undefined && r[property] != null && typeof(r[property]) === "object") {
                 r[property] = $.extend({}, r[property]);

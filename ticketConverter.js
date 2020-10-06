@@ -23,7 +23,7 @@ var ticketConverter = {
         },
 
         replace_properties: [
-            "ClassName", "ClassTypeId", "FullClassName", "Id"
+            "ClassName", "FullClassName", "Id"
         ]
     },
 
@@ -54,9 +54,11 @@ var ticketConverter = {
         function() {
             app.custom.formTasks.add("Incident", "Convert to Service Request", function(formObj, viewModel) {
                 ticketConverter.setters.set_currentTicket(formObj, viewModel);
+                ticketConverter.functionality.apply(SRQ);
             });
-            app.custom.formTasks.add("Service Request", "Convert to Incident", function(formObj, viewModel) {
+            app.custom.formTasks.add("ServiceRequest", "Convert to Incident", function(formObj, viewModel) {
                 ticketConverter.setters.set_currentTicket(formObj, viewModel);
+                ticketConverter.functionality.apply(INCIDENT);
             });
         }
     ],
@@ -68,7 +70,6 @@ var ticketConverter = {
             var class_id = ticketConverter.getters.get_classId(type);
             var old_obj = ticketConverter.getters.get_currentTicket().viewModel;
             var new_obj = ticketManipulator.deep_copy(old_obj);
-            var translated_property = null;
             var temp_name = null;
             var template_obj = await ticketManipulator.request_template_obj(template_id)
             
@@ -80,6 +81,7 @@ var ticketConverter = {
             temp_name[1] = new_obj.Id;
             temp_name = temp_name.join(":");
             new_obj.FullName = temp_name;
+            new_obj.classTypeId = class_id;
             ticketManipulator.remove_loading();
             ticketConverter.functionality.ui_commit(old_obj, new_obj);
         },
