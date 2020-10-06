@@ -42,18 +42,23 @@ var scripts = [ "/CustomSpace/Scripts/customSettings/customSettings.js",
 				"/CustomSpace/Scripts/gridSaver/gridSaver.js",
 				"/CustomSpace/Scripts/watchListControl/watchListControl.js",
 				"/CustomSpace/Scripts/autoGroupAssigner/autoGroupAssigner.js",
-				"/CustomSpace/Scripts/accentSuggest/accentSuggest.js",
 				"/CustomSpace/Scripts/formCreateCI/formCreateCI.js",
 				"/CustomSpace/Scripts/hiddenUserFinder/hiddenUserFinder.js",
 				"/CustomSpace/Scripts/portalUserEmailManager/portalUserEmailManager.js",
 				"/CustomSpace/Scripts/templateApplier/templateApplier.js"];
 
 dependency_arr = [ "https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.11.5/polyfill.min.js",
-					"/CustomSpace/Scripts/settings_controller/settings_controller.js"];
+					"/CustomSpace/Scripts/settings_controller/settings_controller.js",
+					"/CustomSpace/Scripts/accentSuggest/accentSuggest.js",
+					"/CustomSpace/Scripts/ticketManipulator/ticketManipulator.js"];
 				
 $("head").append('<meta http-equiv="X-UA-Compatible" content="IE=11, IE=10, IE=9, ie=8, ie=7">');
 loadScript(dependency_arr[0]).then(function(){
 	loadScript(dependency_arr[1]).then(function() {
-		loadScripts(scripts);
+		loadScript(dependency_arr[2]).then(function(){
+			loadScript(dependency_arr[3]).then(function(){
+				loadScripts(scripts);
+			});
+		});
 	}) 
 });
