@@ -138,7 +138,7 @@ var templateApplier = {
                   break;
                 }
 
-                kendo.alert("Cannot apply template with class " + templateObj.ClassName + 'to object of type ' + current_obj.ClassName + '.');
+                kendo.alert("Cannot apply template with class " + templateObj.ClassName + ' to object of type ' + current_obj.ClassName + '.');
                 return _context.abrupt("return");
 
               case 13:

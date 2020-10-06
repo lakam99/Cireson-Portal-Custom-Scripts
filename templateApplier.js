@@ -110,7 +110,7 @@ var templateApplier = {
             var templateObj = await templateApplier.functionality.request_template_obj(selected);
             if (templateObj.ClassTypeId !== current_obj.ClassTypeId) {
                 kendo.alert("Cannot apply template with class " + templateObj.ClassName +
-                'to object of type ' + current_obj.ClassName + '.');
+                ' to object of type ' + current_obj.ClassName + '.');
                 return;
             }
             var whitelist = templateApplier.getters.get_whitelisted_properties();
