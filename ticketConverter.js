@@ -81,7 +81,7 @@ var ticketConverter = {
             temp_name[1] = new_obj.Id;
             temp_name = temp_name.join(":");
             new_obj.FullName = temp_name;
-            new_obj.classTypeId = class_id;
+            new_obj.ClassTypeId = class_id;
             ticketManipulator.remove_loading();
             ticketConverter.functionality.ui_commit(old_obj, new_obj);
         },
