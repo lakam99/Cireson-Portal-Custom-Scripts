@@ -5,6 +5,8 @@
 var INCIDENT = 0;
 var SRQ = 1;
 
+var url = ["/Incident/Edit/", "/ServiceRequest/Edit/"];
+
 var ticketConverter = {
     properties: {
         currentTicket: {
@@ -69,12 +71,11 @@ var ticketConverter = {
             var template_id = ticketConverter.getters.get_templateId(type);
             var class_id = ticketConverter.getters.get_classId(type);
             var old_obj = ticketConverter.getters.get_currentTicket().viewModel;
-            var new_obj = ticketManipulator.deep_copy(old_obj);
             var temp_name = null;
             var template_obj = await ticketManipulator.request_template_obj(template_id)
             
             ticketConverter.properties.replace_properties.forEach(function(property){
-                new_obj[property] = template_obj[property];
+                template_obj[property] = old_obj[property];
             });
 
             temp_name = new_obj.FullName.split(":")
@@ -91,7 +92,7 @@ var ticketConverter = {
                 ticketManipulator.show_loading();
                 ticketManipulator.commit_new_obj(new_obj, old_obj, function(res){
                     ticketManipulator.remove_loading();
-                    kendo.alert("<a href='" + window.location.href+ "'>Ticket successfully converted!</a>");
+                    kendo.alert("<a href='" + window.location.origin+url[type]+ "'>Ticket successfully converted!</a>");
                 });
             });
         }
