@@ -71,11 +71,12 @@ var ticketConverter = {
             var template_id = ticketConverter.getters.get_templateId(type);
             var class_id = ticketConverter.getters.get_classId(type);
             var old_obj = ticketConverter.getters.get_currentTicket().viewModel;
+            var new_obj = ticketManipulator.deep_copy(old_obj);
             var temp_name = null;
             var template_obj = await ticketManipulator.request_template_obj(template_id)
             
             ticketConverter.properties.replace_properties.forEach(function(property){
-                template_obj[property] = old_obj[property];
+                new_obj[property] = template_obj[property];
             });
 
             temp_name = new_obj.FullName.split(":")
@@ -84,15 +85,15 @@ var ticketConverter = {
             new_obj.FullName = temp_name;
             new_obj.ClassTypeId = class_id;
             ticketManipulator.remove_loading();
-            ticketConverter.functionality.ui_commit(old_obj, new_obj);
+            ticketConverter.functionality.ui_commit(old_obj, new_obj, type);
         },
 
-        ui_commit: function(old_obj, new_obj) {
+        ui_commit: function(old_obj, new_obj, type) {
             kendo.confirm("Are you sure you want to convert this ticket?").then(function(){
                 ticketManipulator.show_loading();
                 ticketManipulator.commit_new_obj(new_obj, old_obj, function(res){
                     ticketManipulator.remove_loading();
-                    kendo.alert("<a href='" + window.location.origin+url[type]+ "'>Ticket successfully converted!</a>");
+                    kendo.alert("<a href='" + window.location.origin+url[type]+new_obj.Id+ "/'>Ticket successfully converted!</a>");
                 });
             });
         }
@@ -100,7 +101,9 @@ var ticketConverter = {
 
     main: {
         start: function() {
-            ticketConverter.setup.forEach(function(f){f()});
+            $(document).ready(function(){
+                ticketConverter.setup.forEach(function(f){f()});
+            });
         }
     }
 }
