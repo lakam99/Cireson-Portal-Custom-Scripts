@@ -104,43 +104,24 @@ var templateApplier = {
         apply: async function() {
             templateApplier.getters.get_dialog_window().close();
             var current_obj = templateApplier.properties.currentTicket.viewModel;
-            templateApplier.functionality.show_loading();
+            ticketManipulator.show_loading();
             current_obj = await templateApplier.functionality.trigger_workflow_or_update_required(current_obj);
             var selected = templateApplier.getters.get_selected_template_id();
-            var templateObj = await templateApplier.functionality.request_template_obj(selected);
-            if (templateObj.ClassTypeId !== current_obj.ClassTypeId) {
+            var templateObj = await ticketManipulator.request_template_obj(selected);
+            if (templateObj.ClassName !== current_obj.ClassName) {
                 kendo.alert("Cannot apply template with class " + templateObj.ClassName +
-                'to object of type ' + current_obj.ClassName + '.');
+                ' to object of type ' + current_obj.ClassName + '.');
                 return;
             }
             var whitelist = templateApplier.getters.get_whitelisted_properties();
             var new_obj = templateApplier.functionality.replace_properties(current_obj, templateObj, whitelist);
             templateApplier.functionality.set_obj_status(new_obj, templateApplier.constants.statuses.in_progress);
-            templateApplier.functionality.remove_loading();
+            ticketManipulator.remove_loading();
             templateApplier.functionality.ui_commit_new_obj(new_obj, current_obj);
         },
 
-        show_loading: function() {
-            $("body").append(templateApplier.properties.loader_html);
-            kendo.ui.progress($("#loader_overlay"), true);
-        },
-        
-        remove_loading: function() {
-            $("#template_applier_select").remove();
-        },
-
-        deep_copy(obj) {
-            var r = $.extend([], obj);
-            Object.keys(r).forEach(function(property){
-                if (r[property] != undefined && r[property] != null && typeof(r[property]) === "object") {
-                    r[property] = $.extend({}, r[property]);
-                }
-            });
-            return r;
-        },
-
         replace_properties: function(main_obj, replacement_obj, whitelist_properties) {
-            var r = templateApplier.functionality.deep_copy(main_obj);
+            var r = ticketManipulator.deep_copy(main_obj);
             if (!whitelist_properties || !Array.isArray(whitelist_properties)) {
                 whitelist_properties = [];
             }
@@ -167,9 +148,9 @@ var templateApplier = {
             return new Promise(function(resolve, reject){
                 templateApplier.properties.resolveFunc = function(resolve_obj) {resolve(resolve_obj)}
                 if (!templateApplier.functionality.status_eq(obj.Status, templateApplier.constants.statuses.submitted)) {
-                    var new_obj = templateApplier.functionality.deep_copy(obj);
+                    var new_obj = ticketManipulator.deep_copy(obj);
                     templateApplier.functionality.set_obj_status(new_obj, templateApplier.constants.statuses.submitted);
-                    templateApplier.functionality.commit_new_obj(new_obj, obj, function(resolve){
+                    ticketManipulator.commit_new_obj(new_obj, obj, function(resolve){
                         templateApplier.properties.resolveFunc(new_obj);
                     });
                 } else {
@@ -178,42 +159,11 @@ var templateApplier = {
             });
         },
 
-        request_template_obj: async function(templateId) {
-            var req = {id: templateId, createdById: session.user.Id};
-            var url = window.location.origin + '/api/V3/Projection/CreateProjectionByTemplate';
-            var r = await ClientRequestManager.send_request("get", url, req, false);
-            return JSON.parse(r);
-        },
-
-        generate_commit_data: function(new_obj, old_obj) {
-          return {
-              formJSON: {
-                  original: old_obj,
-                  current: new_obj
-              }
-          };  
-        },
-
-        commit_new_obj: function(new_obj, old_obj, callback) {
-            $.ajax({
-                url: '/api/V3/Projection/Commit',
-                type: 'post',
-                contentType: 'application/json; charset=utf-8',
-                dataType: 'json',
-                data: JSON.stringify(templateApplier.functionality.generate_commit_data(new_obj, old_obj)),
-                success: callback,
-                error: function(o, status, msg) {
-                    console.log("An error occured: " + status + ": " + msg);
-                    console.log(o.responseJSON.exception);
-                }
-            });
-        },
-
         ui_commit_new_obj: function(new_obj, old_obj) {
             kendo.confirm("Are you sure you want to apply this template?").then(function(){
-                templateApplier.functionality.show_loading();
-                templateApplier.functionality.commit_new_obj(new_obj, old_obj, function(result) {
-                    templateApplier.functionality.remove_loading();
+                ticketManipulator.show_loading();
+                ticketManipulator.commit_new_obj(new_obj, old_obj, function(result) {
+                    ticketManipulator.remove_loading();
                     kendo.alert("<a href='"+window.location.href+"'>Template successfully applied!</a>");
                 });
             });
