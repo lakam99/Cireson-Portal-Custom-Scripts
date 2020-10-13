@@ -92,6 +92,14 @@ var activityAdder = {
 
         get_selected_template_name: function() {
             return activityAdder.getters.get_combobox().text();
+        },
+
+        get_selected_ids: function() {
+            var ids = [];
+            $(".activity_item").toArray().forEach(function(e){
+                ids.push($(e).attr('name'));
+            });
+            return ids;
         }
     },
 
@@ -157,26 +165,61 @@ var activityAdder = {
 
     functionality: {
         cancel: function() {return true},
+
         add: async function() {
             var name = activityAdder.getters.get_selected_template_name();
-            activityAdder.functionality.new_ui_activity(name);
+            var id = activityAdder.getters.get_selected_template_id();
+            activityAdder.functionality.new_ui_activity(name, id);
         },
 
-        new_ui_activity: function(name) {
+        apply: async function() {
+            activityAdder.getters.get_dialog_window().close();
+            ticketManipulator.show_loading();
+            var template_ids = activityAdder.getters.get_selected_ids();
+            var oldObj = activityAdder.properties.currentTicket.viewModel;
+            var newObj = ticketManipulator.deep_copy(oldObj);
+            var templates = [];
+            var c = null;
+            
+            for (var i = 0; i < template_ids.length; i++) {
+                c = await ticketManipulator.request_template_obj(template_ids[i]);
+                templates.push(c);
+            }
+
+            templates.forEach(function(t){
+                //too lazy to flatten
+                newObj.Activity.push(t);
+            });
+            
+            ticketManipulator.remove_loading();
+            activityAdder.functionality.ui_commit(newObj, oldObj);
+        },
+
+        new_ui_activity: function(name, id) {
             $(".activity_inner").append(`
-            <div class='activity_item'>
+            <div class='activity_item' name='${id}'>
                 ${name}
                 <span class='activity_item_icons'>
                     <span class="fa fa-plus"></span>
                     <span class="fa fa-minus"></span>
                 </span>
             </div>
-        `);
+            `);
 
-        $(".fa-minus").off("click");
-        $(".fa-minus").on("click", function(ev) {
-            $(ev.target).parent().parent().remove();
-        });
+            $(".fa-minus").off("click");
+            $(".fa-minus").on("click", function(ev) {
+                $(ev.target).parent().parent().remove();
+            });
+        },
+
+        ui_commit: function(new_obj, old_obj) {
+            kendo.confirm("Are you sure you want to modify activities?").then(function(){
+                ticketManipulator.show_loading();
+                ticketManipulator.commit_new_obj(new_obj, old_obj, function(){
+                    ticketManipulator.remove_loading();
+                    kendo.alert("Successfully modified activities.");
+                });
+            });
         }
     },
 
