@@ -46,7 +46,8 @@ var scripts = [ "/CustomSpace/Scripts/customSettings/customSettings.js",
 				"/CustomSpace/Scripts/hiddenUserFinder/hiddenUserFinder.js",
 				"/CustomSpace/Scripts/portalUserEmailManager/portalUserEmailManager.js",
 				"/CustomSpace/Scripts/templateApplier/templateApplier.js",
-				"/CustomSpace/Scripts/ticketConverter/ticketConverter.js"];
+				"/CustomSpace/Scripts/ticketConverter/ticketConverter.js",
+				"/CustomSpace/Scripts/activityAdder/activityAdder.js"];
 
 dependency_arr = [ "https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.11.5/polyfill.min.js",
 					"/CustomSpace/Scripts/settings_controller/settings_controller.js",

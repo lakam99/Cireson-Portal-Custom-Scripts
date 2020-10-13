@@ -3,8 +3,10 @@
 //arkam.mazrui@gmail.com
 
 var activityAdder = {
-    properties = {
+    properties: {
         activity_adder_html: "<div id='activity_adder'></div>",
+        activity_selecter_html: "<div id='activity_selector'></div>",
+        activity_container: "/CustomSpace/Templates/activityAdder/activityAdder.html",
         input_html: "<div id='activity_input_container'><input id='activity_adder_select'/></div>",
         dialog: {
             width: "502px",
@@ -12,10 +14,16 @@ var activityAdder = {
             modal: true,
             visible: false,
         },
+        selector_dialog: {
+            width: "502px",
+            title: "Select a Template",
+            modal: true,
+            visible: false,
+        },
         comboBox: {
             dataTextField: "Name",
             dataValueField: "Id",
-            dataSource: [],
+            dataSource: [{Name: "Sorry, data is still loading!", Id: 0}],
             filter: "contains",
             suggest: true,
             index: 0
@@ -24,7 +32,7 @@ var activityAdder = {
             formObj: null,
             viewModel: null
         },
-        activityClasses = [
+        activityClasses: [
             "bfd90aaa-80dd-0fbb-6eaf-65d92c1d8e36",
             "7ac62bd4-8fce-a150-3b40-16a39a61383d",
             "0ad0812b-f267-52bf-9f11-c56587786791",
@@ -36,9 +44,19 @@ var activityAdder = {
     getters: {
         get_dialog: function() {
             var r = activityAdder.properties.dialog;
-            r.content = activityAdder.properties.input_html;
+            r.content = activityAdder.properties.activity_container;
             r.actions = [
                 {text: "Apply", action: activityAdder.functionality.apply, primary: true},
+                {text: "Cancel", action: activityAdder.functionality.cancel, primary: false}
+            ];
+            return r;
+        },
+
+        get_selector_dialog: function() {
+            var r = activityAdder.properties.selector_dialog;
+            r.content = activityAdder.properties.input_html;
+            r.actions = [
+                {text: "Add", action: activityAdder.functionality.add, primary: true},
                 {text: "Cancel", action: activityAdder.functionality.cancel, primary: false}
             ];
             return r;
@@ -48,8 +66,16 @@ var activityAdder = {
             return $("#activity_adder");
         },
 
+        get_activity_selector: function() {
+            return $("#activity_selector");
+        },
+
         get_dialog_window: function() {
             return activityAdder.getters.get_activity_adder().data("kendoDialog");
+        },
+
+        get_selector_window: function() {
+            return activityAdder.getters.get_activity_selector().data("kendoDialog");
         },
 
         get_input: function() {
@@ -61,7 +87,11 @@ var activityAdder = {
         },
 
         get_selected_template_id: function() {
-            return activityAdder.getters.get_combobox().value();
+            return activityAdder.getters.get_combobox()._old;
+        },
+
+        get_selected_template_name: function() {
+            return activityAdder.getters.get_combobox().text();
         }
     },
 
@@ -83,25 +113,30 @@ var activityAdder = {
     setup: [
         function() {
             //settings the datasource for combobox
-            activityAdder.properties.activityClasses.forEach(function(id){
-                $.ajax({
-                    dataType: "json",
-                    type: "get",
-                    async: false,
-                    url: window.location.origin + "/api/V3/Template/GetTemplates",
-                    data: {classId:id},
-                    success: function(res){
-                        activityAdder.properties.comboBox.dataSource.push(res);
-                    }
-                });
+            return new Promise(async function(resolve){
+                var r = null;
+                for (var i = 0; i < activityAdder.properties.activityClasses.length; i++) {
+                    r = await ClientRequestManager.send_request("get",
+                     window.location.origin + "/api/V3/Template/GetTemplates",
+                     {classId: activityAdder.properties.activityClasses[i]}, false);
+                    
+                    activityAdder.properties.comboBox.dataSource.push(JSON.parse(r));
+                }
+                resolve(true);
             });
+        },
+
+        function() {
+            waiter.request("get", "/CustomSpace/Templates/activityAdder/activityAdder.html", {}, false);
+            activityAdder.properties.activity_container = waiter.get_return();
         },
 
         function() {
             //build UI
             $("body").append(activityAdder.properties.activity_adder_html);
+            $("body").append(activityAdder.properties.activity_selecter_html);
             activityAdder.getters.get_activity_adder().kendoDialog(activityAdder.getters.get_dialog());
-            activityAdder.getters.get_input().kendoComboBox(activityAdder.properties.comboBox);
+            activityAdder.getters.get_activity_selector().kendoDialog(activityAdder.getters.get_selector_dialog());
         },
 
         function() {
@@ -110,17 +145,50 @@ var activityAdder = {
                 activityAdder.setters.set_ticket_info(formObj, viewModel);
                 activityAdder.getters.get_dialog_window().open();
             });
+        },
+
+        function() {
+            //bind listeners
+            $("#new_activity").on("click", function(){
+                activityAdder.getters.get_selector_window().open();
+            });
         }
     ],
 
     functionality: {
         cancel: function() {return true},
-        apply: function() {return true}
+        add: async function() {
+            var name = activityAdder.getters.get_selected_template_name();
+            activityAdder.functionality.new_ui_activity(name);
+        },
+
+        new_ui_activity: function(name) {
+            $(".activity_inner").append(`
+            <div class='activity_item'>
+                ${name}
+                <span class='activity_item_icons'>
+                    <span class="fa fa-plus"></span>
+                    <span class="fa fa-minus"></span>
+                </span>
+            </div>
+        `);
+
+        $(".fa-minus").off("click");
+        $(".fa-minus").on("click", function(ev) {
+            $(ev.target).parent().parent().remove();
+        });
+        }
     },
 
     main: {
-        setup: function() {
+        setup: async function() {
+            var wait =activityAdder.setup.shift();
             activityAdder.setup.forEach(function(f){f()});
+            activityAdder.getters.get_input().kendoComboBox(activityAdder.properties.comboBox);
+            var r = await wait();
+            activityAdder.properties.comboBox.dataSource.shift();
+            activityAdder.properties.comboBox.dataSource = [].concat.apply([],activityAdder.properties.comboBox.dataSource);
+            activityAdder.getters.get_input().kendoComboBox(activityAdder.properties.comboBox);
         }, 
 
         start: function() {
