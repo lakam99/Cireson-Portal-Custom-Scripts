@@ -177,6 +177,7 @@ var activityAdder = {
             ticketManipulator.show_loading();
             var template_ids = activityAdder.getters.get_selected_ids();
             var oldObj = activityAdder.properties.currentTicket.viewModel;
+            oldObj = await ticketManipulator.trigger_workflow_or_update_required(oldObj);
             var newObj = ticketManipulator.deep_copy(oldObj);
             var templates = [];
             var c = null;
@@ -235,9 +236,7 @@ var activityAdder = {
         }, 
 
         start: function() {
-            $(document).ready(function(){
-                activityAdder.main.setup();
-            });
+            activityAdder.main.setup();
         }
     }
 }
