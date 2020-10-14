@@ -97,7 +97,7 @@ var templateApplier = {
             templateApplier.getters.get_dialog_window().close();
             var current_obj = templateApplier.properties.currentTicket.viewModel;
             ticketManipulator.show_loading();
-            current_obj = await templateApplier.functionality.trigger_workflow_or_update_required(current_obj);
+            current_obj = await ticketManipulator.trigger_workflow_or_update_required(current_obj);
             var selected = templateApplier.getters.get_selected_template_id();
             var templateObj = await ticketManipulator.request_template_obj(selected);
             if (templateObj.ClassName !== current_obj.ClassName) {
@@ -163,9 +163,7 @@ var templateApplier = {
         },
 
         start: function() {
-            $(document).ready(function(){
-                templateApplier.main.setup();
-            });
+            templateApplier.main.setup();
         }
     }
 }

@@ -208,8 +208,12 @@ var activityAdder = {
             `);
 
             $(".fa-minus").off("click");
+            $(".fa-plus").off("click");
             $(".fa-minus").on("click", function(ev) {
                 $(ev.target).parent().parent().remove();
+            });
+            $(".fa-plus").on("click", function(ev){
+                activityAdder.functionality.new_ui_activity(name, id);
             });
         },
 
@@ -226,10 +230,16 @@ var activityAdder = {
 
     main: {
         setup: async function() {
-            var wait =activityAdder.setup.shift();
+            var wait = activityAdder.setup.shift();
+            var cache = settings_controller.get_setting("activity_adder").combo_cache;
             activityAdder.setup.forEach(function(f){f()});
             activityAdder.getters.get_input().kendoComboBox(activityAdder.properties.comboBox);
-            var r = await wait();
+            if (cache === undefined) {
+                await wait();
+                settings_controller.set_setting("activity_adder", {combo_cache: activityAdder.properties.comboBox.dataSource});
+            } else {
+                activityAdder.properties.comboBox.dataSource = cache;
+            }
             activityAdder.properties.comboBox.dataSource.shift();
             activityAdder.properties.comboBox.dataSource = [].concat.apply([],activityAdder.properties.comboBox.dataSource);
             activityAdder.getters.get_input().kendoComboBox(activityAdder.properties.comboBox);

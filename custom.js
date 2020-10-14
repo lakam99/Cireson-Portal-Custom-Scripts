@@ -33,7 +33,6 @@ function loadScripts(script_arr) {
 /* ----------------------------------------------- */
 
 var scripts = [ "/CustomSpace/Scripts/customSettings/customSettings.js",
-				"/CustomSpace/Scripts/apiCaller/APICaller.js",
 				"/CustomSpace/Scripts/apiCaller/ClientRequestManager.js",
 				"/CustomSpace/Scripts/mapController/map_controller.js",
 				"/CustomSpace/Scripts/Quickies/quickies.js",
@@ -52,14 +51,17 @@ var scripts = [ "/CustomSpace/Scripts/customSettings/customSettings.js",
 dependency_arr = [ "https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.11.5/polyfill.min.js",
 					"/CustomSpace/Scripts/settings_controller/settings_controller.js",
 					"/CustomSpace/Scripts/accentSuggest/accentSuggest.js",
-					"/CustomSpace/Scripts/ticketManipulator/ticketManipulator.js"];
+					"/CustomSpace/Scripts/ticketManipulator/ticketManipulator.js",
+					"/CustomSpace/Scripts/apiCaller/APICaller.js"];
 				
 $("head").append('<meta http-equiv="X-UA-Compatible" content="IE=11, IE=10, IE=9, ie=8, ie=7">');
 loadScript(dependency_arr[0]).then(function(){
 	loadScript(dependency_arr[1]).then(function() {
 		loadScript(dependency_arr[2]).then(function(){
 			loadScript(dependency_arr[3]).then(function(){
-				loadScripts(scripts);
+				loadScript(dependency_arr[4]).then(function(){
+					loadScripts(scripts);
+				});
 			});
 		});
 	}) 
