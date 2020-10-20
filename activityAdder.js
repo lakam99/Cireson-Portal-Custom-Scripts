@@ -37,7 +37,7 @@ var UI_Builder = {
 
         $(".fa-plus").on("click", function(ev){
             var e = $(ev.target).parent().parent();
-            UI_Builder.new_ui_activity($(e).text(), $(e).attr("name"));
+            UI_Builder.new_ui_activity($(e).text(), $(e).data("id"));
         });
     },
 
@@ -177,7 +177,7 @@ var activityAdder = {
         comboBox: {
             dataTextField: "Name",
             dataValueField: "Id",
-            dataSource: [{Name: "Sorry, data is still loading!", Id: 0}],
+            dataSource: [],
             filter: "contains",
             suggest: true,
             index: 0
@@ -254,6 +254,10 @@ var activityAdder = {
                 ids.push($(e).attr('name'));
             });
             return ids;
+        },
+
+        get_activity_items: function() {
+            return $(".activity_inner > .activity_item").toArray();
         }
     },
 
@@ -326,7 +330,7 @@ var activityAdder = {
         },
 
         generate_sequence_ids_wrapper: function() {
-            var el = $(".activity_inner > .activity_items");
+            var el = activityAdder.getters.get_activity_items();
             activityAdder.functionality.generate_sequence_ids(el);
         },
 
@@ -334,17 +338,30 @@ var activityAdder = {
             elements.forEach(function(el, i){
                 $(el).data("sequenceId", i);
                 if (el.parentContainer) {
-                    activityAdder.functionality.generate_sequence_ids(el.parentContainer.children);
+                    activityAdder.functionality.generate_sequence_ids($(el.parentContainer).find(".activity_item").toArray());
                 }
             });
         },
 
         build_activities_wrapper: function() {
-
+            var el = activityAdder.getters.get_activity_items();
+            return activityAdder.functionality.build_activities(el);
         },
 
-        build_activities: function(elelements) {
-
+        build_activities: function(elements) {
+            var activities = [];
+            var t = null;
+            var el = null;
+            for(var i = 0; i < elements.length; i++){
+                el = elements[i];
+                t = ticketManipulator.non_async_request_template_obj($(el).data("id"));
+                t.SequenceId = $(el).data("sequenceId");
+                if (el.parentContainer) {
+                    t.Activity = activityAdder.functionality.build_activities($(el.parentContainer).find(".activity_item").toArray());
+                }
+                activities.push(t);
+            }
+            return activities;
         },
 
         apply: async function() {
@@ -357,15 +374,7 @@ var activityAdder = {
             var c = null;
             
             activityAdder.functionality.generate_sequence_ids_wrapper();
-            
-            $(".activity_inner > .activity_item").forEach(async function(el){
-                
-            });
-
-            templates.forEach(function(t){
-                //too lazy to flatten
-                newObj.Activity.push(t);
-            });
+            newObj.Activity = activityAdder.functionality.build_activities_wrapper();
             
             ticketManipulator.remove_loading();
             activityAdder.functionality.ui_commit(newObj, oldObj);
@@ -388,12 +397,11 @@ var activityAdder = {
             activityAdder.setup.forEach(function(f){f()});
             var cache = settings_controller.get_setting("activity_adder").combo_cache;
             activityAdder.getters.get_input().kendoComboBox(activityAdder.properties.comboBox);
-            if (cache === undefined) {
+            if (cache === undefined || cache.length <= 6) {
                 load_data();
             } else {
                 activityAdder.properties.comboBox.dataSource = cache;
             }
-            activityAdder.properties.comboBox.dataSource.shift();
             activityAdder.getters.get_input().kendoComboBox(activityAdder.properties.comboBox);
         }, 
 

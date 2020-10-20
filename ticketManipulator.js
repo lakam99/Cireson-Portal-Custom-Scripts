@@ -42,6 +42,13 @@ var ticketManipulator = {
         return JSON.parse(r);
     },
 
+    non_async_request_template_obj: function(templateId) {
+        var req = {id: templateId, createdById: session.user.Id};
+        var url = window.location.origin + '/api/V3/Projection/CreateProjectionByTemplate';
+        var r = waiter.request("get", url, req, false);
+        return waiter.get_return();
+    },
+
     generate_commit_data: function(new_obj, old_obj) {
       return {
           formJSON: {

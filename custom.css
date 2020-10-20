@@ -161,5 +161,10 @@ legend.createUserLegend {
   height:3% !important
 }
 
+hr.indicator {
+  border: 1px dashed green;
+  margin: 1%;
+}
+
 .my_nav > .container > .navbar-nav > li > a {padding-top:5px !important; padding-bottom:5px !important;}
 .my_cont > .navbar {min-height:32px !important}
