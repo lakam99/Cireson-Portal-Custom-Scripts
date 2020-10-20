@@ -2,6 +2,160 @@
 //arkam.mazrui@nserc-crsng.gc.ca
 //arkam.mazrui@gmail.com
 
+var UI_Builder = {
+    collapse: "<span class='fa fa-caret-down'></span>",
+    expand: "<span class='fa fa-caret-up'></span>",
+
+    new_ui_activity: function(name, id) {
+        $(".activity_inner").append(`
+        <div class='activity_item' data-id='${id}'>${name}<span class='activity_item_icons'>
+                <span class="fa fa-plus"></span>
+                <span class="fa fa-minus"></span>
+            </span>
+        </div>
+        `);
+
+        UI_Builder.bind();
+    },
+
+    bind_listeners: function() {
+        $(".fa-plus").off("click");
+        $(".fa-minus").off("click");
+        $(".fa-minus").on("click", function(e){
+            var elem = $(e.target).parent().parent()[0];
+            var parent = elem.parentContainer;
+            var children = undefined;
+            $(elem).remove();
+            if (parent !== undefined && parent.hasChildNodes()) {
+                children = [].concat.apply([], parent.childNodes);
+                children.forEach(function(child){
+                    $(parent).before(child);
+                });
+            }
+            UI_Builder.check_parenthood();
+        });
+
+        $(".fa-plus").on("click", function(ev){
+            var e = $(ev.target).parent().parent();
+            UI_Builder.new_ui_activity($(e).text(), $(e).attr("name"));
+        });
+    },
+
+    build_draggable: function() {
+        $(".activity_item").kendoDraggable({
+            hint: function(e){return e.clone()},
+            drag: function(e) {
+                $("hr.indicator").remove();
+                var hover = e.elementUnderCursor;
+                var i = "<hr class='indicator'/>";
+                var r = -1;
+                if ($(".activity_inner")[0].contains(hover) && $(".activity_inner")[0] !== hover) {
+                    r = UI_Builder.before_or_after(e, hover);
+                    if (r == 0) {
+                        $(hover).after(i);
+                    } else if (r == 1) {
+                        $(hover).before(i);
+                    }
+                }
+            },
+            dragend: function(){$("hr.indicator").remove()}
+        });
+    },
+
+    build_droptarget: function() {
+        $(".activity_item").kendoDropTarget({
+            drop: function(e){
+                $("hr.indicator").remove();
+                var t = e.dropTarget[0];
+                var elem = e.draggable.element[0];
+                if (elem.parentContainer !== undefined && elem.parentContainer.contains(t)) {
+                    return;
+                }
+                var r = UI_Builder.before_or_after(e, t);
+                if (r == 1) {
+                    $(t).before(elem);
+                } else if (r == 0) {
+                    $(t).after(elem);
+                } else {
+                    UI_Builder.push_to_parent(t, elem);
+                }
+                if (elem.parentContainer && $(elem).next() !== elem.parentContainer) {
+                        $(elem).after(elem.parentContainer);
+                }
+                if (t.parentContainer && $(t).next() !== t.parentContainer) {
+                    $(t).after(t.parentContainer);
+                }
+                UI_Builder.check_parenthood();
+            }
+        });
+    },
+
+    bind: function() {
+        UI_Builder.bind_listeners();
+        UI_Builder.build_draggable();
+        UI_Builder.build_droptarget();
+    },
+
+    check_parenthood: function() {
+        $(".parent_container").toArray().forEach(function(e){
+            if (!e.hasChildNodes()) {
+                $(e.parent).find("span.fa-caret-down,span.fa-caret-up").remove();
+                delete e.parent.parentContainer;
+                $(e).remove();
+            }
+        });
+    },
+
+    before_or_after: function(event, target) {
+        var rect = target.getBoundingClientRect();
+        var y = event.clientY;
+        var distTop = Math.abs(y - rect.top);
+        var distBot = Math.abs(y - rect.bottom);
+        var centre = Math.abs(distTop-distBot);
+        if (centre <= 7) {
+            return -1;
+        } else if (distTop > distBot) {
+            return 0; //after
+        } else {
+            return 1; //before
+        }
+    },
+
+    push_to_parent: function(parent, child) {
+        if (parent === child) {return}
+        if (parent.parentContainer === undefined) {
+            $(parent).after("<div class='parent_container'></div>");
+            parent.parentContainer = $(parent).next(".parent_container")[0];
+            parent.parentContainer.parent = parent;
+            $(parent).find("span.fa-plus").before(UI_Builder.collapse);
+            UI_Builder.bind_collapse();
+            return UI_Builder.push_to_parent(parent, child);
+        } else {
+            $(parent.parentContainer).append(child);
+        }
+    },
+    
+    bind_collapse: function() {
+        $("span.fa-caret-down").on("click", function(e){
+            var elem = $(e.target).parent().parent()[0];
+            $(elem.parentContainer).attr("style", "display:none !important;");
+            $(e.target).off("click");
+            $(e.target).replaceWith(UI_Builder.expand);
+            UI_Builder.bind_expand();
+        });
+    },
+
+    bind_expand: function() {
+        $("span.fa-caret-up").on("click", function(e){
+            var elem = $(e.target).parent().parent()[0];
+            $(elem.parentContainer).attr("style", "");
+            $(e.target).off("click");
+            $(e.target).replaceWith(UI_Builder.collapse);
+            UI_Builder.bind_collapse();
+        });
+    }
+}
+
 var activityAdder = {
     properties: {
         activity_adder_html: "<div id='activity_adder'></div>",
@@ -121,17 +275,16 @@ var activityAdder = {
     setup: [
         function() {
             //settings the datasource for combobox
-            return new Promise(async function(resolve){
-                var r = null;
-                for (var i = 0; i < activityAdder.properties.activityClasses.length; i++) {
-                    r = await ClientRequestManager.send_request("get",
-                     window.location.origin + "/api/V3/Template/GetTemplates",
-                     {classId: activityAdder.properties.activityClasses[i]}, false);
-                    
+            for (var i = 0; i < activityAdder.properties.activityClasses.length; i++) {
+                ClientRequestManager.send_request("get",
+                 window.location.origin + "/api/V3/Template/GetTemplates",
+                 {classId: activityAdder.properties.activityClasses[i]}, false).then(function(r){;
                     activityAdder.properties.comboBox.dataSource.push(JSON.parse(r));
-                }
-                resolve(true);
-            });
+                    activityAdder.properties.comboBox.dataSource = [].concat.apply([],activityAdder.properties.comboBox.dataSource);
+                    settings_controller.set_setting("activity_adder", {combo_cache: activityAdder.properties.comboBox.dataSource});
+                    activityAdder.getters.get_input().kendoComboBox(activityAdder.properties.comboBox);
+                 });
+            }
         },
 
         function() {
@@ -169,23 +322,45 @@ var activityAdder = {
         add: async function() {
             var name = activityAdder.getters.get_selected_template_name();
             var id = activityAdder.getters.get_selected_template_id();
-            activityAdder.functionality.new_ui_activity(name, id);
+            UI_Builder.new_ui_activity(name, id);
+        },
+
+        generate_sequence_ids_wrapper: function() {
+            var el = $(".activity_inner > .activity_items");
+            activityAdder.functionality.generate_sequence_ids(el);
+        },
+
+        generate_sequence_ids: function(elements, is_child) {
+            elements.forEach(function(el, i){
+                $(el).data("sequenceId", i);
+                if (el.parentContainer) {
+                    activityAdder.functionality.generate_sequence_ids(el.parentContainer.children);
+                }
+            });
+        },
+
+        build_activities_wrapper: function() {
+
+        },
+
+        build_activities: function(elelements) {
+
         },
 
         apply: async function() {
             activityAdder.getters.get_dialog_window().close();
             ticketManipulator.show_loading();
-            var template_ids = activityAdder.getters.get_selected_ids();
             var oldObj = activityAdder.properties.currentTicket.viewModel;
             oldObj = await ticketManipulator.trigger_workflow_or_update_required(oldObj);
             var newObj = ticketManipulator.deep_copy(oldObj);
             var templates = [];
             var c = null;
             
-            for (var i = 0; i < template_ids.length; i++) {
-                c = await ticketManipulator.request_template_obj(template_ids[i]);
-                templates.push(c);
-            }
+            activityAdder.functionality.generate_sequence_ids_wrapper();
+            
+            $(".activity_inner > .activity_item").forEach(async function(el){
+                
+            });
 
             templates.forEach(function(t){
                 //too lazy to flatten
@@ -194,27 +369,6 @@ var activityAdder = {
             
             ticketManipulator.remove_loading();
             activityAdder.functionality.ui_commit(newObj, oldObj);
-        },
-
-        new_ui_activity: function(name, id) {
-            $(".activity_inner").append(`
-            <div class='activity_item' name='${id}'>
-                ${name}
-                <span class='activity_item_icons'>
-                    <span class="fa fa-plus"></span>
-                    <span class="fa fa-minus"></span>
-                </span>
-            </div>
-            `);
-
-            $(".fa-minus").off("click");
-            $(".fa-plus").off("click");
-            $(".fa-minus").on("click", function(ev) {
-                $(ev.target).parent().parent().remove();
-            });
-            $(".fa-plus").on("click", function(ev){
-                activityAdder.functionality.new_ui_activity(name, id);
-            });
         },
 
         ui_commit: function(new_obj, old_obj) {
@@ -229,19 +383,17 @@ var activityAdder = {
     },
 
     main: {
-        setup: async function() {
-            var wait = activityAdder.setup.shift();
-            var cache = settings_controller.get_setting("activity_adder").combo_cache;
+        setup: function() {
+            var load_data = activityAdder.setup.shift();
             activityAdder.setup.forEach(function(f){f()});
+            var cache = settings_controller.get_setting("activity_adder").combo_cache;
             activityAdder.getters.get_input().kendoComboBox(activityAdder.properties.comboBox);
             if (cache === undefined) {
-                await wait();
-                settings_controller.set_setting("activity_adder", {combo_cache: activityAdder.properties.comboBox.dataSource});
+                load_data();
             } else {
                 activityAdder.properties.comboBox.dataSource = cache;
             }
             activityAdder.properties.comboBox.dataSource.shift();
-            activityAdder.properties.comboBox.dataSource = [].concat.apply([],activityAdder.properties.comboBox.dataSource);
             activityAdder.getters.get_input().kendoComboBox(activityAdder.properties.comboBox);
         }, 
 

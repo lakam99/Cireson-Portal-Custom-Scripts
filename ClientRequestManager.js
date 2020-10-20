@@ -19,11 +19,12 @@ var ClientRequestManager = {
         return r;
     },
 
-    send_request : function(request_type, url, request_data, enclose_params) {
+    send_request : function(request_type, url, request_data, enclose_params, async) {
         var result = new Promise(function(resolve, reject) {
             var xhr = new XMLHttpRequest();
+            if (async===undefined){async=true};
             url = url + ClientRequestManager.params_to_url(request_data, enclose_params);
-            xhr.open(request_type, url, true);
+            xhr.open(request_type, url, async);
     
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === XMLHttpRequest.DONE) {
@@ -42,3 +43,21 @@ var ClientRequestManager = {
         return result;
     }
 };
+
+var waiter = {
+    r: null,
+    get_return: function(){return waiter.r},
+    set_r: function(value){waiter.r = value},
+    request: async function(method,url,parameters,enclose_params) {
+        if (enclose_params===undefined){enclose_params=false}
+        else if (enclose_params) {parameters = ClientRequestManager.enclose_params(enclose_params)}
+        $.ajax({
+            type: method,
+            url: url,
+            data: parameters,
+            async: false,
+            success: function(r){waiter.set_r(r)}
+        });
+    }
+
+}

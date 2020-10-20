@@ -91,32 +91,46 @@ legend.createUserLegend {
 }
 
 .activity_inner {
-    margin-left: -1%;
-    margin-bottom: 5%;
-    width: 100%;
-    min-height: 50px;
-    max-height: 60%;
-    background-color: rgba(161,161,161,0.3);
-    border: 1px solid grey;
-    overflow: scroll;
+  margin-left: 2%;
+  margin-bottom: 5%;
+  width: 75%;
+  height: 60%;
+  background-color: rgba(161,161,161,0.3);
+  border: 1px solid grey;
+  overflow: scroll;
+}
+
+.drop_before,.drop_after {
+  display: inline-block;
+  background-color: white;
+  border: 1px dashed black;
+  content: "&nbsp;";
+  font-size: 1px;
 }
 
 .activity_item {
-    border: 1px solid black;
-    height: 15%;
-    padding-left: 4%;
-    padding-top: 2%;
-    background-color: rgb(255, 255, 255);
+  border: 1px solid black;
+  padding-left: 4%;
+  padding-top: 2%;
+  background-color: rgb(255, 255, 255);
+  position: relative;
+}
+
+.parent_container {
+  display: block;
+  position: relative;
+  width: 90%;
+  background-color: rgba(161,161,161,0.3);
+  margin-left: 10%;
 }
 
 .activity_item:hover {
-    background-color: rgba(255,255,255,0.1);
-    border: 1px dashed black;
+  background-color: rgba(255,255,255,0.1);
 }
 
 .activity_item_icons {
-    float: right;
-    margin-right: 2%;
+  float: right;
+  margin-right: 2%;
 }
 
 .activity_icon {
@@ -134,6 +148,11 @@ legend.createUserLegend {
 
 .fa-minus {
     color: rgb(202, 74, 74);
+}
+
+.fa-caret-up,.fa-caret-down {
+  color: rgba(37, 41, 26, 0.541);
+  margin-right: 4px;
 }
 
 .my_nav {
