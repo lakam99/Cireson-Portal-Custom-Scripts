@@ -6,8 +6,9 @@ var UI_Builder = {
     collapse: "<span class='fa fa-caret-down'></span>",
     expand: "<span class='fa fa-caret-up'></span>",
 
-    new_ui_activity: function(name, id) {
-        $(".activity_inner").append(`
+    new_ui_activity: function(name, id, parent) {
+        parent === undefined ? ".activity_inner":parent;
+        $(parent).append(`
         <div class='activity_item' data-id='${id}'>${name}<span class='activity_item_icons'>
                 <span class="fa fa-plus"></span>
                 <span class="fa fa-minus"></span>
@@ -16,6 +17,7 @@ var UI_Builder = {
         `);
 
         UI_Builder.bind();
+        return (parent).toArray()[$(parent).length - 1];
     },
 
     bind_listeners: function() {
@@ -329,17 +331,16 @@ var activityAdder = {
             UI_Builder.new_ui_activity(name, id);
         },
 
-        generate_sequence_ids_wrapper: function() {
-            var el = activityAdder.getters.get_activity_items();
-            activityAdder.functionality.generate_sequence_ids(el);
+        represent_current_wrapper: function() {
+            var activities = activityAdder.properties.currentTicket.viewModel.Activity;
+            return activityAdder.functionality.represent_current(activities);
         },
 
-        generate_sequence_ids: function(elements, is_child) {
-            elements.forEach(function(el, i){
-                $(el).data("sequenceId", i);
-                if (el.parentContainer) {
-                    activityAdder.functionality.generate_sequence_ids($(el.parentContainer).find(".activity_item").toArray());
-                }
+        represent_current: function(activities, parent_elem) {
+            var e = null;
+            activities.forEach(function(activity){
+                e = UI_Builder.new_ui_activity(activity.FullClassName, parent_elem);
+                e.reserve = 
             });
         },
 
@@ -355,7 +356,7 @@ var activityAdder = {
             for(var i = 0; i < elements.length; i++){
                 el = elements[i];
                 t = ticketManipulator.non_async_request_template_obj($(el).data("id"));
-                t.SequenceId = $(el).data("sequenceId");
+                t.SequenceId = i;
                 if (el.parentContainer) {
                     t.Activity = activityAdder.functionality.build_activities($(el.parentContainer).find(".activity_item").toArray());
                 }
@@ -373,7 +374,6 @@ var activityAdder = {
             var templates = [];
             var c = null;
             
-            activityAdder.functionality.generate_sequence_ids_wrapper();
             newObj.Activity = activityAdder.functionality.build_activities_wrapper();
             
             ticketManipulator.remove_loading();
