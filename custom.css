@@ -95,6 +95,7 @@ legend.createUserLegend {
   margin-bottom: 5%;
   width: 75%;
   height: 60%;
+  max-height: 250px;
   background-color: rgba(161,161,161,0.3);
   border: 1px solid grey;
   overflow: scroll;
