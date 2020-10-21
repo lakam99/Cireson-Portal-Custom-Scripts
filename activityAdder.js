@@ -324,6 +324,10 @@ var activityAdder = {
             //create task
             app.custom.formTasks.add('ServiceRequest', 'Add Activity', function(formObj, viewModel){
                 activityAdder.setters.set_ticket_info(formObj, viewModel);
+                if (ticketManipulator.status_eq(viewModel.Status, ticketManipulator.constants.statuses.completed)) {
+                    kendo.alert("Cannot modify activities of a completed ticket.");
+                    return;
+                }
                 activityAdder.functionality.represent_current_wrapper();
                 activityAdder.getters.get_dialog_window().open();
             });

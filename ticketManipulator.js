@@ -12,7 +12,8 @@ var ticketManipulator = {
     constants: {
         statuses: {
             submitted: {Id: "72b55e17-1c7d-b34c-53ae-f61f8732e425", Name: "Submitted"},
-            in_progress: {Id: "59393f48-d85f-fa6d-2ebe-dcff395d7ed1", Name: "In Progress"}
+            in_progress: {Id: "59393f48-d85f-fa6d-2ebe-dcff395d7ed1", Name: "In Progress"},
+            completed: {Id: "b026fdfd-89bd-490b-e1fd-a599c78d440f", Name: "Completed"}
         }
     },
 
