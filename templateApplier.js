@@ -37,14 +37,6 @@ var templateApplier = {
             viewModel: null
         },
         whitelist: ["Activity", "Area"],
-        resolveFunc: null
-    },
-
-    constants: {
-        statuses: {
-            submitted: {Id: "72b55e17-1c7d-b34c-53ae-f61f8732e425", Name: "Submitted"},
-            in_progress: {Id: "59393f48-d85f-fa6d-2ebe-dcff395d7ed1", Name: "In Progress"}
-        }
     },
 
     getters: {
@@ -105,7 +97,7 @@ var templateApplier = {
             templateApplier.getters.get_dialog_window().close();
             var current_obj = templateApplier.properties.currentTicket.viewModel;
             ticketManipulator.show_loading();
-            current_obj = await templateApplier.functionality.trigger_workflow_or_update_required(current_obj);
+            current_obj = await ticketManipulator.trigger_workflow_or_update_required(current_obj);
             var selected = templateApplier.getters.get_selected_template_id();
             var templateObj = await ticketManipulator.request_template_obj(selected);
             if (templateObj.ClassName !== current_obj.ClassName) {
@@ -115,7 +107,7 @@ var templateApplier = {
             }
             var whitelist = templateApplier.getters.get_whitelisted_properties();
             var new_obj = templateApplier.functionality.replace_properties(current_obj, templateObj, whitelist);
-            templateApplier.functionality.set_obj_status(new_obj, templateApplier.constants.statuses.in_progress);
+            ticketManipulator.set_obj_status(new_obj, ticketManipulator.constants.statuses.in_progress);
             ticketManipulator.remove_loading();
             templateApplier.functionality.ui_commit_new_obj(new_obj, current_obj);
         },
@@ -135,28 +127,6 @@ var templateApplier = {
             });
 
             return r;
-        },
-
-        status_eq: function(s1, s2) {return s1.Id === s2.Id && s1.Name === s2.Name;},
-
-        set_obj_status: function(obj, set_to_status) {
-            obj.Status.Id = set_to_status.Id;
-            obj.Status.Name = set_to_status.Name;
-        },
-
-        trigger_workflow_or_update_required: async function(obj) {
-            return new Promise(function(resolve, reject){
-                templateApplier.properties.resolveFunc = function(resolve_obj) {resolve(resolve_obj)}
-                if (!templateApplier.functionality.status_eq(obj.Status, templateApplier.constants.statuses.submitted)) {
-                    var new_obj = ticketManipulator.deep_copy(obj);
-                    templateApplier.functionality.set_obj_status(new_obj, templateApplier.constants.statuses.submitted);
-                    ticketManipulator.commit_new_obj(new_obj, obj, function(resolve){
-                        templateApplier.properties.resolveFunc(new_obj);
-                    });
-                } else {
-                    resolve(obj);
-                }
-            });
         },
 
         ui_commit_new_obj: function(new_obj, old_obj) {
@@ -193,9 +163,7 @@ var templateApplier = {
         },
 
         start: function() {
-            $(document).ready(function(){
-                templateApplier.main.setup();
-            });
+            templateApplier.main.setup();
         }
     }
 }

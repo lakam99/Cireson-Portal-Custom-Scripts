@@ -94,7 +94,9 @@ function resize_columns() {
     }
 
     var ex_element = $("td[data-field='Id']")[0];
-    grid.resizeColumn(column, sizing_tools.element_px(ex_element));
+    if (ex_element) {
+        grid.resizeColumn(column, sizing_tools.element_px(ex_element));
+    }
 }
 
 function add_grid_btns() {
