@@ -6,8 +6,12 @@ var UI_Builder = {
     collapse: "<span class='fa fa-caret-down'></span>",
     expand: "<span class='fa fa-caret-up'></span>",
 
-    new_ui_activity: function(name, id, parent) {
-        parent === undefined ? ".activity_inner":parent;
+    new_ui_activity: function(name, id, parent, override) {
+        var elements = null;
+        if(activityAdder.properties.activityClasses.includes(id) && !override) {
+            id = activityAdder.functionality.match_id(name);
+        }
+        parent = parent === undefined ? ".activity_inner":parent;
         $(parent).append(`
         <div class='activity_item' data-id='${id}'>${name}<span class='activity_item_icons'>
                 <span class="fa fa-plus"></span>
@@ -17,7 +21,9 @@ var UI_Builder = {
         `);
 
         UI_Builder.bind();
-        return (parent).toArray()[$(parent).length - 1];
+        elements = $(".activity_item").toArray();
+        return elements[elements.length - 1];
+        
     },
 
     bind_listeners: function() {
@@ -39,7 +45,9 @@ var UI_Builder = {
 
         $(".fa-plus").on("click", function(ev){
             var e = $(ev.target).parent().parent();
-            UI_Builder.new_ui_activity($(e).text(), $(e).data("id"));
+            var text = $(e).data("reserve") === undefined ? $(e).text():$(e).data("reserve").FullClassName;
+            var id = $(e).data("reserve") === undefined ? $(e).data("id"):$(e).data("reserve").ClassTypeId;
+            UI_Builder.new_ui_activity(text, $(e).data("id"));
         });
     },
 
@@ -123,14 +131,20 @@ var UI_Builder = {
         }
     },
 
+    build_parent: function(parent) {
+        //can you really build a parent? Yeah I'll show you
+        $(parent).after("<div class='parent_container'></div>");
+        parent.parentContainer = $(parent).next(".parent_container")[0];
+        parent.parentContainer.parent = parent;
+        $(parent).find("span.fa-plus").before(UI_Builder.collapse);
+        UI_Builder.bind_collapse();
+        return parent;
+    },
+
     push_to_parent: function(parent, child) {
         if (parent === child) {return}
         if (parent.parentContainer === undefined) {
-            $(parent).after("<div class='parent_container'></div>");
-            parent.parentContainer = $(parent).next(".parent_container")[0];
-            parent.parentContainer.parent = parent;
-            $(parent).find("span.fa-plus").before(UI_Builder.collapse);
-            UI_Builder.bind_collapse();
+            UI_Builder.build_parent(parent);
             return UI_Builder.push_to_parent(parent, child);
         } else {
             $(parent.parentContainer).append(child);
@@ -310,6 +324,7 @@ var activityAdder = {
             //create task
             app.custom.formTasks.add('ServiceRequest', 'Add Activity', function(formObj, viewModel){
                 activityAdder.setters.set_ticket_info(formObj, viewModel);
+                activityAdder.functionality.represent_current_wrapper();
                 activityAdder.getters.get_dialog_window().open();
             });
         },
@@ -331,6 +346,25 @@ var activityAdder = {
             UI_Builder.new_ui_activity(name, id);
         },
 
+        match_id: function(name) {
+            var a = activityAdder.getters.get_combobox().dataSource.data();
+            for (var i = 0; i <a.length; i++){
+                if (a[i].Name.replace(/\W/g,'').includes(name.replace(/\W/g,''))) {
+                    return a[i].Id;
+                }
+            }
+        },
+
+        activity_already_represented: function(activity) {
+            var items = $(".activity_item").toArray();
+            for (var i = 0; i < items.length; i++) {
+                if ($(items[i]).data("reserve") === activity) {
+                    return true;
+                }
+            }
+            return false;
+        },
+
         represent_current_wrapper: function() {
             var activities = activityAdder.properties.currentTicket.viewModel.Activity;
             return activityAdder.functionality.represent_current(activities);
@@ -339,8 +373,14 @@ var activityAdder = {
         represent_current: function(activities, parent_elem) {
             var e = null;
             activities.forEach(function(activity){
-                e = UI_Builder.new_ui_activity(activity.FullClassName, parent_elem);
-                e.reserve = 
+                if (!activityAdder.functionality.activity_already_represented(activity)) {
+                    e = UI_Builder.new_ui_activity(activity.Id, activity.ClassTypeId, parent_elem, true);
+                    $(e).data("reserve", activity);
+                    if (activity.Activity && activity.Activity.length) {
+                        e = UI_Builder.build_parent(e);
+                        activityAdder.functionality.represent_current(activity.Activity, e.parentContainer);
+                    } 
+                }
             });
         },
 
@@ -355,7 +395,7 @@ var activityAdder = {
             var el = null;
             for(var i = 0; i < elements.length; i++){
                 el = elements[i];
-                t = ticketManipulator.non_async_request_template_obj($(el).data("id"));
+                t = $(el).data("reserve") !== undefined ? $(el).data("reserve"):ticketManipulator.non_async_request_template_obj($(el).data("id"));
                 t.SequenceId = i;
                 if (el.parentContainer) {
                     t.Activity = activityAdder.functionality.build_activities($(el.parentContainer).find(".activity_item").toArray());
