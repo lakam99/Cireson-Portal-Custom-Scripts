@@ -250,7 +250,7 @@ var activityAdder = {
         needs_wipe: false,
         is_needed: function() {
             return (!activityAdder.sequenceIdManager.id_replaced && activityAdder.sequenceIdManager.needs_wipe) 
-                    || (activityAdder.sequenceIdManager.id_replaced && !activityAdder.sequenceIdManager.needs_wipe);
+                    || !(activityAdder.sequenceIdManager.id_replaced && activityAdder.sequenceIdManager.needs_wipe);
         }
     },
 
@@ -441,6 +441,7 @@ var activityAdder = {
             var t = null;
             var el = null;
             var reserve = undefined;
+            var first_parent = undefined;
             for(var i = 0; i < elements.length; i++){
                 el = elements[i];
                 reserve = $(el).data("reserve");
@@ -454,6 +455,8 @@ var activityAdder = {
                 t.SequenceId = i;
                 if (el.parentContainer) {
                     t.Activity = activityAdder.functionality.build_activities($(el.parentContainer).find(".activity_item").toArray());
+                } else {
+                    t.ActualStartDate = (new Date()).toISOString();
                 }
                 activities.push(t);
             }
@@ -474,10 +477,11 @@ var activityAdder = {
             if (activities == null) {
                 backup = ticketManipulator.deep_copy(newObj);
                 newObj.Activity = [];
-                ticketManipulator.wait_to_commit(new_obj, backup);
-                newObj = backup;
+                oldObj = ticketManipulator.wait_to_commit(newObj, backup);
+                activityAdder.sequenceIdManager.id_replaced = true;
                 activities = activityAdder.functionality.build_activities_wrapper();
             }
+            newObj.Activity = activities;
             
             ticketManipulator.remove_loading();
             activityAdder.functionality.ui_commit(newObj, oldObj);
