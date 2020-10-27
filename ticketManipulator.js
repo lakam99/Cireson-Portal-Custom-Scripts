@@ -13,7 +13,8 @@ var ticketManipulator = {
         statuses: {
             submitted: {Id: "72b55e17-1c7d-b34c-53ae-f61f8732e425", Name: "Submitted"},
             in_progress: {Id: "59393f48-d85f-fa6d-2ebe-dcff395d7ed1", Name: "In Progress"},
-            completed: {Id: "b026fdfd-89bd-490b-e1fd-a599c78d440f", Name: "Completed"}
+            completed: {Id: "b026fdfd-89bd-490b-e1fd-a599c78d440f", Name: "Completed"},
+            pending: {Id: "50c667cf-84e5-97f8-f6f8-d8acd99f181c", Name: "Pending"}
         }
     },
 
@@ -57,6 +58,12 @@ var ticketManipulator = {
               current: new_obj
           }
       };  
+    },
+
+    wait_to_commit: function(new_obj, old_obj) {
+        var req = ticketManipulator.generate_commit_data(new_obj, old_obj);
+        waiter.request("post", window.location.origin+"/api/V3/Projection/Commit", req, false);
+        return waiter.get_return();
     },
 
     commit_new_obj: function(new_obj, old_obj, callback) {

@@ -51,10 +51,19 @@ var UI_Builder = {
         });
     },
 
+    wipe_class: function(classname) {
+        $(`.${classname}`).toArray().forEach(function(e){
+            $(e).removeClass(`${classname}`);
+        });
+    },
+
     build_draggable: function() {
         $(".activity_item").kendoDraggable({
             hint: function(e){return e.clone()},
             drag: function(e) {
+                var h = "activity_item_hover";
+                var ch = ".activity_item_hover";
+
                 $("hr.indicator").remove();
                 var hover = e.elementUnderCursor;
                 var i = "<hr class='indicator'/>";
@@ -65,10 +74,17 @@ var UI_Builder = {
                         $(hover).after(i);
                     } else if (r == 1) {
                         $(hover).before(i);
+                    } else if (r == -1) {
+                        if ($(ch).length) {
+                            UI_Builder.wipe_class(h);
+                        }
+                        $(hover).addClass(h);
                     }
                 }
             },
-            dragend: function(){$("hr.indicator").remove()}
+            dragend: function(){
+                $("hr.indicator").remove();
+            }
         });
     },
 
@@ -116,19 +132,37 @@ var UI_Builder = {
         });
     },
 
+    dif_maxto: function(num, num_now, max_dif, min_dif) {
+        //is num within respectable difference range?
+        var t = Math.abs(num - num_now);
+        return t <= max_dif && t <= min_dif;
+    },
+
+    prev_y: null,
+    prev_r: null,
     before_or_after: function(event, target) {
         var rect = target.getBoundingClientRect();
+        var r = null;
         var y = event.clientY;
+        if (activityAdder.prev_y != null && UI_Builder.dif_maxto(y, UI_Builder.prev_y, 10, 0)) {
+            if (UI_Builder.prev_r != null) {
+                return UI_Builder.prev_r;
+            } else {
+                UI_Builder.prev_y = y;
+            }
+        }
         var distTop = Math.abs(y - rect.top);
         var distBot = Math.abs(y - rect.bottom);
         var centre = Math.abs(distTop-distBot);
         if (centre <= 7) {
-            return -1;
+            r = -1; //center
         } else if (distTop > distBot) {
-            return 0; //after
+            r = 0; //after
         } else {
-            return 1; //before
+            r = 1; //before
         }
+        UI_Builder.prev_r = r;
+        return r;
     },
 
     build_parent: function(parent) {
@@ -209,6 +243,15 @@ var activityAdder = {
             "e786e1c7-b1fe-5b8b-ef8f-9e2dc346c44f",
             "568c49f2-d7d6-d7d7-89dc-dfb5b39fded7"
         ]
+    },
+
+    sequenceIdManager: {
+        id_replaced: false,
+        needs_wipe: false,
+        is_needed: function() {
+            return (!activityAdder.sequenceIdManager.id_replaced && activityAdder.sequenceIdManager.needs_wipe) 
+                    || (activityAdder.sequenceIdManager.id_replaced && !activityAdder.sequenceIdManager.needs_wipe);
+        }
     },
 
     getters: {
@@ -397,9 +440,17 @@ var activityAdder = {
             var activities = [];
             var t = null;
             var el = null;
+            var reserve = undefined;
             for(var i = 0; i < elements.length; i++){
                 el = elements[i];
-                t = $(el).data("reserve") !== undefined ? $(el).data("reserve"):ticketManipulator.non_async_request_template_obj($(el).data("id"));
+                reserve = $(el).data("reserve");
+                t = reserve !== undefined ? reserve:ticketManipulator.non_async_request_template_obj($(el).data("id"));
+                if (activityAdder.sequenceIdManager.is_needed() && reserve && reserve.SequenceId != i) {
+                    //request activities be wiped then try again
+                    activityAdder.sequenceIdManager.needs_wipe = true;
+                    activityAdder.sequenceIdManager.id_replaced = false;
+                    return null;
+                }
                 t.SequenceId = i;
                 if (el.parentContainer) {
                     t.Activity = activityAdder.functionality.build_activities($(el.parentContainer).find(".activity_item").toArray());
@@ -415,10 +466,18 @@ var activityAdder = {
             var oldObj = activityAdder.properties.currentTicket.viewModel;
             oldObj = await ticketManipulator.trigger_workflow_or_update_required(oldObj);
             var newObj = ticketManipulator.deep_copy(oldObj);
-            var templates = [];
+            var backup = null;
+            var activities = null;
             var c = null;
             
-            newObj.Activity = activityAdder.functionality.build_activities_wrapper();
+            activities = activityAdder.functionality.build_activities_wrapper();
+            if (activities == null) {
+                backup = ticketManipulator.deep_copy(newObj);
+                newObj.Activity = [];
+                ticketManipulator.wait_to_commit(new_obj, backup);
+                newObj = backup;
+                activities = activityAdder.functionality.build_activities_wrapper();
+            }
             
             ticketManipulator.remove_loading();
             activityAdder.functionality.ui_commit(newObj, oldObj);
@@ -430,6 +489,7 @@ var activityAdder = {
                 ticketManipulator.commit_new_obj(new_obj, old_obj, function(){
                     ticketManipulator.remove_loading();
                     kendo.alert("Successfully modified activities.");
+                    window.location.replace(window.location.href);
                 });
             });
         }
