@@ -24,9 +24,12 @@ var ticketConverter = {
             classId:  "1cba7c99-4050-2749-fde9-2ed267208427"
         },
 
-        replace_properties: [
-            "ClassName", "FullClassName", "Id"
-        ]
+        replace_properties: "/CustomSpace/CustomData/ticketConverter/ticketConverterProperties.json",
+
+        translate_properties: {
+            "AppliesToWorkItem": "AppliesToTroubleTicket",
+            "AppliesToTroubleTicket": "AppliesToWorkItem"
+        }
     },
 
     getters: {
@@ -53,6 +56,18 @@ var ticketConverter = {
     },
 
     setup: [
+        function(){
+            $.ajax({
+                url: window.location.origin + ticketConverter.properties.replace_properties,
+                type: "get",
+                dataType: "json",
+                async: false,
+                success: function(res){
+                    ticketConverter.properties.replace_properties = res;
+                }
+            });
+        },
+
         function() {
             app.custom.formTasks.add("Incident", "Convert to Service Request", function(formObj, viewModel) {
                 ticketConverter.setters.set_currentTicket(formObj, viewModel);
@@ -69,31 +84,37 @@ var ticketConverter = {
         apply: async function(type) {
             ticketManipulator.show_loading();
             var template_id = ticketConverter.getters.get_templateId(type);
-            var class_id = ticketConverter.getters.get_classId(type);
             var old_obj = ticketConverter.getters.get_currentTicket().viewModel;
             var new_obj = ticketManipulator.deep_copy(old_obj);
             var temp_name = null;
-            var template_obj = await ticketManipulator.request_template_obj(template_id)
+            var convert_obj = await ticketManipulator.request_template_obj(template_id)
             
+            //use new_obj so old_obj doesn't risk getting changed
             ticketConverter.properties.replace_properties.forEach(function(property){
-                new_obj[property] = template_obj[property];
+                if (ticketConverter.properties.translate_properties[property]) {
+                    convert_obj[ticketConverter.properties.translate_properties[property]] = new_obj[property];
+                } else if (convert_obj[property] !== undefined) {
+                    convert_obj[property] = ticketManipulator.deep_copy(new_obj[property]);
+                }
             });
 
             temp_name = new_obj.FullName.split(":")
             temp_name[1] = new_obj.Id;
             temp_name = temp_name.join(":");
-            new_obj.FullName = temp_name;
-            new_obj.ClassTypeId = class_id;
+            convert_obj.FullName = temp_name;
+            ticketManipulator.set_obj_status(new_obj, ticketManipulator.constants.statuses.completed);
             ticketManipulator.remove_loading();
-            ticketConverter.functionality.ui_commit(old_obj, new_obj, type);
+            ticketConverter.functionality.ui_commit(old_obj, new_obj, convert_obj, type);
         },
 
-        ui_commit: function(old_obj, new_obj, type) {
+        ui_commit: function(old_obj, new_obj, convert_obj, type) {
             kendo.confirm("Are you sure you want to convert this ticket?").then(function(){
                 ticketManipulator.show_loading();
-                ticketManipulator.commit_new_obj(new_obj, old_obj, function(res){
-                    ticketManipulator.remove_loading();
-                    kendo.alert("<a href='" + window.location.origin+url[type]+new_obj.Id+ "/'>Ticket successfully converted!</a>");
+                ticketManipulator.commit_new_obj(new_obj, old_obj, function(){
+                    ticketManipulator.commit_new_obj(convert_obj, null, function(res){
+                        ticketManipulator.remove_loading();
+                        kendo.alert("<a href='" + window.location.origin+url[type]+res.Id+ "/'>Ticket successfully converted!</a>");
+                    });
                 });
             });
         }
