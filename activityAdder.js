@@ -446,7 +446,7 @@ var activityAdder = {
                 el = elements[i];
                 reserve = $(el).data("reserve");
                 t = reserve !== undefined ? reserve:ticketManipulator.non_async_request_template_obj($(el).data("id"));
-                if (activityAdder.sequenceIdManager.is_needed() && reserve && reserve.SequenceId != i) {
+                if (reserve && reserve.SequenceId != i && activityAdder.sequenceIdManager.is_needed()) {
                     //request activities be wiped then try again
                     activityAdder.sequenceIdManager.needs_wipe = true;
                     activityAdder.sequenceIdManager.id_replaced = false;
