@@ -47,7 +47,8 @@ var scripts = [ "/CustomSpace/Scripts/templateApplier/templateApplier.js",
 				"/CustomSpace/Scripts/autoGroupAssigner/autoGroupAssigner.js",
 				"/CustomSpace/Scripts/formCreateCI/formCreateCI.js",
 				"/CustomSpace/Scripts/hiddenUserFinder/hiddenUserFinder.js",
-				"/CustomSpace/Scripts/portalUserEmailManager/portalUserEmailManager.js"];
+				"/CustomSpace/Scripts/portalUserEmailManager/portalUserEmailManager.js",
+				"/CustomSpace/Scripts/globalSearchMemorizer/globalSearchMemorizer.js"];
 
 dependency_arr = [ 	"/CustomSpace/Scripts/ClientRequestManager/ClientRequestManager.js",
 					"/CustomSpace/Scripts/settings_controller/settings_controller.js",
