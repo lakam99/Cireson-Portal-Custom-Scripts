@@ -10,16 +10,14 @@ var globalSearchMemorizer = {
             $(document).on("globalSearchMemorizerReady", function(){
                 var exist = setInterval(function(){
                     var map = globalSearchMemorizer.get_checked_settings();
-                    var nodes = $(".gs-switch");
+                    var nodes = globalSearchMemorizer.get_nodes();
                     if (nodes.length) {
                         clearInterval(exist);
                         if (nodes.length != map.length) {
                             //live nodes have been changed since last stored
-                            map = globalSearchMemorizer.update_checked(nodes);
+                            map = globalSearchMemorizer.update_checked();
                         }
-                        for (var i = 0; i < nodes.length; i++) {
-                            globalSearchMemorizer.process_node(nodes[i], map[i]);
-                        }
+                        globalSearchMemorizer.process_nodes(map);
                         globalSearchMemorizer.listen_nodes();
                     }
                 }, 100);
@@ -43,27 +41,42 @@ var globalSearchMemorizer = {
         }
     ],
 
-    listen_nodes: function() {
-        var nodes = $(".gs-switch");
-        $(nodes).toArray().forEach(function(node){$(node).on("click", function(){
-            setTimeout(function(){
-                globalSearchMemorizer.update_checked(nodes);
-            }, 100);
-        })});
+    get_nodes: function() {
+        return $(".gs-switch");
     },
 
-    process_node: function(node, map_value) {
-        var c = !!$(node).has("input:checked").length;
-        if (map_value != c) {
-            $(node).click();
+    listen_nodes: function() {
+        var nodes = globalSearchMemorizer.get_nodes();
+        $(nodes).off("click");
+        $(nodes).on("click", function(){
+            setTimeout(function(){
+                globalSearchMemorizer.update_checked();
+                globalSearchMemorizer.listen_nodes();
+            }, 100);
+        });
+    },
+
+    process_nodes: function(map) {
+        var nodes = globalSearchMemorizer.get_nodes();
+        var c = null;
+        for (var i = 0; i < nodes.length; i++) {
+            if (!document.body.contains(nodes[i])) {
+                nodes = globalSearchMemorizer.get_nodes(); //nodes have changed
+            }
+            c = c = !!$(nodes[i]).has("input:checked").length;
+            if (map[i] != c) {
+                $(nodes[i]).click();
+            }
         }
+        
     },
 
     set_settings: function(settings) {
         globalSearchMemorizer.settings = settings;
     },
 
-    update_checked: function(nodes) {
+    update_checked: function() {
+        var nodes = globalSearchMemorizer.get_nodes();
         var map = nodes.toArray().map(function(n){
             return !!$(n).has("input:checked").length;
         });
