@@ -52,6 +52,7 @@ function start() {
         
         add_grid_btns();
         start_icon_listener();
+        bind_sort();
     }
 }
 
@@ -82,6 +83,16 @@ var sizing_tools = {
         return sizing_tools.element_em(element)/0.0625;
     }
 
+}
+
+function bind_sort() {
+    grid.bind("sort", async function(event){
+        await (new Promise(function(resolve){
+            if (event.sort.field == "Id") {
+                grid.dataSource.sort([{field: "NumericId", dir: event.sort.dir}]);
+            }
+        }));
+    });
 }
 
 function resize_columns() {

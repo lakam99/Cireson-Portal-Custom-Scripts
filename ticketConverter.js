@@ -87,31 +87,28 @@ var ticketConverter = {
             var old_obj = ticketConverter.getters.get_currentTicket().viewModel;
             var new_obj = ticketManipulator.deep_copy(old_obj);
             var temp_name = null;
-            var convert_obj = await ticketManipulator.request_template_obj(template_id)
+            var convert_obj = await ticketManipulator.request_template_obj(template_id);
+            var og_convert_obj = ticketManipulator.deep_copy(convert_obj);
             
             //use new_obj so old_obj doesn't risk getting changed
             ticketConverter.properties.replace_properties.forEach(function(property){
                 if (ticketConverter.properties.translate_properties[property]) {
                     convert_obj[ticketConverter.properties.translate_properties[property]] = new_obj[property];
                 } else if (convert_obj[property] !== undefined) {
-                    convert_obj[property] = ticketManipulator.deep_copy(new_obj[property]);
+                    convert_obj[property] = new_obj[property];
                 }
             });
 
-            temp_name = new_obj.FullName.split(":")
-            temp_name[1] = new_obj.Id;
-            temp_name = temp_name.join(":");
-            convert_obj.FullName = temp_name;
             ticketManipulator.set_obj_status(new_obj, ticketManipulator.constants.statuses.completed);
             ticketManipulator.remove_loading();
-            ticketConverter.functionality.ui_commit(old_obj, new_obj, convert_obj, type);
+            ticketConverter.functionality.ui_commit(old_obj, new_obj, convert_obj, og_convert_obj, type);
         },
 
-        ui_commit: function(old_obj, new_obj, convert_obj, type) {
+        ui_commit: function(old_obj, new_obj, convert_obj, og_convert_obj, type) {
             kendo.confirm("Are you sure you want to convert this ticket?").then(function(){
                 ticketManipulator.show_loading();
                 ticketManipulator.commit_new_obj(new_obj, old_obj, function(){
-                    ticketManipulator.commit_new_obj(convert_obj, null, function(res){
+                    ticketManipulator.commit_new_obj(convert_obj, og_convert_obj, function(res){
                         ticketManipulator.remove_loading();
                         kendo.alert("<a href='" + window.location.origin+url[type]+res.Id+ "/'>Ticket successfully converted!</a>");
                     });
