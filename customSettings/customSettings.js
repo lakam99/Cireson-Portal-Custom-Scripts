@@ -45,18 +45,20 @@ var customSettings = {
 
         function() {
             customSettings.settings.customSettings.forEach(function(setting){
-                var value = settings_controller.get_setting_value(setting.name);
-                if (value) {value = 'checked'} else {value = ''}
-                setting.html = '<div class="'+setting.size+'"><div class="form-group">'+
-                '<label class="control-label" for="'+setting.name+'_container">'+setting.displayName+'</label>'+
-                        '<div class="container custom-setting-container" name="'+setting.name+'_container">'+
-                            '<label class="switch" for="'+setting.name+'">'+
-                                '<input type="checkbox" id="'+setting.name+'" '+value+'/>'+
-                                '<div class="slider round"></div>'+
-                            '</label>'+
+                if (setting.render || setting.render === undefined) {
+                    var value = setting.value ? setting.value:settings_controller.get_setting_value(setting.name);
+                    if (value) {value = 'checked'} else {value = ''}
+                    setting.html = '<div class="'+setting.size+'"><div class="form-group">'+
+                    '<label class="control-label" for="'+setting.name+'_container">'+setting.displayName+'</label>'+
+                            '<div class="container custom-setting-container" name="'+setting.name+'_container">'+
+                                '<label class="switch" for="'+setting.name+'">'+
+                                    '<input type="checkbox" id="'+setting.name+'" '+value+'/>'+
+                                    '<div class="slider round"></div>'+
+                                '</label>'+
+                            '</div>'+
                         '</div>'+
-                    '</div>'+
-                '</div>';
+                    '</div>';
+                }
             
                 if (setting.toggleFunctions !== undefined) {
                     $.ajax({
@@ -78,7 +80,7 @@ var customSettings = {
             //render setting on each page
             customSettings.settings.customSettings.forEach(function(setting) {
                 if (setting.toggleFunctions !== undefined) {
-                    if (settings_controller.get_setting_value(setting.name)) {
+                    if ((setting.value!==undefined?setting.value:settings_controller.get_setting_value(setting.name))) {
                         setting.toggleFunctions.toggleOn.function();
                     } else {
                         setting.toggleFunctions.toggleOff.function();
@@ -114,7 +116,9 @@ var customSettings = {
                     clearInterval(yyy);
                     body.before(customSettings.properties.html);
                     customSettings.settings.customSettings.forEach(function(setting){
-                        $("#custom_settings_body").find(".row").append(setting.html);
+                        if (setting.html !== undefined) {
+                            $("#custom_settings_body").find(".row").append(setting.html);
+                        }
                     });
         
                     //bind listeners

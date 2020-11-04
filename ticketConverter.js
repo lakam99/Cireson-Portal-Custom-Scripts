@@ -87,8 +87,8 @@ var ticketConverter = {
             var old_obj = ticketConverter.getters.get_currentTicket().viewModel;
             var new_obj = ticketManipulator.deep_copy(old_obj);
             var temp_name = null;
-            var convert_obj = await ticketManipulator.request_template_obj(template_id);
-            var og_convert_obj = ticketManipulator.deep_copy(convert_obj);
+            var og_convert_obj = await ticketManipulator.request_template_obj(template_id);
+            var convert_obj = ticketManipulator.deep_copy(og_convert_obj);
             
             //use new_obj so old_obj doesn't risk getting changed
             ticketConverter.properties.replace_properties.forEach(function(property){

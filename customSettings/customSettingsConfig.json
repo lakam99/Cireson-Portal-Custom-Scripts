@@ -35,6 +35,21 @@
             "displayName": "French Accent Suggest",
             "size": "col-md-4",
             "ieCompatible": true
+        },
+        {
+            "name": "monitorCopy",
+            "ieCompatible": true,
+            "render": false,
+            "value": true,
+            "toggleFunctions": {
+                "functionsLocation":"/CustomSpace/CustomSettings/monitorCopy/monitorCopy.js",
+                "toggleOn": {
+                    "functionName": "monitorCopyOn"
+                },
+                "toggleOff": {
+                    "functionName": "monitorCopyOff"
+                }
+            }
         }
     ]
 }

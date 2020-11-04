@@ -11,8 +11,8 @@ customSettings.helperFunctions.accentKeyboard.build_UI = function(e) {
         $("#keyboard").remove();
         $("body").off("click");
     }
-    $(e).parent().before(`<div id='keyboard' class='container' style='border: 1px solid white " + 
-    "!important; background-color: #333333 !important'></div>`);
+    $(e).parent().before("<div id='keyboard' class='container' style='border: 1px solid white " + 
+    "!important; background-color: rgb(0 208 255 / 11%) !important'></div>");
     var keys = customSettings.helperFunctions.accentKeyboard.keys;
     keys.forEach(function(letter){
         $("#keyboard").append("<a class='k-btn btn btn-xs letter'>"+
