@@ -152,8 +152,8 @@ var customSettings = {
         },
 
         start: function() {
+            customSettings.main.setup();
             $(document).ready(function(){
-                customSettings.main.setup();
                 if (window.location.pathname.includes("/Settings/User/UserProfile")) {
                     customSettings.functionality.render();
                 }

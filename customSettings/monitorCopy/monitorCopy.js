@@ -15,9 +15,7 @@ var monitorCopyOn = async function() {
         var s_name = "monitorCopy";
         var required = settings_controller.get_setting_value(s_name);
         if (required) {
-            debugger;
             c.ticket.RelatesToWorkItem.addItem(settings_controller.get_setting(s_name).data);
-            console.log("Reporting for duty!");
             settings_controller.set_setting(s_name, {value:false});
         } else {
             $(document).ready(function(){
