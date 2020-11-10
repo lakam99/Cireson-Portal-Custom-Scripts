@@ -95,6 +95,15 @@ html, body {
     background-color: #a7a5a5 !important;
     border: 1px solid #dcdcdc !important;
   }
+
+  input.CI-Input {
+    background-color: rgb(60, 60, 60) !important;
+    color: white !important;
+  }
+
+  .text-danger {
+    color: #f10027 !important;
+  }
   
   svg:not([fill]) {fill: #7d7d7d !important}
   li, select {background-image: none !important}

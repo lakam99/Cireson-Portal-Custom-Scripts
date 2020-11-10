@@ -9,6 +9,8 @@ var settings_controller = {
         var r = localStorage.getItem(settings_controller.key);
         if (r === null) {
             var backup = sessionStorage.getItem("custom_settings");
+            if (backup === null || !backup.length) 
+                backup = JSON.stringify({});
             localStorage.setItem(settings_controller.key, backup);
             sessionStorage.removeItem("custom_settings");
             return settings_controller.get_storage_settings();
