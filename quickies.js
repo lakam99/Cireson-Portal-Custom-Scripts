@@ -15,6 +15,15 @@ imgs = [
     }
 ]
 
+var addCommentColor = setInterval(function(){
+    var o = $("#commentBoxEditor")[0]|| $("body[contenteditable='true']");
+    if ((o.length === undefined || o.length) && settings_controller.get_setting_value("darkMode")) {
+        clearInterval(addCommentColor);
+        o.style.backgroundColor = "rgba(1,1,1,0.1)";
+        o.style.color = "white";
+    }
+}, 100);
+
 $(document).ready(function() {
     if (loc("/View/02efdc70-55c7-4ba8-9804-ca01631c1a54") && enabled) {
         //disabled

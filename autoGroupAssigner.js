@@ -3,14 +3,14 @@
 //arkam.mazrui@gmail.com
 
 var autoGroupAssigner = {
-    get_userPicker_obj: function() {return $("[name='AssignedWorkItem']");},
-    get_kendo_obj: function() {return autoGroupAssigner.get_userPicker_obj().data("kendoAutoComplete");},
+    get_userPicker_obj: function() {return $("[name='AssignedWorkItem']")},
+    get_assignToMe_task: function() {return $("[data-bind='click: assignToMe']")},
+    get_kendo_obj: function() {return autoGroupAssigner.get_userPicker_obj().data("kendoAutoComplete")},
     get_assignedUser_id: function() {return autoGroupAssigner.get_kendo_obj().dataSource._data[0].Id},
     get_user_groups: function(id) {
         if (!id) {return}
         waiter.request("get", window.location.origin+"/api/V3/User/GetUsersSupportGroupEnumerations", {Id: id});
-        //waiter.await_request_return();
-        return JSON.parse(waiter.get_return());
+        return waiter.get_return();
     },
 
     assigned_picker_exists: function() {return autoGroupAssigner.get_userPicker_obj().length != 0},
@@ -36,7 +36,13 @@ var autoGroupAssigner = {
                 var index = autoGroupAssigner.support_group.index_of(primary);
                 autoGroupAssigner.support_group.get_dropdown().select(index);
             }
-            
+        },
+
+        do_wait: function(callback, w8) {
+            w8 = !w8?100:w8;
+            return function() {
+                setTimeout(callback, w8);
+            }
         }
     },
 
@@ -84,6 +90,11 @@ var autoGroupAssigner = {
         function() {
             //focus out listener
             autoGroupAssigner.get_userPicker_obj().focusout(autoGroupAssigner.actions.main);
+        },
+
+        function() {
+            //When Assign to Me is clicked
+            autoGroupAssigner.get_assignToMe_task().on("click", autoGroupAssigner.actions.do_wait(autoGroupAssigner.actions.main));
         }
     ],
 

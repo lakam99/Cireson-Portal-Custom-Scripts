@@ -6,7 +6,7 @@ formCreateCI.helperFunctions.get_user = function(name) {
     var req = {userFilter: name, filterByAnalyst: false,
     groupsOnly: false, maxNumberOfResults: 1, fetchAll: false};
     waiter.request("get", "/api/V3/User/GetUserList", req, false);
-    return JSON.parse(waiter.get_return())[0];
+    return waiter.get_return()[0];
 }
 
 var generateDisplayName = function(FirstName, LastName) {
