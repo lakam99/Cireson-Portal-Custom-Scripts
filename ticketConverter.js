@@ -2,7 +2,7 @@
 //arkam.mazrui@nserc-crsng.gc.ca
 //arkam.mazrui@gmail.com
 
-var INCIDENT = 0;
+var INC = 0;
 var SRQ = 1;
 
 var url = ["/Incident/Edit/", "/ServiceRequest/Edit/"];
@@ -24,19 +24,27 @@ var ticketConverter = {
             classId:  "1cba7c99-4050-2749-fde9-2ed267208427"
         },
 
-        replace_properties: [
-            "ClassName", "FullClassName", "Id"
+        replace_properties: "/CustomSpace/CustomData/ticketConverter/ticketConverterProperties.json",
+
+        translate_properties: {
+            "AppliesToWorkItem": "AppliesToTroubleTicket",
+            "AppliesToTroubleTicket": "AppliesToWorkItem"
+        },
+
+        override_properties: [
+            "RequestedWorkItem", "AssignedWorkItem",
+            "Activity"
         ]
     },
 
     getters: {
         get_templateId: function(type) {
-            return (type === INCIDENT ? ticketConverter.properties.incident.templateId:
+            return (type === INC ? ticketConverter.properties.incident.templateId:
                     ticketConverter.properties.serviceRequest.templateId);
         },
     
         get_classId: function(type) {
-            return (type === INCIDENT ? ticketConverter.properties.incident.classId:
+            return (type === INC ? ticketConverter.properties.incident.classId:
                     ticketConverter.properties.serviceRequest.classId);
         },
     
@@ -53,6 +61,18 @@ var ticketConverter = {
     },
 
     setup: [
+        function(){
+            $.ajax({
+                url: window.location.origin + ticketConverter.properties.replace_properties,
+                type: "get",
+                dataType: "json",
+                async: false,
+                success: function(res){
+                    ticketConverter.properties.replace_properties = res;
+                }
+            });
+        },
+
         function() {
             app.custom.formTasks.add("Incident", "Convert to Service Request", function(formObj, viewModel) {
                 ticketConverter.setters.set_currentTicket(formObj, viewModel);
@@ -60,7 +80,7 @@ var ticketConverter = {
             });
             app.custom.formTasks.add("ServiceRequest", "Convert to Incident", function(formObj, viewModel) {
                 ticketConverter.setters.set_currentTicket(formObj, viewModel);
-                ticketConverter.functionality.apply(INCIDENT);
+                ticketConverter.functionality.apply(INC);
             });
         }
     ],
@@ -69,31 +89,40 @@ var ticketConverter = {
         apply: async function(type) {
             ticketManipulator.show_loading();
             var template_id = ticketConverter.getters.get_templateId(type);
-            var class_id = ticketConverter.getters.get_classId(type);
             var old_obj = ticketConverter.getters.get_currentTicket().viewModel;
             var new_obj = ticketManipulator.deep_copy(old_obj);
             var temp_name = null;
-            var template_obj = await ticketManipulator.request_template_obj(template_id)
+            var convert_obj = await ticketManipulator.request_template_obj(template_id);
             
+            //use new_obj so old_obj doesn't risk getting changed
             ticketConverter.properties.replace_properties.forEach(function(property){
-                new_obj[property] = template_obj[property];
+                if (ticketConverter.properties.translate_properties[property]) {
+                    convert_obj[ticketConverter.properties.translate_properties[property]] = new_obj[property];
+                } else if (convert_obj[property] !== undefined || ticketConverter.properties.override_properties.includes(property)) {
+                    convert_obj[property] = new_obj[property];
+                }
             });
 
-            temp_name = new_obj.FullName.split(":")
-            temp_name[1] = new_obj.Id;
-            temp_name = temp_name.join(":");
-            new_obj.FullName = temp_name;
-            new_obj.ClassTypeId = class_id;
+            convert_obj.Title = new_obj.Title;
+            convert_obj.Description = new_obj.Description;
+
+            ticketManipulator.set_obj_status(new_obj, ticketManipulator.constants.statuses.completed);
             ticketManipulator.remove_loading();
-            ticketConverter.functionality.ui_commit(old_obj, new_obj, type);
+            ticketConverter.functionality.ui_commit(old_obj, new_obj, convert_obj, type);
         },
 
-        ui_commit: function(old_obj, new_obj, type) {
-            kendo.confirm("Are you sure you want to convert this ticket?").then(function(){
+        ui_commit: function(old_obj, new_obj, convert_obj, type) {
+            kendo.confirm("Are you sure you want to convert this ticket? Doing so will close the original.").then(function(){
                 ticketManipulator.show_loading();
-                ticketManipulator.commit_new_obj(new_obj, old_obj, function(res){
-                    ticketManipulator.remove_loading();
-                    kendo.alert("<a href='" + window.location.origin+url[type]+new_obj.Id+ "/'>Ticket successfully converted!</a>");
+                ticketManipulator.commit_new_obj(new_obj, old_obj, function(){
+                    var form = $("<form>", {"method": "post"});
+                    var input = $("<input>", {"type": "hidden", "name":"vm"});
+                    form.append(input);
+                    type = window.location.origin+(type==INC?"/Incident/":"/ServiceRequest/") + "New/";
+                    input.val(JSON.stringify(convert_obj));
+                    form.attr("action", type);
+                    $("body").append(form);
+                    form.submit();
                 });
             });
         }

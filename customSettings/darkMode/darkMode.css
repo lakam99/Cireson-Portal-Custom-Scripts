@@ -106,6 +106,8 @@ html, body {
     color: #f10027 !important;
   }
 
+  .k-ext-treeview.k-treeview span.k-in.k-state-hover,
+  .k-ext-treeview.k-treeview span.k-in.k-state-selected,
   .k-state-hover {
     background-color: rgb(217 217 253 / 54%) !important;
   }
@@ -127,12 +129,12 @@ html, body {
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #f1f1f1; 
+  background: #5a5a5a; 
 }
  
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #888; 
+  background: #3b3b3b; 
 }
 
 /* Handle on hover */

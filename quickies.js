@@ -24,6 +24,14 @@ var addCommentColor = setInterval(function(){
     }
 }, 100);
 
+var acknowledgeTaskCyaL8r = setInterval(function(){
+    var a0 = $("[data-bind='click: acknowledge']");
+    if (a0.length) {
+        clearInterval(acknowledgeTaskCyaL8r);
+        a0.remove();
+    }
+}, 100);
+
 $(document).ready(function() {
     if (loc("/View/02efdc70-55c7-4ba8-9804-ca01631c1a54") && enabled) {
         //disabled
@@ -66,7 +74,7 @@ $(document).ready(function() {
                     }
                 }
             });
-    }, 100)
+        }, 100)
     };
     
 });
