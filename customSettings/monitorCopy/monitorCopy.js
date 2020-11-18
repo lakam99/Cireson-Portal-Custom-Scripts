@@ -7,6 +7,10 @@ c.load_ticket = function() {
             c.ticket = v;
             resolve(true);
         });
+        app.custom.formTasks.add("Incident", null, function(f, v){
+            c.ticket = v;
+            resolve(true);
+        });
     });
 }
 

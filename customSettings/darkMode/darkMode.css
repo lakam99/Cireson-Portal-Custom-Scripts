@@ -143,14 +143,14 @@ html, body {
 }
 
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-  color: red;
+  color: red !important;
   opacity: 1; /* Firefox */
 }
 
 :-ms-input-placeholder { /* Internet Explorer 10-11 */
-  color: red;
+  color: red !important;
 }
 
 ::-ms-input-placeholder { /* Microsoft Edge */
-  color: red;
+  color: red !important;
 }

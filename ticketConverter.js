@@ -91,7 +91,6 @@ var ticketConverter = {
             var template_id = ticketConverter.getters.get_templateId(type);
             var old_obj = ticketConverter.getters.get_currentTicket().viewModel;
             var new_obj = ticketManipulator.deep_copy(old_obj);
-            var temp_name = null;
             var convert_obj = await ticketManipulator.request_template_obj(template_id);
             
             //use new_obj so old_obj doesn't risk getting changed
@@ -103,9 +102,6 @@ var ticketConverter = {
                 }
             });
 
-            convert_obj.Title = new_obj.Title;
-            convert_obj.Description = new_obj.Description;
-
             ticketManipulator.set_obj_status(new_obj, ticketManipulator.constants.statuses.completed);
             ticketManipulator.remove_loading();
             ticketConverter.functionality.ui_commit(old_obj, new_obj, convert_obj, type);
@@ -115,6 +111,7 @@ var ticketConverter = {
             kendo.confirm("Are you sure you want to convert this ticket? Doing so will close the original.").then(function(){
                 ticketManipulator.show_loading();
                 ticketManipulator.commit_new_obj(new_obj, old_obj, function(){
+                    settings_controller.set_setting("monitorCopy", {value: true, data:new_obj});
                     var form = $("<form>", {"method": "post"});
                     var input = $("<input>", {"type": "hidden", "name":"vm"});
                     form.append(input);
