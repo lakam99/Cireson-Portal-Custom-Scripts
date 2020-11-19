@@ -36,7 +36,7 @@ html, body {
   }
 
   button.two-action-input-group__primary-action.k-button, span.k-icon {
-    margin: 2% !important;
+    right: 0px !important;
   }
 
   .drawer-drawermenu .k-dropdown-wrap, .drawer-drawermenu .k-textbox,
@@ -106,10 +106,9 @@ html, body {
     color: #f10027 !important;
   }
 
-  .k-ext-treeview.k-treeview span.k-in.k-state-hover,
   .k-ext-treeview.k-treeview span.k-in.k-state-selected,
   .k-state-hover {
-    background-color: rgb(217 217 253 / 54%) !important;
+    background-color: rgb(58, 25, 85) !important;
   }
   
   svg:not([fill]) {fill: #7d7d7d !important}
@@ -122,9 +121,18 @@ html, body {
   :link:not(cite), :link *:not(cite) {color: #8db2e5 !important}
   :visited, :visited *, :visited *[class] {color: rgb(211, 138, 138) !important}
    
+  button,button.k-button,button.k-button.k-primary {
+    border: 1px solid #008ed6 !important;
+  }
+  
+  button:hover,button.k-button:hover,button.k-button.k-primary:hover {
+    background-color: #008ed6 !important;
+  }
+
   /* width */
 ::-webkit-scrollbar {
   width: 10px;
+  height: 10px;
 }
 
 /* Track */
@@ -143,14 +151,14 @@ html, body {
 }
 
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-  color: red !important;
+  color: rgba(255, 255, 255, 0.897) !important;
   opacity: 1; /* Firefox */
 }
 
 :-ms-input-placeholder { /* Internet Explorer 10-11 */
-  color: red !important;
+  color: rgba(0, 0, 0, 0.8) !important;
 }
 
 ::-ms-input-placeholder { /* Microsoft Edge */
-  color: red !important;
+  color: rgba(0, 0, 0, 0.8) !important;
 }
