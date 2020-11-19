@@ -173,3 +173,9 @@ hr.indicator {
 
 .my_nav > .container > .navbar-nav > li > a {padding-top:5px !important; padding-bottom:5px !important;}
 .my_cont > .navbar {min-height:32px !important}
+
+/* sidebar background color */
+
+body {
+  background: rgb(103 186 228 / 10%) !important;
+}

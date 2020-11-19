@@ -8,7 +8,7 @@ var loadScript = function (path) {
 		script = document.createElement("script");
 	script.async = "async";
 	script.type = "text/javascript";
-	script.src = path;
+	script.src = path + "?=" + Math.round(Math.random() * 15);
 	script.onload = script.onreadystatechange = function(_, isAbort) {
 		if (!script.readyState || /loaded|complete/.test(script.readyState)) {
 			if (isAbort)
