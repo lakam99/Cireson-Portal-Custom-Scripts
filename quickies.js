@@ -2,19 +2,6 @@
 //arkam.mazrui@nserc-crsng.gc.ca
 //arkam.mazrui@gmail.com
 
-var enabled = true;
-var done = false;
-imgs = [
-    {
-        id: "da117d71-69fe-a1ff-5461-459a8465d95d",
-        img: "https://i.imgur.com/CH7ZOQ7.png"
-    },
-    {
-        id: "a6254395-3fa1-1727-dd84-3ca5958dec95",
-        img: "https://www.clker.com/cliparts/8/3/3/4/1195445190322000997molumen_red_round_error_warning_icon.svg.hi.png"
-    }
-]
-
 var addCommentColor = setInterval(function(){
     var o = $("#commentBoxEditor")[0]|| $("body[contenteditable='true']");
     if ((o.length === undefined || o.length) && settings_controller.get_setting_value("darkMode")) {
