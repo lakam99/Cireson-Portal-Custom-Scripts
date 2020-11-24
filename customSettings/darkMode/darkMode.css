@@ -36,7 +36,7 @@ html, body {
   }
 
   button.two-action-input-group__primary-action.k-button, span.k-icon {
-    margin: 2% !important;
+    right: 0px !important;
   }
 
   .drawer-drawermenu .k-dropdown-wrap, .drawer-drawermenu .k-textbox,
@@ -77,7 +77,7 @@ html, body {
   }
 
   i,div.searchIcon[data-control-action='userPickerWindow'] {
-    background-color: inherit !important;
+    background-color: transparent !important;
     display: initial !important;
   }
 
@@ -91,9 +91,24 @@ html, body {
   }
   
   textarea, textarea[class], input[type='text'], 
-  input[type='password'], input[type='email'],input[type='text'][class] {
-    background-color: #a7a5a5 !important;
+  input[type='password'], input[type='email'],
+  input[type='text'][class], input.CI-Input {
+    background-color: rgb(60, 60, 60) !important;
+    color: white !important;
     border: 1px solid #dcdcdc !important;
+  }
+
+  span.k-dropdown-wrap > input.k-input {
+    border: none !important;
+  }
+
+  .text-danger {
+    color: #f10027 !important;
+  }
+
+  .k-ext-treeview.k-treeview span.k-in.k-state-selected,
+  .k-state-hover {
+    background-color: rgb(58, 25, 85) !important;
   }
   
   svg:not([fill]) {fill: #7d7d7d !important}
@@ -106,3 +121,44 @@ html, body {
   :link:not(cite), :link *:not(cite) {color: #8db2e5 !important}
   :visited, :visited *, :visited *[class] {color: rgb(211, 138, 138) !important}
    
+  button,button.k-button,button.k-button.k-primary {
+    border: 1px solid #008ed6 !important;
+  }
+  
+  button:hover,button.k-button:hover,button.k-button.k-primary:hover {
+    background-color: #008ed6 !important;
+  }
+
+  /* width */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #5a5a5a; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #3b3b3b; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: rgba(255, 255, 255, 0.897) !important;
+  opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: rgba(0, 0, 0, 0.8) !important;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+  color: rgba(0, 0, 0, 0.8) !important;
+}

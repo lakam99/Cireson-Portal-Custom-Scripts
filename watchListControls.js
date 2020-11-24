@@ -72,6 +72,10 @@ var watchListControl = {
         },
 
         function() {
+            return "<span class='pull-left'>&nbsp;</span>";
+        },
+
+        function() {
             return "<a class='k-button pull-left btn btn-default btn-remove-all'>Remove all</a>";
         }
     ],

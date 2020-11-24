@@ -11,10 +11,14 @@ var ticketManipulator = {
 
     constants: {
         statuses: {
-            submitted: {Id: "72b55e17-1c7d-b34c-53ae-f61f8732e425", Name: "Submitted"},
-            in_progress: {Id: "59393f48-d85f-fa6d-2ebe-dcff395d7ed1", Name: "In Progress"},
-            completed: {Id: "b026fdfd-89bd-490b-e1fd-a599c78d440f", Name: "Completed"},
-            pending: {Id: "50c667cf-84e5-97f8-f6f8-d8acd99f181c", Name: "Pending"}
+            submitted: {srq: {Id: "72b55e17-1c7d-b34c-53ae-f61f8732e425", Name: "Submitted"},
+                        inc: {}},
+            in_progress: {srq: {Id: "59393f48-d85f-fa6d-2ebe-dcff395d7ed1", Name: "In Progress"},
+                          inc: {}},
+            completed: {srq: {Id: "b026fdfd-89bd-490b-e1fd-a599c78d440f", Name: "Completed"},
+                        inc: {Id: "2b8830b6-59f0-f574-9c2a-f4b4682f1681", Name: "Resolved"}},
+            pending: {srq: {Id: "50c667cf-84e5-97f8-f6f8-d8acd99f181c", Name: "Pending"},
+                      inc: {}}
         }
     },
 
@@ -84,16 +88,18 @@ var ticketManipulator = {
     status_eq: function(s1, s2) {return s1.Id === s2.Id && s1.Name === s2.Name;},
 
     set_obj_status: function(obj, set_to_status) {
-        obj.Status.Id = set_to_status.Id;
-        obj.Status.Name = set_to_status.Name;
+        var type = obj.FullClassName == "Incident" ? 1:0; //INC:SRQ
+        obj.Status.Id = type?set_to_status.inc.Id:set_to_status.srq.Id;
+        obj.Status.Name = type?set_to_status.inc.Name:set_to_status.srq.Name;
     },
 
     trigger_workflow_or_update_required: async function(obj) {
         return new Promise(function(resolve, reject){
+            var statuses = obj.FullClassName == "Incident" ? ticketManipulator.constants.inc : ticketManipulator.constants.srq;
             ticketManipulator.properties.resolveFunc = function(resolve_obj) {resolve(resolve_obj)}
-            if (!ticketManipulator.status_eq(obj.Status, ticketManipulator.constants.statuses.submitted)) {
+            if (!ticketManipulator.status_eq(obj.Status, statuses.submitted)) {
                 var new_obj = ticketManipulator.deep_copy(obj);
-                ticketManipulator.set_obj_status(new_obj, ticketManipulator.constants.statuses.submitted);
+                ticketManipulator.set_obj_status(new_obj, statuses.submitted);
                 ticketManipulator.commit_new_obj(new_obj, obj, function(resolve){
                     ticketManipulator.properties.resolveFunc(new_obj);
                 });

@@ -94,8 +94,8 @@ legend.createUserLegend {
   margin-left: 2%;
   margin-bottom: 5%;
   width: 75%;
-  min-height: 200px;
-  max-height: 200px;
+  height: 60%;
+  max-height: 250px;
   background-color: rgba(161,161,161,0.3);
   border: 1px solid grey;
   overflow: scroll;
@@ -115,10 +115,6 @@ legend.createUserLegend {
   padding-top: 2%;
   background-color: rgb(255, 255, 255);
   position: relative;
-}
-
-.activity_item_hover {
-  background-color: rgba(255,255,255,0.1);
 }
 
 .parent_container {
@@ -173,9 +169,3 @@ hr.indicator {
 
 .my_nav > .container > .navbar-nav > li > a {padding-top:5px !important; padding-bottom:5px !important;}
 .my_cont > .navbar {min-height:32px !important}
-
-/* sidebar background color */
-
-body {
-  background: rgb(103 186 228 / 10%) !important;
-}

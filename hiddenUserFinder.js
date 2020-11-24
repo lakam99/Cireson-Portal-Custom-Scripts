@@ -51,13 +51,13 @@ var hiddenUserFinder = {
     functionality: {
         get_user: function(name){
             waiter.request("get", "/platform/api/GlobalSearch(EntitySets=@entitysets)?search="+name+"&%24top=10&%40entitysets=%27Cached_MT_System_Domain_User%27&languageFields=LanguageCode%2CLocaleID&languageCode=ENU&searchLimit=10?", {}, false);
-            return JSON.parse(JSON.parse(waiter.get_return()).value[0].EntityJson);
+            return waiter.get_return().value[0].EntityJson;
         },
 
         get_users: function(name){
             var r = [];
             waiter.request("get", "/platform/api/GlobalSearch(EntitySets=@entitysets)?search="+name+"&%24top=10&%40entitysets=%27Cached_MT_System_Domain_User%27&languageFields=LanguageCode%2CLocaleID&languageCode=ENU&searchLimit=10?", {}, false);
-            var users = JSON.parse(waiter.get_return()).value;
+            var users = waiter.get_return().value;
             users.forEach(function(user){
                 r.push(hiddenUserFinder.functionality.create_user_obj(JSON.parse(user.EntityJson)));
             });
