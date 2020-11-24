@@ -16,6 +16,19 @@ imgs = [
 ]
 
 $(document).ready(function() {
+    if (settings_controller.get_setting_value("darkMode")) {
+        $("head").append(`
+                <style>
+                    .k-ext-treeview.k-treeview span.k-in.k-state-selected {
+                        background-color: rgba(105, 58, 143, 0.452) !important;
+                    }
+                
+                    .k-ext-treeview.k-treeview span.k-in.k-state-hover {
+                        background-color: rgb(58, 25, 85) !important;
+                    }
+                </style>
+        `);
+    }
     if (loc("/View/02efdc70-55c7-4ba8-9804-ca01631c1a54") && enabled) {
         //disabled
         var key_replace = setInterval(function() {
@@ -28,7 +41,6 @@ $(document).ready(function() {
             });
         }, 800);
     }
-
     var dropdown_resizer = {
         dropdown_height: 550,
         dropdown_font_size: 13,
