@@ -105,7 +105,9 @@ function resize_columns() {
     }
 
     var ex_element = $("td[data-field='Id']")[0];
-    grid.resizeColumn(column, sizing_tools.element_px(ex_element));
+    if (ex_element) {
+        grid.resizeColumn(column, sizing_tools.element_px(ex_element));
+    }
 }
 
 function add_grid_btns() {
@@ -115,8 +117,10 @@ function add_grid_btns() {
             reset_btn = $(".margin-t10.btn");
             reset_btn.removeClass(".margin-t10").css("margin", "0px 10px 0px 10px");
         }
-        reset_btn.after("<a class='k-button pull-right btn btn-default btn-expand-all'>" + localization["expand_all"] + "</a>");
-        reset_btn.after("<a class='k-button pull-right btn btn-default btn-collapse-all'>" + localization["collapse_all"] + "</a>");
+        reset_btn.after("<a class='k-button pull-right btn btn-default btn-expand-all'>"
+         + (localization["expand_all"] === undefined ? "Expand All":localization["expand_all"]) + "</a>");
+        reset_btn.after("<a class='k-button pull-right btn btn-default btn-collapse-all'>" 
+        + (localization["collapse_all"] === undefined ? "Collapse All":localization["collapse_all"]) + "</a>");
         btns_added = true;
     }
 }
@@ -267,8 +271,8 @@ function map_fill() {
 function collapse_collected() {
     var map = get_map();
     if (map === undefined) {
-        kendo.alert('An error has occured with the grid settings.'+
-        'Apologies for the inconvenience but all grids will be reset.');
+        //kendo.alert('An error has occured with the grid settings.'+
+        //'Apologies for the inconvenience but all grids will be reset.');
         map_controller.reset_map();
         return collapse_collected();
     }
