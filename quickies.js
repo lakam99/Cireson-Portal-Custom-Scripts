@@ -20,17 +20,19 @@ var acknowledgeTaskCyaL8r = setInterval(function(){
 }, 100);
 
 $(document).ready(function() {
-    $("head").append(`
-            <style>
-                .k-ext-treeview.k-treeview span.k-in.k-state-selected {
-                    background-color: rgba(105, 58, 143, 0.452) !important;
-                }
-            
-                .k-ext-treeview.k-treeview span.k-in.k-state-hover {
-                    background-color: rgb(58, 25, 85) !important;
-                }
-            </style>
-    `);
+    if (settings_controller.get_setting_value("darkMode")) {
+        $("head").append(`
+                <style>
+                    .k-ext-treeview.k-treeview span.k-in.k-state-selected {
+                        background-color: rgba(105, 58, 143, 0.452) !important;
+                    }
+                
+                    .k-ext-treeview.k-treeview span.k-in.k-state-hover {
+                        background-color: rgb(58, 25, 85) !important;
+                    }
+                </style>
+        `);
+    }
 
     var dropdown_resizer = {
         dropdown_height: 550,
