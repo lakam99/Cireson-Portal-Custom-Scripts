@@ -95,11 +95,11 @@ var ticketManipulator = {
 
     trigger_workflow_or_update_required: async function(obj) {
         return new Promise(function(resolve, reject){
-            var statuses = obj.FullClassName == "Incident" ? ticketManipulator.constants.inc : ticketManipulator.constants.srq;
+            var status = obj.FullClassName == "Incident" ? ticketManipulator.constants.statuses.submitted.inc:ticketManipulator.constants.statuses.submitted.srq;
             ticketManipulator.properties.resolveFunc = function(resolve_obj) {resolve(resolve_obj)}
-            if (!ticketManipulator.status_eq(obj.Status, statuses.submitted)) {
+            if (!ticketManipulator.status_eq(obj.Status, status)) {
                 var new_obj = ticketManipulator.deep_copy(obj);
-                ticketManipulator.set_obj_status(new_obj, statuses.submitted);
+                ticketManipulator.set_obj_status(new_obj, status);
                 ticketManipulator.commit_new_obj(new_obj, obj, function(resolve){
                     ticketManipulator.properties.resolveFunc(new_obj);
                 });
