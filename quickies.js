@@ -33,18 +33,17 @@ var acknowledgeTaskCyaL8r = setInterval(function(){
 }, 100);
 
 $(document).ready(function() {
-    if (loc("/View/02efdc70-55c7-4ba8-9804-ca01631c1a54") && enabled) {
-        //disabled
-        var key_replace = setInterval(function() {
-            imgs.forEach(function(img){
-                var key = $("#"+img.id);
-                if (key.length) {
-                    key.find("img").attr("src", img.img);
-                    clearInterval(key_replace);
+    $("head").append(`
+            <style>
+                .k-ext-treeview.k-treeview span.k-in.k-state-selected {
+                    background-color: rgba(105, 58, 143, 0.452) !important;
                 }
-            });
-        }, 800);
-    }
+            
+                .k-ext-treeview.k-treeview span.k-in.k-state-hover {
+                    background-color: rgb(58, 25, 85) !important;
+                }
+            </style>
+    `);
 
     var dropdown_resizer = {
         dropdown_height: 550,
