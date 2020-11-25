@@ -23,7 +23,11 @@ customSettings.helperFunctions.accentKeyboard.build_UI = function(e) {
             var $input = $(btn).parent().parent().find('input');
             var val = $input.val();
             $input.val(val + $(btn).text());
-            setTimeout(function(){},1);
+            setTimeout(function(){
+                $input.data("kendoAutoComplete").popup.open();
+                $input.focus();
+                $input.selectionStart = $input.selectionEnd = $input.val().length + 1;
+            },300);
         });
     });
 }
