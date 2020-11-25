@@ -15,7 +15,7 @@ var accentSuggest = {
             'y': [255]
         },
 
-        type_speed_allowance: 200 //ms
+        type_speed_allowance: 500 //ms
     },
 
     properties: {
@@ -204,18 +204,19 @@ var accentSuggest = {
             return JSON.parse(r);
         },
 
-        request_variations: async function(word) {
+        request_variations: function*(word) {
             var variations = accentSuggest.functionality.generate_variations(word);
             variations.splice(0,1);
-            var suggestions = [];
-            for (var i = 0; i < variations.length; i++) {
-                var suggestion = await accentSuggest.functionality.request_variation(variations[i]);
-                if (suggestion.length) {
-                    suggestions.push(suggestion);
-                }
+            for (var i = 0, variation = variations[i]; i < variations.length; i++) {
+                yield new Promise(function(resolve, reject){
+                    accentSuggest.functionality.request_variation(variation).then(function(suggestion){
+                        if (suggestion.length)
+                            resolve(suggestion);
+                        else
+                            reject(suggestion);
+                    });
+                });
             }
-            suggestions = [].concat.apply([], suggestions);
-            return suggestions;
         }
 
     },
@@ -238,9 +239,6 @@ var accentSuggest = {
             accentSuggest.getters.get_page_userpicker_objs().forEach(function(n,i){
                 var timeout = null;
 
-                $(n.element).on("click", function(){
-                    n.popup.open();
-                });
                 $(n.element).off("focusout");
                 $(n.element).on("keyup", function(){
                     clearTimeout(timeout);
@@ -249,12 +247,21 @@ var accentSuggest = {
                     timeout = setTimeout(function(){
                         if (n.popup.visible()) {
                             var text = n.element.val();
-                            accentSuggest.functionality.request_variations(text).then(function(variations){
-                                variations.forEach(function(variation, i){
-                                    n.dataSource.add(variation);
-                                });
-                                n.popup.open();
-                            });
+                            if (text.length < 3)
+                                return;
+                            var request = accentSuggest.functionality.request_variations(text);
+                            var response = null;
+                            var respond = null;
+                            if ((response = request.next().value)) {
+                                response.then((respond = function(suggestion){
+                                    if (Array.isArray(suggestion)) {
+                                        suggestion.forEach(function(individual_suggestion){respond(individual_suggestion)});
+                                    } else {
+                                        if (!hiddenUserFinder.functionality.user_array_includes(n.dataSource.data(), suggestion))
+                                            n.dataSource.add(suggestion);
+                                    }
+                                }), function(reject){});
+                            }
                         }
                     }, accentSuggest.constants.type_speed_allowance);
                 });
