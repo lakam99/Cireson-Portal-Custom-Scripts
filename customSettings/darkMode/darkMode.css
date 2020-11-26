@@ -129,6 +129,10 @@ html, body {
     background-color: #008ed6 !important;
   }
 
+  div > #keyboard {
+    background-color: transparent !important;
+  }
+
   /* width */
 ::-webkit-scrollbar {
   width: 10px;

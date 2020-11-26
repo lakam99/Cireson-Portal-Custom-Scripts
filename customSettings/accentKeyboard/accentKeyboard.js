@@ -11,8 +11,7 @@ customSettings.helperFunctions.accentKeyboard.build_UI = function(e) {
         $("#keyboard").remove();
         $("body").off("click");
     }
-    $(e).parent().before(`<div id='keyboard' class='container' style='border: 1px solid white " + 
-    "!important; background-color: #333333 !important'></div>`);
+    $(e).parent().before(`<div id='keyboard' class='container'></div>`);
     var keys = customSettings.helperFunctions.accentKeyboard.keys;
     keys.forEach(function(letter){
         $("#keyboard").append("<a class='k-btn btn btn-xs letter'>"+
@@ -23,10 +22,11 @@ customSettings.helperFunctions.accentKeyboard.build_UI = function(e) {
             var $input = $(btn).parent().parent().find('input');
             var val = $input.val();
             $input.val(val + $(btn).text());
+            $input.focus();
             setTimeout(function(){
                 $input.data("kendoAutoComplete").popup.open();
-                $input.focus();
-                $input.selectionStart = $input.selectionEnd = $input.val().length + 1;
+                //$input.click();
+                //$input.selectionStart = $input.selectionEnd = $input.val().length + 1;
             },300);
         });
     });

@@ -138,6 +138,11 @@ legend.createUserLegend {
     margin: auto;
 }
 
+#keyboard {
+  border: 1px solid #008ed6  !important;
+  background-color: #fff4f4 !important;
+}
+
 .fa-plus:hover,.fa-minus:hover {
     color: royalblue;
     cursor: pointer;
