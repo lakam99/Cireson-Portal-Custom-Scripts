@@ -172,5 +172,13 @@ hr.indicator {
   margin: 1%;
 }
 
+.k-confirm .k-window-titlebar::before {
+  content: 'Support Central 2012 Portal';
+}
+
+.k-confirm .k-window-titlebar .k-dialog-title {        
+display:none;
+}
+
 .my_nav > .container > .navbar-nav > li > a {padding-top:5px !important; padding-bottom:5px !important;}
 .my_cont > .navbar {min-height:32px !important}
