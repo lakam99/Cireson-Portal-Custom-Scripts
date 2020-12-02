@@ -8,6 +8,12 @@ function get_settings(q) {
 	return s==null?false:JSON.parse(s);
 }
 
+function set_settings(key, value) {
+	var s = get_settings();
+	s[key] = value;
+	localStorage.setItem("settings", JSON.stringify(s));
+}
+
 var s = get_settings();
 if (s && s.darkMode && s.darkMode.value) {
 	var link = window.location.origin + "/CustomSpace/CustomSettings/darkMode/darkMode.css";
@@ -38,7 +44,7 @@ var loadScript = function (path) {
 				result.resolve();
 		}
 	};
-	script.onerror = function () { console.log(result); result.reject(); };
+	script.onerror = function () {console.err("FAILED TO LOAD " + path);console.log(result); result.reject(); };
 	$("head")[0].appendChild(script);
 	console.log("Loaded " + path)
 	return result.promise();
@@ -77,7 +83,11 @@ dependency_arr = [ 	"/CustomSpace/Scripts/ClientRequestManager/ClientRequestMana
 				
 $("head").append('<meta http-equiv="X-UA-Compatible" content="IE=11, IE=10, IE=9, ie=8, ie=7">');
 
-var u = (s = get_settings().update_required) && s.value ? Math.round(Math.random()*15) : "";
+var u = "";
+if ((s = get_settings().update_required) && s.value) {
+	set_settings("update_required", {value: false});
+	u = "?v="+Math.round(Math.random()*15);
+} 
 
 loadScript(dependency_arr[0] + u).then(function(){
 	loadScript(dependency_arr[1] + u).then(function() {
