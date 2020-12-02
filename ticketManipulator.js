@@ -89,8 +89,8 @@ var ticketManipulator = {
 
     set_obj_status: function(obj, set_to_status) {
         var type = obj.FullClassName == "Incident" ? 1:0; //INC:SRQ
-        obj.Status.Id = type?set_to_status.inc.Id:set_to_status.srq.Id;
-        obj.Status.Name = type?set_to_status.inc.Name:set_to_status.srq.Name;
+        obj.Status.Id = set_to_status.Id;
+        obj.Status.Name = set_to_status.Name;
     },
 
     trigger_workflow_or_update_required: async function(obj) {

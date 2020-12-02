@@ -50,6 +50,22 @@
                     "functionName": "monitorCopyOff"
                 }
             }
+        },
+        {
+            "name": "scriptPatcher",
+            "displayName": "Auto-update Portal",
+            "size": "col-md-4",
+            "ieCompatible": true,
+            "render": true,
+            "toggleFunctions": {
+                "functionsLocation":"/CustomSpace/CustomSettings/scriptPatcher/scriptPatcher.js",
+                "toggleOn": {
+                    "functionName": "scriptPatcherOn"
+                },
+                "toggleOff": {
+                    "functionName": "scriptPatcherOff"
+                }
+            }
         }
     ]
 }

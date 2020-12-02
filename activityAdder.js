@@ -220,7 +220,7 @@ var activityAdder = {
         },
         selector_dialog: {
             width: "502px",
-            title: "Select a Template",
+            title: "Select an Activity Template",
             modal: true,
             visible: false,
         },

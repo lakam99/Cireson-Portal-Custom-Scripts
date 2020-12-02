@@ -2,8 +2,9 @@
 //arkam.mazrui@nserc-crsng.gc.ca
 //arkam.mazrui@gmail.com
 
-function get_settings() {
-	var s = localStorage.getItem("settings");
+function get_settings(q) {
+	q = !q ? "settings":q;
+	var s = localStorage.getItem(q);
 	return s==null?false:JSON.parse(s);
 }
 
@@ -44,8 +45,9 @@ var loadScript = function (path) {
 	
 };
 
-function loadScripts(script_arr) {
-	script_arr.forEach(function(script){loadScript(script)});
+function loadScripts(script_arr, xtra) {
+	xtra = !xtra? "" : xtra;
+	script_arr.forEach(function(script){loadScript(script+xtra)});
 }
 
 /* ----------------------------------------------- */
@@ -74,10 +76,13 @@ dependency_arr = [ 	"/CustomSpace/Scripts/ClientRequestManager/ClientRequestMana
 					"/CustomSpace/Scripts/accentSuggest/accentSuggest.js"];
 				
 $("head").append('<meta http-equiv="X-UA-Compatible" content="IE=11, IE=10, IE=9, ie=8, ie=7">');
-loadScript(dependency_arr[0]).then(function(){
-	loadScript(dependency_arr[1]).then(function() {
-		loadScript(dependency_arr[2]).then(function(){
-			loadScripts(scripts);
+
+var u = (s = get_settings().update_required) && s.value ? Math.round(Math.random()*15) : "";
+
+loadScript(dependency_arr[0] + u).then(function(){
+	loadScript(dependency_arr[1] + u).then(function() {
+		loadScript(dependency_arr[2] + u).then(function(){
+			loadScripts(scripts, u);
 		});
 	}) 
 });
