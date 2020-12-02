@@ -133,6 +133,19 @@ html, body {
     background-color: transparent !important;
   }
 
+  button.btn.btn-link.btn-lg:hover {
+    background-color: rgb(61, 61, 61) !important;
+  }
+
+  button.btn.btn-link.btn-lg > span > div:hover {
+    all: unset !important;
+    background-color: rgb(61, 61, 61) !important;;
+  }
+
+  .input[readonly] {
+    color: white !important;
+  }
+
   /* width */
 ::-webkit-scrollbar {
   width: 10px;
