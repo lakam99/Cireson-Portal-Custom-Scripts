@@ -119,6 +119,7 @@ var ticketConverter = {
                     input.val(JSON.stringify(convert_obj));
                     form.attr("action", type);
                     $("body").append(form);
+                    ticketManipulator.remove_loading();
                     form.submit();
                 });
             });
