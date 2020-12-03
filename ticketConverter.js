@@ -103,7 +103,7 @@ var ticketConverter = {
             });
 
             ticketManipulator.set_obj_status(new_obj,
-                 (new_obj.FullClassName == "Incident" ? ticketManipulator.constants.statuses.completed.inc:ticketManipulator.constants.statuses.srq));
+                 (new_obj.FullClassName == "Incident" ? ticketManipulator.constants.statuses.completed.inc:ticketManipulator.constants.statuses.completed.srq));
             ticketManipulator.remove_loading();
             ticketConverter.functionality.ui_commit(old_obj, new_obj, convert_obj, type);
         },
