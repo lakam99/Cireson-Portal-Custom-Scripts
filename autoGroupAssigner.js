@@ -6,7 +6,15 @@ var autoGroupAssigner = {
     get_userPicker_obj: function() {return $("[name='AssignedWorkItem']")},
     get_assignToMe_task: function() {return $("[data-bind='click: assignToMe']")},
     get_kendo_obj: function() {return autoGroupAssigner.get_userPicker_obj().data("kendoAutoComplete")},
-    get_assignedUser_id: function() {return autoGroupAssigner.get_kendo_obj().dataSource._data[0].Id},
+    get_assignedUser_id: function() {
+        var name = autoGroupAssigner.get_userPicker_obj().val();
+        var data = autoGroupAssigner.get_kendo_obj().dataSource._data;
+        for (var i = 0, user = data[i]; i < data.length; i++, user = data[i]) {
+            if (user.Name == name)
+                return user.Id;
+        }
+        return "";
+    },
     get_user_groups: function(id) {
         if (!id) {return}
         waiter.request("get", window.location.origin+"/api/V3/User/GetUsersSupportGroupEnumerations", {Id: id});
@@ -94,7 +102,7 @@ var autoGroupAssigner = {
 
         function() {
             //When Assign to Me is clicked
-            autoGroupAssigner.get_assignToMe_task().on("click", autoGroupAssigner.actions.do_wait(autoGroupAssigner.actions.main));
+            autoGroupAssigner.get_assignToMe_task().on("click", autoGroupAssigner.actions.do_wait(autoGroupAssigner.actions.main, 300));
         }
     ],
 
