@@ -133,13 +133,13 @@ html, body {
     background-color: transparent !important;
   }
 
-  button.btn.btn-link.btn-lg:hover {
+  button.btn.btn-link.btn-lg:hover, li.drawer-button:hover,
+  li.nav_hover:hover {
     background-color: rgb(61, 61, 61) !important;
   }
 
-  button.btn.btn-link.btn-lg > span > div:hover {
-    all: unset !important;
-    background-color: rgb(61, 61, 61) !important;;
+  button.btn > span.fa + div {
+    background-color: inherit !important;
   }
 
   .input[readonly] {
