@@ -15,6 +15,14 @@ imgs = [
     }
 ]
 
+var acknowledgeTaskCyaL8r = setInterval(function(){
+    var a0 = $("[data-bind='click: acknowledge']");
+    if (a0.length) {
+        clearInterval(acknowledgeTaskCyaL8r);
+        a0.remove();
+    }
+}, 100);
+
 $(document).ready(function() {
     if (settings_controller.get_setting_value("darkMode")) {
         $("head").append(`
