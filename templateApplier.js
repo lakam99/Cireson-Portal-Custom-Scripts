@@ -107,7 +107,7 @@ var templateApplier = {
             }
             var whitelist = templateApplier.getters.get_whitelisted_properties();
             var new_obj = templateApplier.functionality.replace_properties(current_obj, templateObj, whitelist);
-            ticketManipulator.set_obj_status(new_obj, ticketManipulator.constants.statuses.in_progress);
+            ticketManipulator.adaptive_set_obj_status(new_obj, ticketManipulator.constants.statuses.in_progress);
             ticketManipulator.remove_loading();
             templateApplier.functionality.ui_commit_new_obj(new_obj, current_obj);
         },

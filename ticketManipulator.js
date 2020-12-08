@@ -88,9 +88,14 @@ var ticketManipulator = {
     status_eq: function(s1, s2) {return s1.Id === s2.Id && s1.Name === s2.Name;},
 
     set_obj_status: function(obj, set_to_status) {
-        var type = obj.FullClassName == "Incident" ? 1:0; //INC:SRQ
         obj.Status.Id = set_to_status.Id;
         obj.Status.Name = set_to_status.Name;
+    },
+
+    adaptive_set_obj_status: function(obj, set_to_status) {
+        var type = obj.FullClassName == "Incident" ? 1:0; //INC:SRQ
+        var status = type == 1 ? set_to_status.inc:set_to_status.srq;
+        ticketManipulator.set_obj_status(obj, status);
     },
 
     trigger_workflow_or_update_required: async function(obj) {
