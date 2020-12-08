@@ -8,23 +8,22 @@ function writeReplace([String]$path, [String]$def, [String]$new, [String]$old) {
     Rename-Item -Path $path$new -NewName $def -Force;
 }
 
-$dir="CustomSpace";
 $scripts="../Scripts/";
 
-$kendoPath=$scripts"kendo/2018.1.117/";
+$kendoPath=$scripts + "kendo/2018.1.117/";
 $newK="kendo.all.min.new.js";
 $defK="kendo.all.min.js";
 $oldK="kendo.all.min.old.js";
 
-$wiMainPath=$scripts"forms/";
+$wiMainPath=$scripts + "forms/";
 $newW="wiMain.new.js";
 $defW="wiMain.js";
 $oldW="wiMain.old.js";
 
 Write-Host "Starting installation...";
 cd $PSScriptRoot;
-Copy-Item $dir -Destination "../"$dir -Force;
-writeReplace($kendoPath, $defK, $newK, $oldK);
-writeReplace($wiMainPath, $defW, $newW, $oldW);
+Copy-Item "CustomSpace" -Destination "../CustomSpace" -Recurse -Force;
+writeReplace $kendoPath $defK $newK $oldK;
+writeReplace $wiMainPath $defW $newW $oldW;
 Write-Host "CustomSpace install complete.";
 pause;
