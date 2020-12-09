@@ -8,6 +8,7 @@ var scriptPatcherOn = function() {
 
             if ((!current.data) || res.data.version > current.data.version) {
                 settings_controller.set_setting_value("update_required", true);
+                location.reload();
             }
 
             settings_controller.set_setting(settings, res);

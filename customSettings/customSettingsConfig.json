@@ -5,6 +5,7 @@
             "displayName": "Dark Mode",
             "size": "col-md-4",
             "ieCompatible": false,
+            "default": true,
             "toggleFunctions": {
                 "functionsLocation": "/CustomSpace/CustomSettings/darkMode/darkMode.js", 
                 "toggleOn": {
@@ -57,6 +58,7 @@
             "size": "col-md-4",
             "ieCompatible": true,
             "render": true,
+            "default": true,
             "toggleFunctions": {
                 "functionsLocation":"/CustomSpace/CustomSettings/scriptPatcher/scriptPatcher.js",
                 "toggleOn": {
