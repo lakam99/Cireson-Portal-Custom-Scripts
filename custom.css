@@ -79,7 +79,7 @@ legend.createUserLegend {
 #new_activity {
   height: 20% !important;
   line-height: initial !important;
-  color: black !important;
+  color: black;
 }
 
   #activity_adder {

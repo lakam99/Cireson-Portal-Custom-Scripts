@@ -37,6 +37,7 @@ var templateApplier = {
             viewModel: null
         },
         whitelist: ["Activity", "Area"],
+        comboBox_value: undefined
     },
 
     getters: {
@@ -67,7 +68,15 @@ var templateApplier = {
         },
 
         get_selected_template_id: function() {
-            return templateApplier.getters.get_combobox().value();
+            try {
+                return templateApplier.getters.get_combobox().value();
+            } catch (e) {
+                console.warn("Failed to retrieve template applier combobox value.");
+                if (templateApplier.properties.comboBox_value)
+                    return templateApplier.properties.comboBox_value;
+                else
+                    kendo.alert("Failed to retrieve selected template. Please refresh the page and try again.");
+            }
         },
 
         get_whitelisted_properties: function() {
@@ -94,6 +103,7 @@ var templateApplier = {
         cancel: function() {return true},
 
         apply: async function() {
+            templateApplier.properties.comboBox_value = templateApplier.getters.get_selected_template_id(); 
             templateApplier.getters.get_dialog_window().close();
             var current_obj = templateApplier.properties.currentTicket.viewModel;
             ticketManipulator.show_loading();
