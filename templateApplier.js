@@ -36,8 +36,7 @@ var templateApplier = {
             formObj: null,
             viewModel: null
         },
-        whitelist: ["Activity", "Area"],
-        comboBox_value: undefined
+        whitelist: ["Activity", "Area"]
     },
 
     getters: {
@@ -68,15 +67,7 @@ var templateApplier = {
         },
 
         get_selected_template_id: function() {
-            try {
-                return templateApplier.getters.get_combobox().value();
-            } catch (e) {
-                console.warn("Failed to retrieve template applier combobox value.");
-                if (templateApplier.properties.comboBox_value)
-                    return templateApplier.properties.comboBox_value;
-                else
-                    kendo.alert("Failed to retrieve selected template. Please refresh the page and try again.");
-            }
+            return templateApplier.getters.get_combobox().value();
         },
 
         get_whitelisted_properties: function() {

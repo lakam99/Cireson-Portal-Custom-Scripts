@@ -28,7 +28,7 @@ var ticketManipulator = {
     },
     
     remove_loading: function() {
-        $("#template_applier_select").remove();
+        $("#loader_overlay").remove();
     },
 
     deep_copy(obj) {

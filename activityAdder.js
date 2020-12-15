@@ -367,7 +367,9 @@ var activityAdder = {
             //create task
             app.custom.formTasks.add('ServiceRequest', 'Add Activity', function(formObj, viewModel){
                 activityAdder.setters.set_ticket_info(formObj, viewModel);
-                if (ticketManipulator.status_eq(viewModel.Status, ticketManipulator.constants.statuses.completed)) {
+                var completed = viewModel.FullClassName == "Incident" ? ticketManipulator.constants.statuses.completed.inc:
+                    ticketManipulator.constants.statuses.completed.srq;
+                if (ticketManipulator.status_eq(viewModel.Status, completed)) {
                     kendo.alert("Cannot modify activities of a completed ticket.");
                     return;
                 }
