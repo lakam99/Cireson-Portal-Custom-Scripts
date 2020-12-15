@@ -36,7 +36,7 @@ var templateApplier = {
             formObj: null,
             viewModel: null
         },
-        whitelist: ["Activity", "Area"],
+        whitelist: ["Activity", "Area"]
     },
 
     getters: {
@@ -94,6 +94,7 @@ var templateApplier = {
         cancel: function() {return true},
 
         apply: async function() {
+            templateApplier.properties.comboBox_value = templateApplier.getters.get_selected_template_id(); 
             templateApplier.getters.get_dialog_window().close();
             var current_obj = templateApplier.properties.currentTicket.viewModel;
             ticketManipulator.show_loading();
