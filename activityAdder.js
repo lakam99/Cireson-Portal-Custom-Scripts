@@ -177,6 +177,8 @@ var UI_Builder = {
 
     push_to_parent: function(parent, child) {
         if (parent === child) {return}
+        var text = $(parent).text();
+        if (!(text.includes("PLA") || text.includes("Parallel Activity"))) {return}
         if (parent.parentContainer === undefined) {
             UI_Builder.build_parent(parent);
             return UI_Builder.push_to_parent(parent, child);
@@ -447,7 +449,8 @@ var activityAdder = {
             for(var i = 0; i < elements.length; i++){
                 el = elements[i];
                 reserve = $(el).data("reserve");
-                t = reserve !== undefined ? reserve:ticketManipulator.non_async_request_template_obj($(el).data("id"));
+                t = ticketManipulator.deep_copy(
+                    reserve !== undefined ? reserve:ticketManipulator.non_async_request_template_obj($(el).data("id")));
                 if (reserve && reserve.SequenceId != i && activityAdder.sequenceIdManager.is_needed()) {
                     //request activities be wiped then try again
                     activityAdder.sequenceIdManager.needs_wipe = true;
