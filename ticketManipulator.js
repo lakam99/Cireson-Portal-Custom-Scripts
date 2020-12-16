@@ -66,13 +66,29 @@ var ticketManipulator = {
 
     wait_to_commit: function(new_obj, old_obj) {
         var req = ticketManipulator.generate_commit_data(new_obj, old_obj);
-        waiter.request("post", window.location.origin+"/api/V3/Projection/Commit", req, false);
-        return waiter.get_return();
+        return new Promise(function(resolve,reject){
+            $.ajax({
+                url: window.location.origin+"/api/V3/Projection/Commit",
+                type: "post",
+                contentType: 'application/json; charset=utf-8',
+                dataType: "json",
+                data: JSON.stringify(req),
+                async: false,
+                success: function() {
+                    resolve();
+                },
+                error: function(e) {
+                    console.error("ticketManipulator.wait_to_commit failed.");
+                    console.error(e);
+                    reject();
+                }
+            });
+        });
     },
 
     commit_new_obj: function(new_obj, old_obj, callback) {
         $.ajax({
-            url: '/api/V3/Projection/Commit',
+            url: window.location.origin+'/api/V3/Projection/Commit',
             type: 'post',
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
