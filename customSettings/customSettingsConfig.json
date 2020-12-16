@@ -55,7 +55,6 @@
         {
             "name": "scriptPatcher",
             "displayName": "Auto-update Portal",
-            "size": "col-md-4",
             "ieCompatible": true,
             "render": false,
             "value": true,
