@@ -142,7 +142,7 @@ html, body {
     background-color: inherit !important;
   }
 
-  .input[readonly], #new_activity {
+  .input[readonly] {
     color: white !important;
   }
 

@@ -2,9 +2,16 @@
 //arkam.mazrui@nserc-crsng.gc.ca
 //arkam.mazrui@gmail.com
 
-function get_settings() {
-	var s = localStorage.getItem("settings");
+function get_settings(q) {
+	q = !q ? "settings":q;
+	var s = localStorage.getItem(q);
 	return s==null?false:JSON.parse(s);
+}
+
+function set_settings(key, value) {
+	var s = get_settings();
+	s[key] = value;
+	localStorage.setItem("settings", JSON.stringify(s));
 }
 
 var s = get_settings();
@@ -37,15 +44,16 @@ var loadScript = function (path) {
 				result.resolve();
 		}
 	};
-	script.onerror = function () { console.log(result); result.reject(); };
+	script.onerror = function () {console.err("FAILED TO LOAD " + path);console.log(result); result.reject(); };
 	$("head")[0].appendChild(script);
 	console.log("Loaded " + path)
 	return result.promise();
 	
 };
 
-function loadScripts(script_arr) {
-	script_arr.forEach(function(script){loadScript(script)});
+function loadScripts(script_arr, xtra) {
+	xtra = !xtra? "" : xtra;
+	script_arr.forEach(function(script){loadScript(script+xtra)});
 }
 
 /* ----------------------------------------------- */
@@ -75,10 +83,17 @@ dependency_arr = [ 	"/CustomSpace/Scripts/ClientRequestManager/ClientRequestMana
 					"/CustomSpace/Scripts/accentSuggest/accentSuggest.js"];
 				
 $("head").append('<meta http-equiv="X-UA-Compatible" content="IE=11, IE=10, IE=9, ie=8, ie=7">');
-loadScript(dependency_arr[0]).then(function(){
-	loadScript(dependency_arr[1]).then(function() {
-		loadScript(dependency_arr[2]).then(function(){
-			loadScripts(scripts);
+
+var u = "";
+if ((s = get_settings().update_required) && s.value) {
+	set_settings("update_required", {value: false});
+	u = "?v="+Math.round(Math.random()*15);
+} 
+
+loadScript(dependency_arr[0] + u).then(function(){
+	loadScript(dependency_arr[1] + u).then(function() {
+		loadScript(dependency_arr[2] + u).then(function(){
+			loadScripts(scripts, u);
 		});
 	}) 
 });

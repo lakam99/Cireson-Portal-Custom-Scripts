@@ -46,7 +46,14 @@ var customSettings = {
         function() {
             customSettings.settings.customSettings.forEach(function(setting){
                 if (setting.render || setting.render === undefined) {
-                    var value = setting.value ? setting.value:settings_controller.get_setting_value(setting.name);
+                    var value = null;
+                    if (setting.default !== undefined && !settings_controller.setting_exists(setting.name)) {
+                        value = setting.default;
+                        settings_controller.set_setting_value(setting.name, value);
+                    }
+                    else
+                        value = setting.value ? setting.value:settings_controller.get_setting_value(setting.name);
+                    setting.value = value;
                     if (value) {value = 'checked'} else {value = ''}
                     setting.html = '<div class="'+setting.size+'"><div class="form-group">'+
                     '<label class="control-label" for="'+setting.name+'_container">'+setting.displayName+'</label>'+

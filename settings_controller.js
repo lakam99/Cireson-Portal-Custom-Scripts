@@ -79,6 +79,10 @@ var settings_controller = {
         }
     },
 
+    setting_exists: function(setting_name) {
+        return settings_controller.get_parsed_settings()[setting_name] !== undefined;
+    },
+
     get_setting_value: function(setting_name) {
         var settings = settings_controller.get_setting(setting_name);
         if (settings.value === undefined) {
