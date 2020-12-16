@@ -57,8 +57,8 @@
             "displayName": "Auto-update Portal",
             "size": "col-md-4",
             "ieCompatible": true,
-            "render": true,
-            "default": true,
+            "render": false,
+            "value": true,
             "toggleFunctions": {
                 "functionsLocation":"/CustomSpace/CustomSettings/scriptPatcher/scriptPatcher.js",
                 "toggleOn": {
