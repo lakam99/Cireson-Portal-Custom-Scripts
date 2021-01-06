@@ -110,6 +110,10 @@ html, body {
   .k-state-hover {
     background-color: rgb(58, 25, 85) !important;
   }
+
+  tr.k-state-selected {
+    background-color: rgb(111, 45, 165) !important;
+  }
   
   svg:not([fill]) {fill: #7d7d7d !important}
   li, select {background-image: none !important}
