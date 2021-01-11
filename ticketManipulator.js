@@ -98,6 +98,17 @@ var ticketManipulator = {
         ticketManipulator.set_obj_status(obj, status);
     },
 
+    change_ticket_status: function(set_to_status) {
+        var ticket = customSettings.helperFunctions.monitorCopy.ticket;
+        if (!ticket || !set_to_status)
+            throw Error("Ticket not set.");
+        var new_ticket = ticketManipulator.deep_copy(ticket);
+        ticketManipulator.adaptive_set_obj_status(new_ticket, set_to_status);
+        ticketManipulator.commit_new_obj(new_ticket, ticket, function(){
+            location.reload();
+        });
+    },
+
     trigger_workflow_or_update_required: async function(obj) {
         return new Promise(function(resolve, reject){
             var status = obj.FullClassName == "Incident" ? ticketManipulator.constants.statuses.submitted.inc:ticketManipulator.constants.statuses.submitted.srq;
