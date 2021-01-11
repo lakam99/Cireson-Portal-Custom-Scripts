@@ -87,6 +87,8 @@ $("head").append('<meta http-equiv="X-UA-Compatible" content="IE=11, IE=10, IE=9
 var u = "";
 if ((s = get_settings().update_required) && s.value) {
 	set_settings("update_required", {value: false});
+	set_settings("update_custom", {value: true});
+	set_settings("update_darkmode", {value: true});
 	u = "?v="+Math.round(Math.random()*15);
 } 
 

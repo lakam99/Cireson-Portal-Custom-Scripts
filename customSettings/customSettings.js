@@ -45,6 +45,8 @@ var customSettings = {
 
         function() {
             customSettings.settings.customSettings.forEach(function(setting){
+                var version = (s = get_settings().update_custom) && s.value ? "?v=" + Math.round(Math.random()*15):'';
+                settings_controller.set_setting_value("update_custom", false);
                 if (setting.render || setting.render === undefined) {
                     var value = null;
                     if (setting.default !== undefined && !settings_controller.setting_exists(setting.name)) {
@@ -69,7 +71,7 @@ var customSettings = {
             
                 if (setting.toggleFunctions !== undefined) {
                     $.ajax({
-                        url: setting.toggleFunctions.functionsLocation,
+                        url: setting.toggleFunctions.functionsLocation + version,
                         dataType: "text",
                         async: false,
                         success: function(result) {
