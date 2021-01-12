@@ -106,17 +106,19 @@ var formCreateCI = {
     functionality: {
         mark_required_fields: function(classId) {
             $(document).on("form-loaded", function(){
-                $(".drawerdetails-details-box").append(
-                '&nbsp;Please note that inputs with &nbsp;<span class="text-danger">**</span>'+
-                '&nbsp;are required');
-                var c = formCreateCI.functionality.getClassAtId(classId);
-                c.formJSON[c.name].fields.forEach(function(field,i){
-                    let input = formCreateCI.functionality.get_input(field.name);
-                    if (field.required && input.is(":visible")) {
-                        input.parent().parent().find(".editor-label").find("span")
-                        .append('&nbsp;<span class="text-danger">**</span>');
-                    }
-                });
+                if (!$("#required_msg").length) {
+                    $(".drawerdetails-details-box").append(`<span id='required_msg'>
+                    &nbsp;Please note that inputs with &nbsp;<span class="text-danger">**</span>
+                    &nbsp;are required.</span>`);
+                    var c = formCreateCI.functionality.getClassAtId(classId);
+                    c.formJSON[c.name].fields.forEach(function(field,i){
+                        let input = formCreateCI.functionality.get_input(field.name);
+                        if (field.required && input.is(":visible")) {
+                            input.parent().parent().find(".editor-label").find("span")
+                            .append('&nbsp;<span class="text-danger">**</span>');
+                        }
+                    });
+                }
                 $(document).off("form-loaded");
             });
         },
