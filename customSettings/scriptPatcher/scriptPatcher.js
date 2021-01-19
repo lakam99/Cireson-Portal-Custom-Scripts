@@ -6,7 +6,7 @@ var scriptPatcherOn = function() {
             var settings = "scriptPatcher-data";
             var current = settings_controller.get_setting(settings);
 
-            if ((!current.data) || res.data.version != current.data.version) {
+            if ((!current.data) || res.data.version > current.data.version) {
                 settings_controller.set_setting_value("update_required", true);
                 location.reload();
             }

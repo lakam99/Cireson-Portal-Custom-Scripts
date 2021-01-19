@@ -58,7 +58,7 @@ var customSettings = {
                     setting.html = '<div class="'+setting.size+'"><div class="form-group">'+
                     '<label class="control-label" for="'+setting.name+'_container">'+setting.displayName+'</label>'+
                             '<div class="container custom-setting-container" name="'+setting.name+'_container">'+
-                                '<label class="switch" for="'+setting.name+'">'+
+                                '<label class="switch" for="'+setting.name+'" aria-label="Enable '+setting.displayName+'">'+
                                     '<input type="checkbox" id="'+setting.name+'" '+value+'/>'+
                                     '<div class="slider round"></div>'+
                                 '</label>'+

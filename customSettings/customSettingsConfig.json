@@ -5,7 +5,7 @@
             "displayName": "Dark Mode",
             "size": "col-md-4",
             "ieCompatible": false,
-            "default": true,
+            "default": false,
             "toggleFunctions": {
                 "functionsLocation": "/CustomSpace/CustomSettings/darkMode/darkMode.js", 
                 "toggleOn": {
