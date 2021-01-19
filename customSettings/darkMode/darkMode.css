@@ -114,6 +114,18 @@ html, body {
   tr.k-state-selected {
     background-color: rgb(111, 45, 165) !important;
   }
+
+  tr[role='row']:hover {
+    background-color: rgba(111, 45, 165, 0.1) !important;
+  }
+
+  td[role='gridcell']:hover {
+    background-color: rgba(111, 45, 165, 0.1) !important;
+  }
+
+  td[role='gridcell'] > a {
+    background-color: inherit !important;
+  }
   
   svg:not([fill]) {fill: #7d7d7d !important}
   li, select {background-image: none !important}

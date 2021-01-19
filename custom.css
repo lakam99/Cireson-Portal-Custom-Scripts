@@ -1,179 +1,179 @@
 .k-pager-numbers {
-    list-style-type: none;
+  list-style-type: none;
 }
 
 legend.createUserLegend {
-  padding-left: 5%;
-  padding-top: 2%;
+padding-left: 5%;
+padding-top: 2%;
 }
 
 .expand-collapse-container.expanded {
-  display: block;
+display: block;
 }
 
 .expand-collapse-container.collapsed {
-  display: none;
+display: none;
 }
 
 .switch {
-    display: inline-block;
-    height: 26px;
-    position: relative;
-    width: 60px;
-  }
-  
-  .switch input {
-    display:none;
-  }
-
-  .custom-setting-container {
-    margin-bottom: auto;
-  }
-  
-  .slider {
-    background-color: #ccc;
-    bottom: 0;
-    cursor: pointer;
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-    transition: .4s;
-  }
-  
-  .slider:before {
-    background-color: #fff;
-    bottom: 3px;
-    content: "";
-    height: 20px;
-    left: 4px;
-    position: absolute;
-    transition: .4s;
-    width: 20px;
-  }
-
-  .letter {
-    margin: 1% !important;
-    }
-  
-  input:not(:checked)+.slider {
-    background-color: lightcoral !important;
-  }
-
-  input:checked + .slider {
-    background-color: #66bb6a !important;
-  }
-  
-  input:checked + .slider:before {
-    transform: translateX(32px);
-  }
-  
-  .slider.round {
-    border-radius: 34px;
-  }
-  
-  .slider.round:before {
-    border-radius: 50%;
-  }
-
-#new_activity {
-  height: 20% !important;
-  line-height: initial !important;
-  color: black !important;
+  display: inline-block;
+  height: 26px;
+  position: relative;
+  width: 60px;
 }
 
-  #activity_adder {
-    width: 100%;
-    height: 89%;
-    overflow: hidden;
-    margin: auto;
-    display: block;
+.switch input {
+  display:none;
+}
+
+.custom-setting-container {
+  margin-bottom: auto;
+}
+
+.slider {
+  background-color: #ccc;
+  bottom: 0;
+  cursor: pointer;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transition: .4s;
+}
+
+.slider:before {
+  background-color: #fff;
+  bottom: 3px;
+  content: "";
+  height: 20px;
+  left: 4px;
+  position: absolute;
+  transition: .4s;
+  width: 20px;
+}
+
+.letter {
+  margin: 1% !important;
+  }
+
+input:not(:checked)+.slider {
+  background-color: lightcoral !important;
+}
+
+input:checked + .slider {
+  background-color: #66bb6a !important;
+}
+
+input:checked + .slider:before {
+  transform: translateX(32px);
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+#new_activity {
+height: 20% !important;
+line-height: initial !important;
+color: black !important;
+}
+
+#activity_adder {
+  width: 100%;
+  height: 89%;
+  overflow: hidden;
+  margin: auto;
+  display: block;
 }
 
 .activity_inner {
-  margin-left: 2%;
-  margin-bottom: 5%;
-  width: 75%;
-  height: 60%;
-  max-height: 250px;
-  background-color: rgba(161,161,161,0.3);
-  border: 1px solid grey;
-  overflow: scroll;
+margin-left: 2%;
+margin-bottom: 5%;
+width: 75%;
+height: 60%;
+max-height: 250px;
+background-color: rgba(161,161,161,0.3);
+border: 1px solid grey;
+overflow: scroll;
 }
 
 .drop_before,.drop_after {
-  display: inline-block;
-  background-color: white;
-  border: 1px dashed black;
-  content: "&nbsp;";
-  font-size: 1px;
+display: inline-block;
+background-color: white;
+border: 1px dashed black;
+content: "&nbsp;";
+font-size: 1px;
 }
 
 .activity_item {
-  border: 1px solid black;
-  padding-left: 4%;
-  padding-top: 2%;
-  background-color: rgb(255, 255, 255);
-  position: relative;
+border: 1px solid black;
+padding-left: 4%;
+padding-top: 2%;
+background-color: rgb(255, 255, 255);
+position: relative;
 }
 
 .parent_container {
-  display: block;
-  position: relative;
-  width: 90%;
-  background-color: rgba(161,161,161,0.3);
-  margin-left: 10%;
+display: block;
+position: relative;
+width: 90%;
+background-color: rgba(161,161,161,0.3);
+margin-left: 10%;
 }
 
 .activity_item:hover {
-  background-color: rgba(255,255,255,0.1);
+background-color: rgba(255,255,255,0.1);
 }
 
 .activity_item_icons {
-  float: right;
-  margin-right: 2%;
+float: right;
+margin-right: 2%;
 }
 
 .activity_icon {
-    margin: auto;
+  margin: auto;
 }
 
 #keyboard {
-  border: 1px solid #008ed6  !important;
-  background-color: #fff4f4 !important;
+border: 1px solid #008ed6  !important;
+background-color: #fff4f4 !important;
 }
 
 .fa-plus:hover,.fa-minus:hover {
-    color: royalblue;
-    cursor: pointer;
+  color: royalblue;
+  cursor: pointer;
 }
 
 .fa-plus {
-    color: green;
+  color: green;
 }
 
 .fa-minus {
-    color: rgb(202, 74, 74);
+  color: rgb(202, 74, 74);
 }
 
 .fa-caret-up,.fa-caret-down {
-  color: rgba(37, 41, 26, 0.541);
-  margin-right: 4px;
+color: rgba(37, 41, 26, 0.541);
+margin-right: 4px;
 }
 
 .my_nav {
-  background-color: transparent !important;
-  width: inherit !important;
-  height:3% !important
+background-color: transparent !important;
+width: inherit !important;
+height:3% !important
 }
 
 hr.indicator {
-  border: 1px dashed green;
-  margin: 1%;
+border: 1px dashed green;
+margin: 1%;
 }
 
 .k-confirm .k-window-titlebar::before {
-  content: 'Support Central 2012 Portal';
+content: 'Support Central 2012 Portal';
 }
 
 .k-confirm .k-window-titlebar .k-dialog-title {        
