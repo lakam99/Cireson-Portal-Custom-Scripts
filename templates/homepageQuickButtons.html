@@ -1,0 +1,21 @@
+<script>
+    function qb_srq() {
+        window.location.replace(window.location.origin + "/ServiceRequest/New/");
+    }
+
+    function qb_q() {
+        console.log("Qeustion button clicked");
+    }
+
+    function qb_inc() {
+        window.location.replace(window.location.origin + "/Incident/New/");
+    }
+</script>
+
+<div class='row'>
+    <div class="col-sm-12 text-center">
+        <a class="btn btn-lg" id='qb_srq' onclick="qb_srq()">Create a Service Request</a>
+        <a class="btn btn-lg" id='qb_q' onclick="qb_q()">Ask a Question</a>
+        <a class="btn btn-lg" id='qb_inc' onclick="qb_inc()">Create an Incident</a>
+    </div>
+</div>

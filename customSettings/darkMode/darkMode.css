@@ -141,7 +141,7 @@ html, body {
     border: 1px solid #008ed6 !important;
   }
   
-  button:hover,button.k-button:hover,button.k-button.k-primary:hover {
+  button:hover,button.k-button:hover,button.k-button.k-primary:hover, a.btn:hover {
     background-color: #008ed6 !important;
   }
 
