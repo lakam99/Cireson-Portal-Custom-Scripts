@@ -4,7 +4,8 @@
             "name": "homepageQuickButtons",
             "template": "/CustomSpace/Templates/homepageQuickButtons.html",
             "page": "/View/02efdc70-55c7-4ba8-9804-ca01631c1a54",
-            "before_filter": ".page_container > .row:nth-child(1)"
+            "before_filter": ".page_container > .row:nth-child(1)",
+            "enabled":false
         }
     ]
 }

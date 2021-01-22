@@ -1,0 +1,79 @@
+{
+    "system_critical": {
+        "async": false,
+        "array":[
+            {"name": "ClientRequestManager",
+            "url": "/CustomSpace/Scripts/ClientRequestManager/ClientRequestManager.js"},
+
+            {"name": "settings_controller",
+            "url": "/CustomSpace/Scripts/settings_controller/settings_controller.js"},
+
+            {"name": "accentSuggest",
+            "url": "/CustomSpace/Scripts/accentSuggest/accentSuggest.js"}
+        ]
+    },
+
+    "main_systems": {
+        "async": true,
+        "array":[
+            {"name": "templateApplier",
+            "url": "/CustomSpace/Scripts/templateApplier/templateApplier.js"},
+
+            {"name": "activityAdder",
+            "url": "/CustomSpace/Scripts/activityAdder/activityAdder.js"},
+
+            {"name": "ticketConverter",
+            "url": "/CustomSpace/Scripts/ticketConverter/ticketConverter.js"},
+
+            {"name": "ticketManipulator",
+            "url": "/CustomSpace/Scripts/ticketManipulator/ticketManipulator.js"},
+
+            {"name": "customSettings",
+            "url": "/CustomSpace/Scripts/customSettings/customSettings.js"},
+
+            {"name": "map_controller",
+            "url": "/CustomSpace/Scripts/mapController/map_controller.js"},
+
+            {"name": "accentSuggest",
+            "url": "/CustomSpace/Scripts/accentSuggest/accentSuggest.js"},
+
+            {"name": "htmlInjector",
+            "url": "/CustomSpace/Scripts/htmlInjector/htmlInjector.js"},
+
+            {"name": "quickies",
+            "url": "/CustomSpace/Scripts/Quickies/quickies.js"},
+
+            {"name": "homepageLocalizer",
+            "url": "/CustomSpace/Scripts/homepageLocalization/homepageLocalizer.js"},
+
+            {"name": "gridControl",
+            "url": "/CustomSpace/Scripts/gridControl/gridControl.js"},
+
+            {"name": "gridSaver",
+            "url": "/CustomSpace/Scripts/gridSaver/gridSaver.js"},
+
+            {"name": "watchListControl",
+            "url": "/CustomSpace/Scripts/watchListControl/watchListControl.js"},
+
+            {"name": "autoGroupAssigner",
+            "url": "/CustomSpace/Scripts/autoGroupAssigner/autoGroupAssigner.js"},
+
+            {"name": "formCreateCI",
+            "url": "/CustomSpace/Scripts/formCreateCI/formCreateCI.js"},
+
+            {"name": "hiddenUserFinder",
+            "url": "/CustomSpace/Scripts/hiddenUserFinder/hiddenUserFinder.js"},
+
+            {"name": "portalUserEmailManager",
+            "url": "/CustomSpace/Scripts/portalUserEmailManager/portalUserEmailManager.js"}
+        ]
+    },
+
+    "misc": {
+        "async": false,
+        "array":[
+            {"name": "ticketConverterProperties",
+            "url": "/CustomSpace/CustomData/ticketConverter/ticketConverterProperties.json"}
+        ]
+    }
+}
