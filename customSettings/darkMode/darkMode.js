@@ -1,5 +1,5 @@
 var darkModeOn = function() {
-    var link = window.location.origin + "/CustomSpace/CustomSettings/darkMode/darkMode.css";
+    var link = customGlobalLoader.get_url("darkModeStylesheet");
     $("head").before('<link type="text/css" rel="stylesheet"' +
     'id="dark-mode-general-link" href="'+link+'">');
 }

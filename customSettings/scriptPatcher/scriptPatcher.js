@@ -1,6 +1,6 @@
 var scriptPatcherOn = function() {
     $.ajax({
-        url: window.location.origin + "/CustomSpace/customSettings/scriptPatcher/versions.json?v="+Math.round(Math.random()*15),
+        url: window.location.origin + "/CustomSpace/customSettings/scriptPatcher/versions.json?v="+customGlobalLoader.get_random_int(),
         dataType: "json",
         success: function(res) {
             var settings = "scriptPatcher-data";

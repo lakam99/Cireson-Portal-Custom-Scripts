@@ -162,6 +162,10 @@ html, body {
     color: white !important;
   }
 
+  a.btn.btn-default#new_activity {
+    color: white !important;
+  }
+
   /* width */
 ::-webkit-scrollbar {
   width: 10px;

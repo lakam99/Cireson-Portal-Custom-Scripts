@@ -4,7 +4,7 @@
 
 var htmlInjector = {
     
-    config: window.location.origin + "/CustomSpace/Scripts/htmlInjector/htmlInjectorConfig.json",
+    config: customGlobalLoader.get_url("htmlInjectorConfig"),
 
     setup: [
         function() {

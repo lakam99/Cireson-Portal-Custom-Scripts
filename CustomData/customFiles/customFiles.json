@@ -73,7 +73,19 @@
         "async": false,
         "array":[
             {"name": "ticketConverterProperties",
-            "url": "/CustomSpace/CustomData/ticketConverter/ticketConverterProperties.json"}
+            "url": "/CustomSpace/CustomData/ticketConverter/ticketConverterProperties.json"},
+
+            {"name": "darkModeStylesheet",
+            "url": "/CustomSpace/CustomSettings/darkMode/darkMode.css"},
+
+            {"name": "htmlInjectorConfig",
+            "url": "/CustomSpace/Scripts/htmlInjector/htmlInjectorConfig.json"},
+
+            {"name": "customSettingsTemplate",
+            "url": "/CustomSpace/Templates/customSettings/customSettings.html"},
+
+            {"name": "customSettingsConfig",
+            "url": "/CustomSpace/CustomSettings/customSettingsConfig.json"}
         ]
     }
 }

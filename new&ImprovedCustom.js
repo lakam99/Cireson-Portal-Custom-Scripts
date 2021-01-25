@@ -3,7 +3,7 @@
 //arkam.mazrui@gmail.com
 
 var customGlobalLoader = {
-    files: window.location.origin + "/CustomData/customFiles/customFiles.json",
+    files: "/CustomSpace/CustomData/customFiles/customFiles.json",
     version: 0,
 
     get_settings: function() {
@@ -11,8 +11,8 @@ var customGlobalLoader = {
     },
 
     get_current_version: function() {
-        if ((s = get_settings()) && s.scriptPatcher-data) {
-            return s.scriptPatcher-data;
+        if ((s = customGlobalLoader.get_settings()) && s["scriptPatcher-data"]) {
+            return s["scriptPatcher-data"].data.version;
         } else {
             return 0;
         }
@@ -28,12 +28,12 @@ var customGlobalLoader = {
 
     setup: [
         function() {
-            customGlobalLoader.version = get_current_version();
+            customGlobalLoader.version = customGlobalLoader.get_current_version();
         },
 
         function() {
             $.ajax({
-                url: customGlobalLoader.files + customGlobalLoader.get_random_int(),
+                url: customGlobalLoader.files + "?v=" + customGlobalLoader.get_random_int(),
                 async: false,
                 dataType: "json",
                 success: function(response) {
@@ -44,41 +44,59 @@ var customGlobalLoader = {
     ],
 
     get_url: function(name) {
-        if ((f = customGlobalLoader.files.files) && f["misc"]) {
+        if ((f = customGlobalLoader.files) && f["misc"]) {
             for (var i = 0, f = f["misc"].array; i < f.length; i++) {
                 if (f[i].name == name)
-                    return customGlobalLoader.append_version(f[i].url);
+                    return customGlobalLoader.get_str_url(f[i].url);
             }
         }
         throw Error("Could not locate url with name " + name + ".");
     },
 
     main: {
-        load_file: function (file_obj, _async) {
-            $("head").append(`<script id='${file_obj.name}'></script>`);
-            var script = document.getElementById(file_obj.name);
-            script.async = _async,
-            script.type = "text/javascript",
-            sript.src = customGlobalLoader.get_str_url(file.url);
+        load_file: function (file_obj) {
+            var result = $.Deferred(),
+            script = document.createElement("script");
+            script.async = "async";
+            script.type = "text/javascript";
+            script.src = customGlobalLoader.get_str_url(file_obj.url);
+            script.onload = script.onreadystatechange = function(_, isAbort) {
+                if (!script.readyState || /loaded|complete/.test(script.readyState)) {
+                    if (isAbort)
+                        result.reject();
+                    else
+                        result.resolve();
+                }
+            };
+            script.onerror = function () {console.err("FAILED TO LOAD " +file_obj.url);console.log(result); result.reject(); };
+            $("head")[0].appendChild(script);
+            console.log("Loaded " + file_obj.url);
+            return result.promise();
         },
 
-        load_files: function (file_array) {
-            file_array.forEach(function (file) {
-                customGlobalLoader.main.load_file(file, file_array.async);
+        load_files: function (files) {
+            files.array.forEach(function (file) {
+                customGlobalLoader.main.load_file(file, files.async);
             })
         },
 
         load_critical_files: function() {
-            customGlobalLoader.main.load_files(customGlobalLoader.files.files.system_critical);
+            return new Promise(async function(resolve,reject){
+                for (var i = 0, s = customGlobalLoader.files.system_critical.array; i < s.length; i++) {
+                    await customGlobalLoader.main.load_file(s[i]);
+                }
+                resolve(true);
+            });
         },
 
         load_essential_files: function() {
-            customGlobalLoader.main.load_files(customGlobalLoader.files.files.main_systems);
+            customGlobalLoader.main.load_files(customGlobalLoader.files.main_systems);
         },
 
-        load_customspace: function (params) {
-          customGlobalLoader.main.load_critical_files();
-          customGlobalLoader.main.load_essential_files(); 
+        load_systems: function (params) {
+          customGlobalLoader.main.load_critical_files().then(function(){
+              customGlobalLoader.main.load_essential_files(); 
+          });
         },
 
         setup: function () {
@@ -86,8 +104,18 @@ var customGlobalLoader = {
         },
 
         load_customspace: function() {
+            customGlobalLoader.main.load_darkmode();
             customGlobalLoader.main.setup();
             customGlobalLoader.main.load_systems();
+        },
+        
+        load_darkmode: function() {
+            var s = customGlobalLoader.get_settings();
+            if (s && s.darkMode && s.darkMode.value) {
+                var link = window.location.origin + "/CustomSpace/CustomSettings/darkMode/darkMode.css";
+                $("head").before('<link type="text/css" rel="stylesheet"' +
+                'id="dark-mode-general-link" href="'+link+'">');
+            }
         }
     }
 }

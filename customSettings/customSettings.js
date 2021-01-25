@@ -4,10 +4,10 @@
 
 var customSettings = {
     properties: {
-        html: "/CustomSpace/Templates/customSettings/customSettings.html"
+        html: customGlobalLoader.get_url("customSettingsTemplate"),
     },
 
-    settings: "/CustomSpace/CustomSettings/customSettingsConfig.json",
+    settings: customGlobalLoader.get_url("customSettingsConfig"),
 
     helperFunctions: {},
 
@@ -69,7 +69,7 @@ var customSettings = {
             
                 if (setting.toggleFunctions !== undefined) {
                     $.ajax({
-                        url: setting.toggleFunctions.functionsLocation,
+                        url: customGlobalLoader.get_str_url(setting.toggleFunctions.functionsLocation),
                         dataType: "text",
                         async: false,
                         success: function(result) {

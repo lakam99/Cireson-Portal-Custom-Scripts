@@ -24,7 +24,7 @@ var ticketConverter = {
             classId:  "1cba7c99-4050-2749-fde9-2ed267208427"
         },
 
-        replace_properties: "/CustomSpace/CustomData/ticketConverter/ticketConverterProperties.json",
+        replace_properties: customGlobalLoader.get_url("ticketConverterProperties"),
 
         translate_properties: {
             "AppliesToWorkItem": "AppliesToTroubleTicket",
@@ -63,7 +63,7 @@ var ticketConverter = {
     setup: [
         function(){
             $.ajax({
-                url: window.location.origin + ticketConverter.properties.replace_properties,
+                url: ticketConverter.properties.replace_properties,
                 type: "get",
                 dataType: "json",
                 async: false,
