@@ -367,7 +367,7 @@ var activityAdder = {
 
         function() {
             //create task
-            app.custom.formTasks.add('ServiceRequest', 'Add Activity', function(formObj, viewModel){
+            formTasks.addFormTask(formTasks.type.srq, 'Add Activity', formTasks.permissions.sc, function(formObj, viewModel){
                 activityAdder.setters.set_ticket_info(formObj, viewModel);
                 var completed = viewModel.FullClassName == "Incident" ? ticketManipulator.constants.statuses.completed.inc:
                     ticketManipulator.constants.statuses.completed.srq;

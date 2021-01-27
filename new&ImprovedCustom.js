@@ -70,7 +70,7 @@ var customGlobalLoader = {
             };
             script.onerror = function () {console.err("FAILED TO LOAD " +file_obj.url);console.log(result); result.reject(); };
             $("head")[0].appendChild(script);
-            console.log("Loaded " + file_obj.url);
+            console.log("Loaded " + script.src);
             return result.promise();
         },
 
@@ -105,6 +105,7 @@ var customGlobalLoader = {
 
         load_customspace: function() {
             customGlobalLoader.main.load_darkmode();
+            customGlobalLoader.main.load_user_group();
             customGlobalLoader.main.setup();
             customGlobalLoader.main.load_systems();
         },
@@ -116,8 +117,66 @@ var customGlobalLoader = {
                 $("head").before('<link type="text/css" rel="stylesheet"' +
                 'id="dark-mode-general-link" href="'+link+'">');
             }
+        },
+
+        load_user_group: function() {
+            customGlobalLoader.main.when_session_available(function(){
+                var s = customGlobalLoader.get_settings();
+                if (s.user_groups == undefined) {
+                    $.ajax({
+                        url: window.location.origin + "/api/V3/User/GetUsersSupportGroupEnumerations",
+                        data: {Id: session.user.Id},
+                        dataType: "json",
+                        async: false,
+                        success: function(res) {
+                            s.user_groups = res;
+                            localStorage.setItem("settings", JSON.stringify(s));
+                            session.user.user_groups = customGlobalLoader.get_settings().user_groups;
+                        } 
+                    });
+                } else {
+                    session.user.user_groups = s.user_groups;
+                }
+            });
+        },
+
+        when_session_available: function(callback) {
+            var sw8 = setInterval(function(){
+                if (session != undefined && session.user != undefined) {
+                    callback();
+                    clearInterval(sw8);
+                }
+            }, 100);
         }
     }
 }
+
+var formTasks = {
+    type: {
+        srq: "ServiceRequest",
+        inc: "Incident",
+        both: "Both"
+    },
+    
+    permissions: {
+        sc: "Support Central"
+    },
+
+    addFormTask: function (type, title, permission, callback) {
+        var responses = session.user.user_groups;
+        for (var i = 0, response = responses[i]; i < responses.length; i++) {
+            if (response.Name.includes(permission)) {
+                if (type == formTasks.type.srq || type == formTasks.type.inc) {
+                    app.custom.formTasks.add(type, title, callback);
+                } else if (type == formTasks.type.both) {
+                    app.custom.formTasks.add(formTasks.type.srq, title, callback);
+                    app.custom.formTasks.add(formTasks.type.inc, title, callback);
+                }
+            }
+        }
+    }
+}
+
+
 
 customGlobalLoader.main.load_customspace();
