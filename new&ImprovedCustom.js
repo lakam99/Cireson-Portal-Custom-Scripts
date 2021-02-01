@@ -142,9 +142,13 @@ var customGlobalLoader = {
 
         when_session_available: function(callback) {
             var sw8 = setInterval(function(){
-                if (session != undefined && session.user != undefined) {
-                    callback();
-                    clearInterval(sw8);
+                try {
+                    if (session != undefined && session.user != undefined) {
+                        callback();
+                        clearInterval(sw8);
+                    }
+                } catch (e) {
+                    console.warn(e);
                 }
             }, 100);
         }
