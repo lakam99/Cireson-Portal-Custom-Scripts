@@ -172,9 +172,11 @@ var formTasks = {
             if (response.Name.includes(permission)) {
                 if (type == formTasks.type.srq || type == formTasks.type.inc) {
                     app.custom.formTasks.add(type, title, callback);
+                    break;
                 } else if (type == formTasks.type.both) {
                     app.custom.formTasks.add(formTasks.type.srq, title, callback);
                     app.custom.formTasks.add(formTasks.type.inc, title, callback);
+                    break;
                 }
             }
         }

@@ -69,11 +69,11 @@ input:checked + .slider:before {
 }
 
 .slider.round {
-  border-radius: 34px;
+  border-radius: 34px !important;
 }
 
 .slider.round:before {
-  border-radius: 50%;
+  border-radius: 50% !important;
 }
 
 #new_activity {
