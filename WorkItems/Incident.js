@@ -15,7 +15,8 @@
                                 {
                                     columnFieldList: [
                                         { DataType: "UserPicker", PropertyDisplayName: "AffectedUser", PropertyName: "RequestedWorkItem" },
-                                        { DataType: "String", PropertyDisplayName: "Alternatecontactmethod", PropertyName: "ContactMethod", ColSpan: 2, MinLength: 0, MaxLength: 256 }
+                                        { DataType: "String", PropertyDisplayName: "Alternatecontactmethod", PropertyName: "ContactMethod", ColSpan: 1, MinLength: 0, MaxLength: 256 },
+                                        { DataType: "String", PropertyDisplayName: "TFS Ticket#", PropertyName: "TFSTicketNumber", MinLength: 0, MaxLength: 40 }
                                     ],
                                 },
                                 {
