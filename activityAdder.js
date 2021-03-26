@@ -1,7 +1,7 @@
 //Written by Arkam Mazrui for the Cireson web portal
 //arkam.mazrui@nserc-crsng.gc.ca
 //arkam.mazrui@gmail.com
-
+var title = "Modify Activites";
 var UI_Builder = {
     collapse: "<span class='fa fa-caret-down'></span>",
     expand: "<span class='fa fa-caret-up'></span>",
@@ -210,13 +210,14 @@ var UI_Builder = {
 
 var activityAdder = {
     properties: {
+        title: title,
         activity_adder_html: "<div id='activity_adder'></div>",
         activity_selecter_html: "<div id='activity_selector'></div>",
         activity_container: "/CustomSpace/Templates/activityAdder/activityAdder.html",
         input_html: "<div id='activity_input_container'><input id='activity_adder_select'/></div>",
         dialog: {
             width: "502px",
-            title: "Add Activity",
+            title: title,
             modal: true,
             visible: false,
         },
@@ -367,7 +368,7 @@ var activityAdder = {
 
         function() {
             //create task
-            formTasks.addFormTask(formTasks.type.srq, 'Add Activity', formTasks.permissions.sc, function(formObj, viewModel){
+            formTasks.addFormTask(formTasks.type.srq, title, formTasks.permissions.sc, function(formObj, viewModel){
                 activityAdder.setters.set_ticket_info(formObj, viewModel);
                 var completed = viewModel.FullClassName == "Incident" ? ticketManipulator.constants.statuses.completed.inc:
                     ticketManipulator.constants.statuses.completed.srq;

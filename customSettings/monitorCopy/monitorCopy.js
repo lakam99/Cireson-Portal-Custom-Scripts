@@ -13,9 +13,12 @@ c.load_ticket = function() {
 var monitorCopyOn = async function() {
     c.load_ticket().then(function(){
         var s_name = "monitorCopy";
+        var field = "input[name='Title']";
         var required = settings_controller.get_setting_value(s_name);
         if (required) {
             c.ticket.RelatesToWorkItem.addItem(settings_controller.get_setting(s_name).data);
+            c.ticket.Title += " (Copy)";
+            $(field).val(c.ticket.Title);
             settings_controller.set_setting(s_name, {value:false});
         } else {
             $(document).ready(function(){

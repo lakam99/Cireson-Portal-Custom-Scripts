@@ -1,0 +1,114 @@
+﻿<ManagementPack ContentReadable="true" SchemaVersion="2.0" OriginalSchemaVersion="1.1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+  <Manifest>
+    <Identity>
+      <ID>ManagementPack.Add_TFS_Ticket</ID>
+      <Version>1.0.0.0</Version>
+    </Identity>
+    <Name>ManagementPack.Add_TFS_Ticket</Name>
+    <References>
+      <Reference Alias="System">
+        <ID>System.Library</ID>
+        <Version>7.5.8501.0</Version>
+        <PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
+      </Reference>
+      <Reference Alias="Console">
+        <ID>Microsoft.EnterpriseManagement.ServiceManager.UI.Console</ID>
+        <Version>10.19.1035.0</Version>
+        <PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
+      </Reference>
+      <Reference Alias="Alias_f035ff3c_80da_49a8_8924_3af349dcf6ae">
+        <ID>System.WorkItem.ServiceRequest.Library</ID>
+        <Version>10.19.1035.0</Version>
+        <PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
+      </Reference>
+      <Reference Alias="Alias_759c3897_aafa_42bd_8c1d_0a1c4791b625">
+        <ID>System.WorkItem.Incident.Library</ID>
+        <Version>10.19.1035.0</Version>
+        <PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
+      </Reference>
+      <Reference Alias="Alias_b104205a_35ce_4997_a135_c72453644f96">
+        <ID>ServiceManager.ServiceRequest.Library</ID>
+        <Version>10.19.1035.0</Version>
+        <PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
+      </Reference>
+      <Reference Alias="Alias_6cd88fb8_9f2d_4a9d_973a_1d845f4f71d5">
+        <ID>System.WorkItem.Library</ID>
+        <Version>10.19.1035.0</Version>
+        <PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
+      </Reference>
+      <Reference Alias="Alias_8c79dd76_37d5_4cba_991d_475263d88e90">
+        <ID>System.SupportingItem.Library</ID>
+        <Version>10.19.1035.0</Version>
+        <PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
+      </Reference>
+      <Reference Alias="Alias_46c15203_5c43_4f28_a2cc_b7383582b196">
+        <ID>System.Knowledge.Library</ID>
+        <Version>10.19.1035.0</Version>
+        <PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
+      </Reference>
+      <Reference Alias="Alias_c3d50af8_8542_46ee_9089_32981432a901">
+        <ID>System.ServiceCatalog.Library</ID>
+        <Version>10.19.1035.0</Version>
+        <PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
+      </Reference>
+      <Reference Alias="Alias_b8fb1c9c_1752_4039_a972_f324d62edbad">
+        <ID>ServiceManager.IncidentManagement.Library</ID>
+        <Version>10.19.1035.0</Version>
+        <PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
+      </Reference>
+      <Reference Alias="Alias_491f4d02_db0a_4c5e_864b_da158b603bc0">
+        <ID>System.WorkItem.Activity.Library</ID>
+        <Version>10.19.1035.0</Version>
+        <PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
+      </Reference>
+    </References>
+  </Manifest>
+  <TypeDefinitions>
+    <EntityTypes>
+      <ClassTypes>
+        <ClassType ID="ClassExtension_6ffd19b7_0841_4759_863b_fe28328c87ff" Accessibility="Public" Abstract="false" Base="Alias_f035ff3c_80da_49a8_8924_3af349dcf6ae!System.WorkItem.ServiceRequest" Hosted="false" Singleton="false" Extension="true">
+          <Property ID="TFSTicketNumber" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
+        </ClassType>
+        <ClassType ID="ClassExtension_da515b9a_36db_4df5_83f8_094a3780cdb5" Accessibility="Public" Abstract="false" Base="Alias_759c3897_aafa_42bd_8c1d_0a1c4791b625!System.WorkItem.Incident" Hosted="false" Singleton="false" Extension="true">
+          <Property ID="TFSTicketNumber" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
+        </ClassType>
+      </ClassTypes>
+    </EntityTypes>
+  </TypeDefinitions>
+  <Categories>
+    <Category ID="ManagementPack.Add_TFS_Ticket.Category" Value="Console!Microsoft.EnterpriseManagement.ServiceManager.ManagementPack">
+      <ManagementPackName>ManagementPack.Add_TFS_Ticket</ManagementPackName>
+      <ManagementPackVersion>1.0.0.0</ManagementPackVersion>
+    </Category>
+  </Categories>
+  <LanguagePacks>
+    <LanguagePack ID="ENC" IsDefault="true">
+      <DisplayStrings>
+        <DisplayString ElementID="ManagementPack.Add_TFS_Ticket">
+          <Name>ManagementPack.Add_TFS_Ticket</Name>
+        </DisplayString>
+      </DisplayStrings>
+    </LanguagePack>
+    <LanguagePack ID="ENU" IsDefault="false">
+      <DisplayStrings>
+        <DisplayString ElementID="ManagementPack.Add_TFS_Ticket">
+          <Name>ManagementPack.Add_TFS_Ticket</Name>
+        </DisplayString>
+        <DisplayString ElementID="ClassExtension_6ffd19b7_0841_4759_863b_fe28328c87ff">
+          <Name>Extension of Service Request</Name>
+          <Description>Extension of class Service Request</Description>
+        </DisplayString>
+        <DisplayString ElementID="ClassExtension_6ffd19b7_0841_4759_863b_fe28328c87ff" SubElementID="TFSTicketNumber">
+          <Name>TFSTicketNumber</Name>
+        </DisplayString>
+        <DisplayString ElementID="ClassExtension_da515b9a_36db_4df5_83f8_094a3780cdb5">
+          <Name>Extension of Incident</Name>
+          <Description>Extension of class Incident</Description>
+        </DisplayString>
+        <DisplayString ElementID="ClassExtension_da515b9a_36db_4df5_83f8_094a3780cdb5" SubElementID="TFSTicketNumber">
+          <Name>TFSTicketNumber</Name>
+        </DisplayString>
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPack>

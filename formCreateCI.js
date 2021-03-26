@@ -9,7 +9,7 @@ var menu2 = 1;
 var formCreateCI = {
 
     templates: [ 
-            "/CustomSpace/Templates/createConfigItem/createConfigItem.html",
+            customGlobalLoader.get_str_url("/CustomSpace/Templates/createConfigItem/createConfigItem.html"),
             '<div class="drawermenu-tile" data-level="1" style="width: auto; overflow: hidden auto; display: block;">'+
                 '<ul>'+
                 '<!-- Drawer Menu Select type -->'+
@@ -19,8 +19,8 @@ var formCreateCI = {
 
     classes: [
         {
-            formLocation: "/CustomSpace/Templates/createUser/createUser.html",
-            formJSON: "/CustomSpace/Templates/createUser/createUser.json",
+            formLocation: customGlobalLoader.get_str_url("/CustomSpace/Templates/createUser/createUser.html"),
+            formJSON: customGlobalLoader.get_str_url("/CustomSpace/Templates/createUser/createUser.json"),
             name: "createUser",
             displayName: "External User",
             classId: "10a7f898-e672-ccf3-8881-360bfb6a8f9a",
@@ -119,7 +119,6 @@ var formCreateCI = {
                         }
                     });
                 }
-                $(document).off("form-loaded");
             });
         },
 

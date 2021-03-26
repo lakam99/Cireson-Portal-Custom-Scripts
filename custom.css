@@ -143,7 +143,7 @@ border: 1px solid #008ed6  !important;
 background-color: #fff4f4 !important;
 }
 
-.fa-plus:hover,.fa-minus:hover {
+.fa-plus:hover,.fa-minus:hover,a.k-button.k-button-icon:hover {
   color: royalblue;
   cursor: pointer;
 }
@@ -178,6 +178,16 @@ content: 'Support Central 2012 Portal';
 
 .k-confirm .k-window-titlebar .k-dialog-title {        
 display:none;
+}
+
+.k-window .k-window-titlebar.k-header {
+  position: relative !important;
+}
+
+a.k-button.k-button-icon {
+  overflow: hidden !important;
+  height: fit-content !important;
+  width: fit-content !important;
 }
 
 .my_nav > .container > .navbar-nav > li > a {padding-top:5px !important; padding-bottom:5px !important;}

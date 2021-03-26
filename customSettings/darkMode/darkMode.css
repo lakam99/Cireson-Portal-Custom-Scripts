@@ -11,7 +11,7 @@ html, body {
   html *:not(input):not(textarea) {color: #dcdcdc !important}
   html *{background-color: rgb(41, 41, 41, 0.90) !important}
   
-  html *, html *[id], html *[class]:not(.global-search__body):not(.slider.round) {
+  html *, html *[id], html *[class]:not(.global-search__body):not(.slider.round):not(.gs-slider) {
     box-shadow: none !important;
     text-shadow: none !important;
     border-radius: unset !important;
@@ -169,6 +169,11 @@ html, body {
   a.dropdowntree-button.k-button {
     height: 100% !important;
     margin-left: -3px !important;
+  }
+
+  span.gs-slider {
+    background-color: #3c3cff26 !important;
+    border-radius: 25px !important;
   }
 
   /* width */
