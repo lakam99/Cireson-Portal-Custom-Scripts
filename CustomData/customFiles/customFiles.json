@@ -65,7 +65,10 @@
             "url": "/CustomSpace/Scripts/hiddenUserFinder/hiddenUserFinder.js"},
 
             {"name": "portalUserEmailManager",
-            "url": "/CustomSpace/Scripts/portalUserEmailManager/portalUserEmailManager.js"}
+            "url": "/CustomSpace/Scripts/portalUserEmailManager/portalUserEmailManager.js"},
+
+            {"name": "calendarManager",
+            "url": "/CustomSpace/Scripts/calendarManager/calendarManager.js"}
         ]
     },
 

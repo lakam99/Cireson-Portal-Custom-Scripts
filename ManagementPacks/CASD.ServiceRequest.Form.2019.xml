@@ -1,8 +1,8 @@
-﻿<ManagementPack xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" ContentReadable="true" SchemaVersion="2.0" OriginalSchemaVersion="1.1">
+﻿<ManagementPack ContentReadable="true" SchemaVersion="2.0" OriginalSchemaVersion="1.1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
   <Manifest>
     <Identity>
       <ID>CASD.ServiceRequest.Form.2019</ID>
-      <Version>1.0.0.7</Version>
+      <Version>1.0.0.9</Version>
     </Identity>
     <Name>CASD.ServiceRequest.Form.2019</Name>
     <References>
@@ -145,7 +145,6 @@
     <Category ID="CASD.ServiceRequest.Form.2019.Category" Value="Console!Microsoft.EnterpriseManagement.ServiceManager.ManagementPack">
       <ManagementPackName>CASD.ServiceRequest.Form.2019</ManagementPackName>
       <ManagementPackVersion>1.0.0.0</ManagementPackVersion>
-      <ManagementPackPublicKeyToken>f2bb20d72c4e1292</ManagementPackPublicKeyToken>
     </Category>
     <Category ID="CategoryId_ede2c85b_fb10_4373_a31d_78dc8580815a" Target="CASDAGENCIES" Value="Alias_8856a86a_7c0d_47e9_b2bd_1c3b4160c41a!Microsoft.EnterpriseManagement.ServiceManager.UI.Authoring.EnumerationViewTasks" />
     <Category ID="CategoryId_f0a1440f_f445_4017_8822_00b9cea3dc68" Target="CASDAGENCIES" Value="System!VisibleToUser" />
@@ -154,8 +153,1180 @@
   </Categories>
   <Presentation>
     <Forms>
-      <Form ID="CustomForm_2b9a4bb8_3a07_42ff_8537_973ba253d4c2" Accessibility="Public" Target="CustomForm_2b9a4bb8_3a07_42ff_8537_973ba253d4c2_TypeProjection" BaseForm="Alias_1c2a9e0a_eccc_43cd_8032_c05c8e802cd1!Microsoft.EnterpriseManagement.ServiceManager.Applications.ServiceRequest.Forms.ServiceRequestForm" TypeName="Microsoft.EnterpriseManagement.ServiceManager.Applications.ServiceRequest.Forms.ServiceRequestForm"><Category>Form</Category><Customization><AddControl Parent="srFormTabControl" Assembly="PresentationFramework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" Type="System.Windows.Controls.TabItem" Left="413.5" Top="11.3200000000001" Right="0" Bottom="0" Row="0" Column="0" /><AddControl Parent="Grid_1" Assembly="PresentationFramework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" Type="System.Windows.Controls.Label" Left="37.5" Top="52.3200000000001" Right="610" Bottom="835" Row="0" Column="0" /><PropertyChange Object="Label_1" Property="HorizontalAlignment"><NewValue>Left</NewValue></PropertyChange><PropertyChange Object="Label_1" Property="Margin"><NewValue>37.5,52.3200000000001,0,835</NewValue></PropertyChange><PropertyChange Object="Label_1" Property="VerticalAlignment"><NewValue>Top</NewValue></PropertyChange><PropertyChange Object="Label_1" Property="Margin"><NewValue>37.5,52.3200000000001,0,0</NewValue></PropertyChange><AddControl Parent="Grid_1" Assembly="PresentationFramework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" Type="System.Windows.Controls.TextBox" Left="40.5" Top="94.3200000000001" Right="607" Bottom="793" Row="0" Column="0" /><PropertyChange Object="TextBox_1" Property="HorizontalAlignment"><NewValue>Left</NewValue></PropertyChange><PropertyChange Object="TextBox_1" Property="Margin"><NewValue>40.5,94.3200000000001,0,793</NewValue></PropertyChange><PropertyChange Object="TextBox_1" Property="VerticalAlignment"><NewValue>Top</NewValue></PropertyChange><PropertyChange Object="TextBox_1" Property="Margin"><NewValue>40.5,94.3200000000001,0,0</NewValue></PropertyChange><Move X="3" Y="17.52"><Element Name="TextBox_1" /></Move><PropertyChange Object="TextBox_1" Property="Margin"><NewValue>37.5,76.8000000000001,610,811</NewValue></PropertyChange><PropertyChange Object="TextBox_1" Property="Margin"><NewValue>37.5,76.8000000000001,0,811</NewValue></PropertyChange><PropertyChange Object="TextBox_1" Property="Margin"><NewValue>37.5,76.8000000000001,0,0</NewValue></PropertyChange><AddControl Parent="Grid_1" Assembly="PresentationFramework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" Type="System.Windows.Controls.Label" Left="36.5" Top="137.32" Right="611" Bottom="750" Row="0" Column="0" /><PropertyChange Object="Label_2" Property="HorizontalAlignment"><NewValue>Left</NewValue></PropertyChange><PropertyChange Object="Label_2" Property="Margin"><NewValue>36.5,137.32,0,750</NewValue></PropertyChange><PropertyChange Object="Label_2" Property="VerticalAlignment"><NewValue>Top</NewValue></PropertyChange><PropertyChange Object="Label_2" Property="Margin"><NewValue>36.5,137.32,0,0</NewValue></PropertyChange><AddControl Parent="Grid_1" Assembly="Microsoft.EnterpriseManagement.UI.SMControls, Version=7.0.5000.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" Type="Microsoft.EnterpriseManagement.UI.WpfControls.ListPicker" Left="48.5" Top="177.32" Right="499" Bottom="713" Row="0" Column="0" /><PropertyChange Object="ListPicker_1" Property="HorizontalAlignment"><NewValue>Left</NewValue></PropertyChange><PropertyChange Object="ListPicker_1" Property="Margin"><NewValue>48.5,177.32,0,713</NewValue></PropertyChange><PropertyChange Object="ListPicker_1" Property="VerticalAlignment"><NewValue>Top</NewValue></PropertyChange><PropertyChange Object="ListPicker_1" Property="Margin"><NewValue>48.5,177.32,0,0</NewValue></PropertyChange><Move X="11" Y="16"><Element Name="ListPicker_1" /></Move><PropertyChange Object="ListPicker_1" Property="Margin"><NewValue>37.5,161.32,510,729</NewValue></PropertyChange><PropertyChange Object="ListPicker_1" Property="Margin"><NewValue>37.5,161.32,0,729</NewValue></PropertyChange><PropertyChange Object="ListPicker_1" Property="Margin"><NewValue>37.5,161.32,0,0</NewValue></PropertyChange><PropertyChange Object="TabItem_1" Property="Header"><NewValue>[Additional Infos]</NewValue></PropertyChange><PropertyChange Object="historyTabItem" Property="Header"><NewValue>[History]</NewValue></PropertyChange><PropertyBindingChange Object="Label_1" Property="Content"><NewBinding Enabled="False" /></PropertyBindingChange><PropertyChange Object="Label_1" Property="Content"><NewValue>Award Number</NewValue></PropertyChange><PropertyBindingChange Object="Label_1" Property="Content"><NewBinding Enabled="False" /></PropertyBindingChange><PropertyChange Object="Label_1" Property="Content"><NewValue>Award #:</NewValue></PropertyChange><PropertyBindingChange Object="TextBox_1" Property="Text"><NewBinding Enabled="False" /></PropertyBindingChange><PropertyChange Object="TextBox_1" Property="Text"><NewValue /></PropertyChange><PropertyBindingChange Object="Label_2" Property="Content"><NewBinding Enabled="False" /></PropertyBindingChange><PropertyChange Object="Label_2" Property="Content"><NewValue>Agency</NewValue></PropertyChange><PropertyBindingChange Object="TextBox_1" Property="Text"><NewBinding Enabled="True" Path="CASDAwardNumber" Mode="Default" BindsDirectlyToSource="False" UpdateSourceTrigger="Default" /></PropertyBindingChange><PropertyChange Object="ListPicker_1" Property="ParentCategoryId"><NewValue>e08292af-f5ee-786b-1d1f-b59ef8950df1</NewValue></PropertyChange><PropertyBindingChange Object="ListPicker_1" Property="SelectedItem"><NewBinding Enabled="True" Path="CASD_Agencies" Mode="TwoWay" BindsDirectlyToSource="False" UpdateSourceTrigger="PropertyChanged" /></PropertyBindingChange><PropertyChange Object="TextBox_1" Property="Height"><NewValue>Auto</NewValue></PropertyChange><PropertyChange Object="TextBox_1" Property="HorizontalAlignment"><NewValue>Stretch</NewValue></PropertyChange><PropertyChange Object="TextBox_1" Property="MinHeight"><NewValue>22</NewValue></PropertyChange><PropertyChange Object="TextBox_1" Property="VerticalAlignment"><NewValue>Bottom</NewValue></PropertyChange><PropertyChange Object="TextBox_1" Property="VerticalAlignment"><NewValue>Top</NewValue></PropertyChange><PropertyChange Object="TextBox_1" Property="HorizontalAlignment"><NewValue>Left</NewValue></PropertyChange><PropertyChange Object="Label_1" Property="Height"><NewValue>Auto</NewValue></PropertyChange><PropertyChange Object="Label_1" Property="MinHeight"><NewValue>22</NewValue></PropertyChange><PropertyChange Object="Label_2" Property="Height"><NewValue>Auto</NewValue></PropertyChange><PropertyChange Object="Label_2" Property="MinHeight"><NewValue>22</NewValue></PropertyChange><PropertyBindingChange Object="Label_2" Property="Content"><NewBinding Enabled="False" /></PropertyBindingChange><PropertyChange Object="Label_2" Property="Content"><NewValue>Agency:</NewValue></PropertyChange><PropertyChange Object="ListPicker_1" Property="Height"><NewValue>Auto</NewValue></PropertyChange><PropertyChange Object="ListPicker_1" Property="Width"><NewValue>200</NewValue></PropertyChange><PropertyChange Object="TextBox_1" Property="Width"><NewValue>100</NewValue></PropertyChange><PropertyChange Object="TextBox_1" Property="Width"><NewValue>180</NewValue></PropertyChange><PropertyChange Object="TextBox_1" Property="Width"><NewValue>120</NewValue></PropertyChange><AddControl Parent="Grid_1" Assembly="PresentationFramework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" Type="System.Windows.Controls.Label" Left="46.5" Top="228.32" Right="601" Bottom="659" Row="0" Column="0" /><PropertyChange Object="Label_3" Property="HorizontalAlignment"><NewValue>Left</NewValue></PropertyChange><PropertyChange Object="Label_3" Property="Margin"><NewValue>46.5,228.32,0,659</NewValue></PropertyChange><PropertyChange Object="Label_3" Property="VerticalAlignment"><NewValue>Top</NewValue></PropertyChange><PropertyChange Object="Label_3" Property="Margin"><NewValue>46.5,228.32,0,0</NewValue></PropertyChange><AddControl Parent="Grid_1" Assembly="Microsoft.EnterpriseManagement.UI.SMControls, Version=7.0.5000.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" Type="Microsoft.EnterpriseManagement.UI.WpfControls.ListPicker" Left="52.5" Top="276.32" Right="495" Bottom="614" Row="0" Column="0" /><PropertyChange Object="ListPicker_2" Property="HorizontalAlignment"><NewValue>Left</NewValue></PropertyChange><PropertyChange Object="ListPicker_2" Property="Margin"><NewValue>52.5,276.32,0,614</NewValue></PropertyChange><PropertyChange Object="ListPicker_2" Property="VerticalAlignment"><NewValue>Top</NewValue></PropertyChange><PropertyChange Object="ListPicker_2" Property="Margin"><NewValue>52.5,276.32,0,0</NewValue></PropertyChange><Move X="6" Y="23.52"><Element Name="ListPicker_2" /></Move><PropertyChange Object="ListPicker_2" Property="Margin"><NewValue>46.5,252.8,501,637</NewValue></PropertyChange><PropertyChange Object="ListPicker_2" Property="Margin"><NewValue>46.5,252.8,0,637</NewValue></PropertyChange><PropertyChange Object="ListPicker_2" Property="Margin"><NewValue>46.5,252.8,0,0</NewValue></PropertyChange><PropertyChange Object="ListPicker_2" Property="Height"><NewValue>0</NewValue></PropertyChange><PropertyChange Object="Label_3" Property="Height"><NewValue>Auto</NewValue></PropertyChange><PropertyChange Object="Label_3" Property="MinHeight"><NewValue>22</NewValue></PropertyChange><PropertyBindingChange Object="Label_3" Property="Content"><NewBinding Enabled="False" /></PropertyBindingChange><PropertyChange Object="Label_3" Property="Content"><NewValue>University / Institution</NewValue></PropertyChange><PropertyChange Object="Label_3" Property="Width"><NewValue>120</NewValue></PropertyChange><PropertyBindingChange Object="Label_3" Property="Content"><NewBinding Enabled="False" /></PropertyBindingChange><PropertyChange Object="Label_3" Property="Content"><NewValue>University / Institution:</NewValue></PropertyChange><PropertyChange Object="ListPicker_2" Property="Height"><NewValue>Auto</NewValue></PropertyChange><PropertyChange Object="ListPicker_2" Property="Width"><NewValue>280</NewValue></PropertyChange><PropertyChange Object="ListPicker_2" Property="Width"><NewValue>300</NewValue></PropertyChange><Move X="9" Y="-2"><Element Name="Label_3" /></Move><PropertyChange Object="Label_3" Property="Margin"><NewValue>37.5,230.32,570,660</NewValue></PropertyChange><PropertyChange Object="Label_3" Property="Margin"><NewValue>37.5,230.32,0,660</NewValue></PropertyChange><PropertyChange Object="Label_3" Property="Margin"><NewValue>37.5,230.32,0,0</NewValue></PropertyChange><PropertyChange Object="Label_3" Property="Height"><NewValue>22</NewValue></PropertyChange><Move X="9" Y="0"><Element Name="ListPicker_2" /></Move><PropertyChange Object="ListPicker_2" Property="Margin"><NewValue>37.5,252.8,390,637</NewValue></PropertyChange><PropertyChange Object="ListPicker_2" Property="Margin"><NewValue>37.5,252.8,0,637</NewValue></PropertyChange><PropertyChange Object="ListPicker_2" Property="Margin"><NewValue>37.5,252.8,0,0</NewValue></PropertyChange><PropertyChange Object="ListPicker_2" Property="Height"><NewValue>22</NewValue></PropertyChange><PropertyChange Object="Label_3" Property="Margin"><NewValue>37.5,230.32,570,660</NewValue></PropertyChange><PropertyChange Object="Label_3" Property="Margin"><NewValue>37.5,230.32,0,660</NewValue></PropertyChange><PropertyChange Object="Label_3" Property="Margin"><NewValue>37.5,230.32,0,0</NewValue></PropertyChange><Move X="-1" Y="-2"><Element Name="Label_2" /></Move><PropertyChange Object="Label_2" Property="Margin"><NewValue>37.5,139.32,610,751</NewValue></PropertyChange><PropertyChange Object="Label_2" Property="Margin"><NewValue>37.5,139.32,0,751</NewValue></PropertyChange><PropertyChange Object="Label_2" Property="Margin"><NewValue>37.5,139.32,0,0</NewValue></PropertyChange><PropertyChange Object="Label_2" Property="Height"><NewValue>22</NewValue></PropertyChange><Move X="0" Y="10"><Element Name="Label_3" /></Move><PropertyChange Object="Label_3" Property="Margin"><NewValue>37.5,220.32,570,670</NewValue></PropertyChange><PropertyChange Object="Label_3" Property="Margin"><NewValue>37.5,220.32,0,670</NewValue></PropertyChange><PropertyChange Object="Label_3" Property="Margin"><NewValue>37.5,220.32,0,0</NewValue></PropertyChange><Move X="0" Y="10"><Element Name="ListPicker_2" /></Move><PropertyChange Object="ListPicker_2" Property="Margin"><NewValue>37.5,242.8,390,647</NewValue></PropertyChange><PropertyChange Object="ListPicker_2" Property="Margin"><NewValue>37.5,242.8,0,647</NewValue></PropertyChange><PropertyChange Object="ListPicker_2" Property="Margin"><NewValue>37.5,242.8,0,0</NewValue></PropertyChange><Move X="0" Y="8"><Element Name="Label_2" /></Move><PropertyChange Object="Label_2" Property="Margin"><NewValue>37.5,131.32,610,759</NewValue></PropertyChange><PropertyChange Object="Label_2" Property="Margin"><NewValue>37.5,131.32,0,759</NewValue></PropertyChange><PropertyChange Object="Label_2" Property="Margin"><NewValue>37.5,131.32,0,0</NewValue></PropertyChange><Move X="0" Y="8"><Element Name="ListPicker_1" /></Move><PropertyChange Object="ListPicker_1" Property="Margin"><NewValue>37.5,153.32,490,737</NewValue></PropertyChange><PropertyChange Object="ListPicker_1" Property="Margin"><NewValue>37.5,153.32,0,737</NewValue></PropertyChange><PropertyChange Object="ListPicker_1" Property="Margin"><NewValue>37.5,153.32,0,0</NewValue></PropertyChange><PropertyChange Object="ListPicker_1" Property="Height"><NewValue>22</NewValue></PropertyChange><PropertyChange Object="altContactTextBox" Property="Foreground"><NewValue>#FF999999</NewValue></PropertyChange><PropertyChange Object="altContactTextBox" Property="IsEnabled"><NewValue>False</NewValue></PropertyChange><PropertyChange Object="altContactTextBox" Property="Foreground"><NewValue>#FF000000</NewValue></PropertyChange><PropertyChange Object="altContactTextBox" Property="IsEnabled"><NewValue>True</NewValue></PropertyChange><PropertyChange Object="ListPicker_2" Property="ParentCategoryId"><NewValue>2cec693b-fbc1-15e2-3545-706de8373a12</NewValue></PropertyChange><PropertyBindingChange Object="ListPicker_2" Property="SelectedItem"><NewBinding Enabled="True" Path="CASD_Universities" Mode="TwoWay" BindsDirectlyToSource="False" UpdateSourceTrigger="PropertyChanged" /></PropertyBindingChange><PropertyChange Object="titleTextBox" Property="Foreground"><NewValue>#FF999999</NewValue></PropertyChange><PropertyChange Object="titleTextBox" Property="IsEnabled"><NewValue>False</NewValue></PropertyChange><PropertyChange Object="titleTextBox" Property="Foreground"><NewValue>#FF000000</NewValue></PropertyChange><PropertyChange Object="titleTextBox" Property="IsEnabled"><NewValue>True</NewValue></PropertyChange></Customization></Form>
-      <Form ID="CustomForm_32326534_92c6_446b_90f4_50beecce3f01" Accessibility="Public" Target="CustomForm_32326534_92c6_446b_90f4_50beecce3f01_TypeProjection" BaseForm="Alias_93f536a4_0d08_4981_83a0_27a511b319b5!System.WorkItem.Incident.ConsoleForm" TypeName="Microsoft.EnterpriseManagement.ServiceManager.Incident.Forms.IncidentFormControl"><Category>Form</Category></Form>
+      <Form ID="CustomForm_2b9a4bb8_3a07_42ff_8537_973ba253d4c2" Accessibility="Public" Target="CustomForm_2b9a4bb8_3a07_42ff_8537_973ba253d4c2_TypeProjection" BaseForm="Alias_1c2a9e0a_eccc_43cd_8032_c05c8e802cd1!Microsoft.EnterpriseManagement.ServiceManager.Applications.ServiceRequest.Forms.ServiceRequestForm" TypeName="Microsoft.EnterpriseManagement.ServiceManager.Applications.ServiceRequest.Forms.ServiceRequestForm">
+        <Category>Form</Category>
+        <Customization>
+          <AddControl Parent="srFormTabControl" Assembly="PresentationFramework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" Type="System.Windows.Controls.TabItem" Left="413.5" Top="11.3200000000001" Right="0" Bottom="0" Row="0" Column="0" />
+          <AddControl Parent="Grid_1" Assembly="PresentationFramework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" Type="System.Windows.Controls.Label" Left="37.5" Top="52.3200000000001" Right="610" Bottom="835" Row="0" Column="0" />
+          <PropertyChange Object="Label_1" Property="HorizontalAlignment">
+            <NewValue>Left</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="Label_1" Property="Margin">
+            <NewValue>37.5,52.3200000000001,0,835</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="Label_1" Property="VerticalAlignment">
+            <NewValue>Top</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="Label_1" Property="Margin">
+            <NewValue>37.5,52.3200000000001,0,0</NewValue>
+          </PropertyChange>
+          <AddControl Parent="Grid_1" Assembly="PresentationFramework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" Type="System.Windows.Controls.TextBox" Left="40.5" Top="94.3200000000001" Right="607" Bottom="793" Row="0" Column="0" />
+          <PropertyChange Object="TextBox_1" Property="HorizontalAlignment">
+            <NewValue>Left</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBox_1" Property="Margin">
+            <NewValue>40.5,94.3200000000001,0,793</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBox_1" Property="VerticalAlignment">
+            <NewValue>Top</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBox_1" Property="Margin">
+            <NewValue>40.5,94.3200000000001,0,0</NewValue>
+          </PropertyChange>
+          <Move X="3" Y="17.52">
+            <Element Name="TextBox_1" />
+          </Move>
+          <PropertyChange Object="TextBox_1" Property="Margin">
+            <NewValue>37.5,76.8000000000001,610,811</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBox_1" Property="Margin">
+            <NewValue>37.5,76.8000000000001,0,811</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBox_1" Property="Margin">
+            <NewValue>37.5,76.8000000000001,0,0</NewValue>
+          </PropertyChange>
+          <AddControl Parent="Grid_1" Assembly="PresentationFramework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" Type="System.Windows.Controls.Label" Left="36.5" Top="137.32" Right="611" Bottom="750" Row="0" Column="0" />
+          <PropertyChange Object="Label_2" Property="HorizontalAlignment">
+            <NewValue>Left</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="Label_2" Property="Margin">
+            <NewValue>36.5,137.32,0,750</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="Label_2" Property="VerticalAlignment">
+            <NewValue>Top</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="Label_2" Property="Margin">
+            <NewValue>36.5,137.32,0,0</NewValue>
+          </PropertyChange>
+          <AddControl Parent="Grid_1" Assembly="Microsoft.EnterpriseManagement.UI.SMControls, Version=7.0.5000.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" Type="Microsoft.EnterpriseManagement.UI.WpfControls.ListPicker" Left="48.5" Top="177.32" Right="499" Bottom="713" Row="0" Column="0" />
+          <PropertyChange Object="ListPicker_1" Property="HorizontalAlignment">
+            <NewValue>Left</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="ListPicker_1" Property="Margin">
+            <NewValue>48.5,177.32,0,713</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="ListPicker_1" Property="VerticalAlignment">
+            <NewValue>Top</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="ListPicker_1" Property="Margin">
+            <NewValue>48.5,177.32,0,0</NewValue>
+          </PropertyChange>
+          <Move X="11" Y="16">
+            <Element Name="ListPicker_1" />
+          </Move>
+          <PropertyChange Object="ListPicker_1" Property="Margin">
+            <NewValue>37.5,161.32,510,729</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="ListPicker_1" Property="Margin">
+            <NewValue>37.5,161.32,0,729</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="ListPicker_1" Property="Margin">
+            <NewValue>37.5,161.32,0,0</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TabItem_1" Property="Header">
+            <NewValue>[Additional Infos]</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="historyTabItem" Property="Header">
+            <NewValue>[History]</NewValue>
+          </PropertyChange>
+          <PropertyBindingChange Object="Label_1" Property="Content">
+            <NewBinding Enabled="False" />
+          </PropertyBindingChange>
+          <PropertyChange Object="Label_1" Property="Content">
+            <NewValue>Award Number</NewValue>
+          </PropertyChange>
+          <PropertyBindingChange Object="Label_1" Property="Content">
+            <NewBinding Enabled="False" />
+          </PropertyBindingChange>
+          <PropertyChange Object="Label_1" Property="Content">
+            <NewValue>Award #:</NewValue>
+          </PropertyChange>
+          <PropertyBindingChange Object="TextBox_1" Property="Text">
+            <NewBinding Enabled="False" />
+          </PropertyBindingChange>
+          <PropertyChange Object="TextBox_1" Property="Text">
+            <NewValue></NewValue>
+          </PropertyChange>
+          <PropertyBindingChange Object="Label_2" Property="Content">
+            <NewBinding Enabled="False" />
+          </PropertyBindingChange>
+          <PropertyChange Object="Label_2" Property="Content">
+            <NewValue>Agency</NewValue>
+          </PropertyChange>
+          <PropertyBindingChange Object="TextBox_1" Property="Text">
+            <NewBinding Enabled="True" Path="CASDAwardNumber" Mode="Default" BindsDirectlyToSource="False" UpdateSourceTrigger="Default" />
+          </PropertyBindingChange>
+          <PropertyChange Object="ListPicker_1" Property="ParentCategoryId">
+            <NewValue>e08292af-f5ee-786b-1d1f-b59ef8950df1</NewValue>
+          </PropertyChange>
+          <PropertyBindingChange Object="ListPicker_1" Property="SelectedItem">
+            <NewBinding Enabled="True" Path="CASD_Agencies" Mode="TwoWay" BindsDirectlyToSource="False" UpdateSourceTrigger="PropertyChanged" />
+          </PropertyBindingChange>
+          <PropertyChange Object="TextBox_1" Property="Height">
+            <NewValue>Auto</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBox_1" Property="HorizontalAlignment">
+            <NewValue>Stretch</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBox_1" Property="MinHeight">
+            <NewValue>22</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBox_1" Property="VerticalAlignment">
+            <NewValue>Bottom</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBox_1" Property="VerticalAlignment">
+            <NewValue>Top</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBox_1" Property="HorizontalAlignment">
+            <NewValue>Left</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="Label_1" Property="Height">
+            <NewValue>Auto</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="Label_1" Property="MinHeight">
+            <NewValue>22</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="Label_2" Property="Height">
+            <NewValue>Auto</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="Label_2" Property="MinHeight">
+            <NewValue>22</NewValue>
+          </PropertyChange>
+          <PropertyBindingChange Object="Label_2" Property="Content">
+            <NewBinding Enabled="False" />
+          </PropertyBindingChange>
+          <PropertyChange Object="Label_2" Property="Content">
+            <NewValue>Agency:</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="ListPicker_1" Property="Height">
+            <NewValue>Auto</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="ListPicker_1" Property="Width">
+            <NewValue>200</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBox_1" Property="Width">
+            <NewValue>100</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBox_1" Property="Width">
+            <NewValue>180</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBox_1" Property="Width">
+            <NewValue>120</NewValue>
+          </PropertyChange>
+          <AddControl Parent="Grid_1" Assembly="PresentationFramework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" Type="System.Windows.Controls.Label" Left="46.5" Top="228.32" Right="601" Bottom="659" Row="0" Column="0" />
+          <PropertyChange Object="Label_3" Property="HorizontalAlignment">
+            <NewValue>Left</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="Label_3" Property="Margin">
+            <NewValue>46.5,228.32,0,659</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="Label_3" Property="VerticalAlignment">
+            <NewValue>Top</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="Label_3" Property="Margin">
+            <NewValue>46.5,228.32,0,0</NewValue>
+          </PropertyChange>
+          <AddControl Parent="Grid_1" Assembly="Microsoft.EnterpriseManagement.UI.SMControls, Version=7.0.5000.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" Type="Microsoft.EnterpriseManagement.UI.WpfControls.ListPicker" Left="52.5" Top="276.32" Right="495" Bottom="614" Row="0" Column="0" />
+          <PropertyChange Object="ListPicker_2" Property="HorizontalAlignment">
+            <NewValue>Left</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="ListPicker_2" Property="Margin">
+            <NewValue>52.5,276.32,0,614</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="ListPicker_2" Property="VerticalAlignment">
+            <NewValue>Top</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="ListPicker_2" Property="Margin">
+            <NewValue>52.5,276.32,0,0</NewValue>
+          </PropertyChange>
+          <Move X="6" Y="23.52">
+            <Element Name="ListPicker_2" />
+          </Move>
+          <PropertyChange Object="ListPicker_2" Property="Margin">
+            <NewValue>46.5,252.8,501,637</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="ListPicker_2" Property="Margin">
+            <NewValue>46.5,252.8,0,637</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="ListPicker_2" Property="Margin">
+            <NewValue>46.5,252.8,0,0</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="ListPicker_2" Property="Height">
+            <NewValue>0</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="Label_3" Property="Height">
+            <NewValue>Auto</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="Label_3" Property="MinHeight">
+            <NewValue>22</NewValue>
+          </PropertyChange>
+          <PropertyBindingChange Object="Label_3" Property="Content">
+            <NewBinding Enabled="False" />
+          </PropertyBindingChange>
+          <PropertyChange Object="Label_3" Property="Content">
+            <NewValue>University / Institution</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="Label_3" Property="Width">
+            <NewValue>120</NewValue>
+          </PropertyChange>
+          <PropertyBindingChange Object="Label_3" Property="Content">
+            <NewBinding Enabled="False" />
+          </PropertyBindingChange>
+          <PropertyChange Object="Label_3" Property="Content">
+            <NewValue>University / Institution:</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="ListPicker_2" Property="Height">
+            <NewValue>Auto</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="ListPicker_2" Property="Width">
+            <NewValue>280</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="ListPicker_2" Property="Width">
+            <NewValue>300</NewValue>
+          </PropertyChange>
+          <Move X="9" Y="-2">
+            <Element Name="Label_3" />
+          </Move>
+          <PropertyChange Object="Label_3" Property="Margin">
+            <NewValue>37.5,230.32,570,660</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="Label_3" Property="Margin">
+            <NewValue>37.5,230.32,0,660</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="Label_3" Property="Margin">
+            <NewValue>37.5,230.32,0,0</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="Label_3" Property="Height">
+            <NewValue>22</NewValue>
+          </PropertyChange>
+          <Move X="9" Y="0">
+            <Element Name="ListPicker_2" />
+          </Move>
+          <PropertyChange Object="ListPicker_2" Property="Margin">
+            <NewValue>37.5,252.8,390,637</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="ListPicker_2" Property="Margin">
+            <NewValue>37.5,252.8,0,637</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="ListPicker_2" Property="Margin">
+            <NewValue>37.5,252.8,0,0</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="ListPicker_2" Property="Height">
+            <NewValue>22</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="Label_3" Property="Margin">
+            <NewValue>37.5,230.32,570,660</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="Label_3" Property="Margin">
+            <NewValue>37.5,230.32,0,660</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="Label_3" Property="Margin">
+            <NewValue>37.5,230.32,0,0</NewValue>
+          </PropertyChange>
+          <Move X="-1" Y="-2">
+            <Element Name="Label_2" />
+          </Move>
+          <PropertyChange Object="Label_2" Property="Margin">
+            <NewValue>37.5,139.32,610,751</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="Label_2" Property="Margin">
+            <NewValue>37.5,139.32,0,751</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="Label_2" Property="Margin">
+            <NewValue>37.5,139.32,0,0</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="Label_2" Property="Height">
+            <NewValue>22</NewValue>
+          </PropertyChange>
+          <Move X="0" Y="10">
+            <Element Name="Label_3" />
+          </Move>
+          <PropertyChange Object="Label_3" Property="Margin">
+            <NewValue>37.5,220.32,570,670</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="Label_3" Property="Margin">
+            <NewValue>37.5,220.32,0,670</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="Label_3" Property="Margin">
+            <NewValue>37.5,220.32,0,0</NewValue>
+          </PropertyChange>
+          <Move X="0" Y="10">
+            <Element Name="ListPicker_2" />
+          </Move>
+          <PropertyChange Object="ListPicker_2" Property="Margin">
+            <NewValue>37.5,242.8,390,647</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="ListPicker_2" Property="Margin">
+            <NewValue>37.5,242.8,0,647</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="ListPicker_2" Property="Margin">
+            <NewValue>37.5,242.8,0,0</NewValue>
+          </PropertyChange>
+          <Move X="0" Y="8">
+            <Element Name="Label_2" />
+          </Move>
+          <PropertyChange Object="Label_2" Property="Margin">
+            <NewValue>37.5,131.32,610,759</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="Label_2" Property="Margin">
+            <NewValue>37.5,131.32,0,759</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="Label_2" Property="Margin">
+            <NewValue>37.5,131.32,0,0</NewValue>
+          </PropertyChange>
+          <Move X="0" Y="8">
+            <Element Name="ListPicker_1" />
+          </Move>
+          <PropertyChange Object="ListPicker_1" Property="Margin">
+            <NewValue>37.5,153.32,490,737</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="ListPicker_1" Property="Margin">
+            <NewValue>37.5,153.32,0,737</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="ListPicker_1" Property="Margin">
+            <NewValue>37.5,153.32,0,0</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="ListPicker_1" Property="Height">
+            <NewValue>22</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="altContactTextBox" Property="Foreground">
+            <NewValue>#FF999999</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="altContactTextBox" Property="IsEnabled">
+            <NewValue>False</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="altContactTextBox" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="altContactTextBox" Property="IsEnabled">
+            <NewValue>True</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="ListPicker_2" Property="ParentCategoryId">
+            <NewValue>2cec693b-fbc1-15e2-3545-706de8373a12</NewValue>
+          </PropertyChange>
+          <PropertyBindingChange Object="ListPicker_2" Property="SelectedItem">
+            <NewBinding Enabled="True" Path="CASD_Universities" Mode="TwoWay" BindsDirectlyToSource="False" UpdateSourceTrigger="PropertyChanged" />
+          </PropertyBindingChange>
+          <PropertyChange Object="titleTextBox" Property="Foreground">
+            <NewValue>#FF999999</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="titleTextBox" Property="IsEnabled">
+            <NewValue>False</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="titleTextBox" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="titleTextBox" Property="IsEnabled">
+            <NewValue>True</NewValue>
+          </PropertyChange>
+          <Resize Type="BottomRight" X="304" Y="0">
+            <Element Name="altContactTextBox" />
+          </Resize>
+          <PropertyChange Object="altContactTextBox" Property="HorizontalAlignment">
+            <NewValue>Left</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="altContactTextBox" Property="Margin">
+            <NewValue>0,0,0,-15</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="altContactTextBox" Property="Width">
+            <NewValue>146.666666666667</NewValue>
+          </PropertyChange>
+          <Resize Type="BottomRight" X="296" Y="-2">
+            <Element Name="altContactHeaderedContentControl" />
+          </Resize>
+          <AddControl Parent="srInfoGrid" Assembly="PresentationFramework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" Type="System.Windows.Controls.Label" Left="55.8333333333334" Top="7" Right="99" Bottom="32" Row="0" Column="2" />
+          <PropertyChange Object="Label_4" Property="Width">
+            <NewValue>Auto</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="Label_4" Property="Height">
+            <NewValue>Auto</NewValue>
+          </PropertyChange>
+          <Move X="43" Y="7">
+            <Element Name="Label_4" />
+          </Move>
+          <PropertyChange Object="Label_4" Property="VerticalAlignment">
+            <NewValue>Top</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="Label_4" Property="Margin">
+            <NewValue>12.8333333333334,0,142,0</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="Label_4" Property="Height">
+            <NewValue>25.45</NewValue>
+          </PropertyChange>
+          <Resize Type="BottomRight" X="-28.5" Y="0.96999999999997">
+            <Element Name="Label_4" />
+          </Resize>
+          <PropertyChange Object="Label_4" Property="Margin">
+            <NewValue>12.8333333333334,0,113,39</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="Label_4" Property="Margin">
+            <NewValue>12.8333333333334,0,113,0</NewValue>
+          </PropertyChange>
+          <AddControl Parent="srInfoGrid" Assembly="PresentationFramework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" Type="System.Windows.Controls.TextBox" Left="36.6566666666668" Top="49" Right="164" Bottom="0" Row="0" Column="2" />
+          <PropertyChange Object="TextBox_2" Property="HorizontalAlignment">
+            <NewValue>Left</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBox_2" Property="Margin">
+            <NewValue>36.6566666666668,49,0,0</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBox_2" Property="VerticalAlignment">
+            <NewValue>Bottom</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBox_2" Property="Margin">
+            <NewValue>36.6566666666668,0,0,0</NewValue>
+          </PropertyChange>
+          <Move X="35" Y="20">
+            <Element Name="TextBox_2" />
+          </Move>
+          <PropertyChange Object="TextBox_2" Property="Margin">
+            <NewValue>1.65666666666675,19,199,20</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBox_2" Property="Margin">
+            <NewValue>1.65666666666675,19,0,20</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBox_2" Property="VerticalAlignment">
+            <NewValue>Stretch</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBox_2" Property="Height">
+            <NewValue>Auto</NewValue>
+          </PropertyChange>
+          <Move X="-11" Y="0">
+            <Element Name="TextBox_2" />
+          </Move>
+          <PropertyChange Object="TextBox_2" Property="Margin">
+            <NewValue>12.6566666666668,19,188,20</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBox_2" Property="Margin">
+            <NewValue>12.6566666666668,19,0,20</NewValue>
+          </PropertyChange>
+          <PropertyBindingChange Object="Label_4" Property="Content">
+            <NewBinding Enabled="False" />
+          </PropertyBindingChange>
+          <PropertyChange Object="Label_4" Property="Content">
+            <NewValue>[TFS Ticket#]:</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBox_2" Property="Text">
+            <NewValue></NewValue>
+          </PropertyChange>
+          <PropertyBindingChange Object="TextBox_2" Property="Text">
+            <NewBinding Enabled="True" Path="TFSTicketNumber" Mode="Default" BindsDirectlyToSource="False" UpdateSourceTrigger="Default" />
+          </PropertyBindingChange>
+          <Resize Type="BottomRight" X="-67" Y="-2">
+            <Element Name="TextBox_2" />
+          </Resize>
+          <PropertyChange Object="TextBox_2" Property="Margin">
+            <NewValue>12.6566666666668,19,121,18</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBox_2" Property="HorizontalAlignment">
+            <NewValue>Stretch</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBox_2" Property="Width">
+            <NewValue>Auto</NewValue>
+          </PropertyChange>
+          <Resize Type="BottomRight" X="0" Y="2.96999999999997">
+            <Element Name="TextBox_2" />
+          </Resize>
+          <Resize Type="BottomRight" X="-32.8675" Y="0">
+            <Element Name="altContactTextBox" />
+          </Resize>
+          <PropertyChange Object="altContactTextBox" Property="Margin">
+            <NewValue>0,0,0,-16</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="altContactTextBox" Property="HorizontalAlignment">
+            <NewValue>Stretch</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="altContactTextBox" Property="Width">
+            <NewValue>Auto</NewValue>
+          </PropertyChange>
+          <Resize Type="BottomRight" X="-68" Y="-1">
+            <Element Name="altContactHeaderedContentControl" />
+          </Resize>
+          <Move X="-70.9716666666666" Y="0">
+            <Element Name="Label_4" />
+            <Element Name="TextBox_2" />
+          </Move>
+          <PropertyChange Object="Label_4" Property="Margin">
+            <NewValue>83.805,0,42.0283333333334,40</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="Label_4" Property="Margin">
+            <NewValue>83.805,0,42.0283333333334,0</NewValue>
+          </PropertyChange>
+          <Resize Type="BottomRight" X="-45" Y="0">
+            <Element Name="altContactTextBox" />
+          </Resize>
+          <Move X="0" Y="2.48000000000002">
+            <Element Name="TextBox_2" />
+          </Move>
+          <PropertyChange Object="srFormTabControl" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="altContactTextBox" Property="Background">
+            <NewValue>#FFFFFFFF</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="titleTextBox" Property="Background">
+            <NewValue>#FFFFFFFF</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="descTextBox" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="descTextBox" Property="Background">
+            <NewValue>#FFFFFFFF</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBox_2" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBox_2" Property="Background">
+            <NewValue>#FFFFFFFF</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="privateCheckBox" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="commentTextBox" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="commentTextBox" Property="Background">
+            <NewValue>#FFFFFFFF</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="addCommentButton" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="expandAllButton" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="collapseAllButton" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="addActivitybutton" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="deleteActivityButton" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="menu_diagramScale" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="diagramScale_large" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="diagramScale_medium" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="diagramScale_small" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="diagramScale_extrasmall" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="btnsToolBarDiagramZoom/Index:1" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="toggleButtonDiagramView" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="toggleButtonListView" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="scrollViewerDiagramListView" Property="Background">
+            <NewValue>#FFFFFFFF</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="expanderDetailsPane" Property="BorderBrush">
+            <NewValue>#FFFFFFFF</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="textReview" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="textReview" Property="Background">
+            <NewValue>#FFFFFFFF</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="listView" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="addButton" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="removeButton" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="openButton" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="saveButton" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="listView" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="addButton" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="removeButton" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="openButton" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="saveButton" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="listView" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="addButton" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="removeButton" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="openButton" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="saveButton" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="listView" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="addButton" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="removeButton" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="openButton" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="saveButton" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="listView" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="addButton" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="removeButton" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="openButton" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="saveButton" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="RelatedSLAControlMainScrollViewer" Property="Background">
+            <NewValue>#FFFFFFFF</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="SLAItemsListView" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBox_1" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBox_1" Property="Background">
+            <NewValue>#FFFFFFFF</NewValue>
+          </PropertyChange>
+        </Customization>
+      </Form>
+      <Form ID="CustomForm_32326534_92c6_446b_90f4_50beecce3f01" Accessibility="Public" Target="CustomForm_32326534_92c6_446b_90f4_50beecce3f01_TypeProjection" BaseForm="Alias_93f536a4_0d08_4981_83a0_27a511b319b5!System.WorkItem.Incident.ConsoleForm" TypeName="Microsoft.EnterpriseManagement.ServiceManager.Incident.Forms.IncidentFormControl">
+        <Category>Form</Category>
+        <Customization>
+          <Resize Type="BottomRight" X="119" Y="0">
+            <Element Name="AlternateContactInfo" />
+          </Resize>
+          <PropertyChange Object="AlternateContactInfo" Property="HorizontalAlignment">
+            <NewValue>Left</NewValue>
+          </PropertyChange>
+          <Resize Type="BottomRight" X="231.74" Y="1">
+            <Element Name="StackPanel204" />
+          </Resize>
+          <AddControl Parent="UpperGeneralGrid" Assembly="PresentationFramework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" Type="System.Windows.Controls.Label" Left="51.6600000000001" Top="21" Right="109" Bottom="4" Row="0" Column="2" />
+          <PropertyChange Object="Label_1" Property="Width">
+            <NewValue>Auto</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="Label_1" Property="Height">
+            <NewValue>Auto</NewValue>
+          </PropertyChange>
+          <Move X="0" Y="18.45">
+            <Element Name="Label_1" />
+          </Move>
+          <AddControl Parent="UpperGeneralGrid" Assembly="PresentationFramework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" Type="System.Windows.Controls.TextBox" Left="78.49" Top="37" Right="140" Bottom="0" Row="0" Column="2" />
+          <PropertyChange Object="TextBox_1" Property="Width">
+            <NewValue>Auto</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBox_1" Property="VerticalAlignment">
+            <NewValue>Bottom</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBox_1" Property="Margin">
+            <NewValue>78.49,0,140,0</NewValue>
+          </PropertyChange>
+          <Move X="38.68" Y="3.55000000000001">
+            <Element Name="TextBox_1" />
+          </Move>
+          <PropertyChange Object="TextBox_1" Property="Margin">
+            <NewValue>39.8100000000001,22,178.68,3.55000000000001</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBox_1" Property="HorizontalAlignment">
+            <NewValue>Left</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBox_1" Property="Margin">
+            <NewValue>39.8100000000001,22,0,3.55000000000001</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBox_1" Property="Width">
+            <NewValue>109.415</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBox_1" Property="VerticalAlignment">
+            <NewValue>Stretch</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBox_1" Property="Height">
+            <NewValue>Auto</NewValue>
+          </PropertyChange>
+          <Move X="-12" Y="-0.100000000000023">
+            <Element Name="TextBox_1" />
+          </Move>
+          <PropertyChange Object="TextBox_1" Property="Margin">
+            <NewValue>51.8100000000001,22.1,137,3.44999999999999</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBox_1" Property="HorizontalAlignment">
+            <NewValue>Stretch</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBox_1" Property="Width">
+            <NewValue>Auto</NewValue>
+          </PropertyChange>
+          <PropertyBindingChange Object="Label_1" Property="Content">
+            <NewBinding Enabled="False" />
+          </PropertyBindingChange>
+          <PropertyChange Object="Label_1" Property="Content">
+            <NewValue>[TFS Ticket#]:</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBox_1" Property="Text">
+            <NewValue></NewValue>
+          </PropertyChange>
+          <PropertyBindingChange Object="TextBox_1" Property="Text">
+            <NewBinding Enabled="True" Path="TFSTicketNumber" Mode="Default" BindsDirectlyToSource="False" UpdateSourceTrigger="Default" />
+          </PropertyBindingChange>
+          <Resize Type="BottomRight" X="-21.5" Y="0.419999999999959">
+            <Element Name="TextBox_1" />
+          </Resize>
+          <Move X="1" Y="-0.519999999999982">
+            <Element Name="TextBox_1" />
+          </Move>
+          <Move X="0" Y="-3">
+            <Element Name="TextBox_1" />
+          </Move>
+          <PropertyChange Object="TextBox_1" Property="VerticalAlignment">
+            <NewValue>Bottom</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBox_1" Property="Margin">
+            <NewValue>51.8100000000001,0,116,-0.0699999999999932</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBox_1" Property="Height">
+            <NewValue>24.48</NewValue>
+          </PropertyChange>
+          <Resize Type="BottomRight" X="-0.5" Y="3">
+            <Element Name="TextBox_1" />
+          </Resize>
+          <PropertyChange Object="TextBox_1" Property="Margin">
+            <NewValue>51.8100000000001,23,115,2.96000000000004</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBox_1" Property="VerticalAlignment">
+            <NewValue>Stretch</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBox_1" Property="Height">
+            <NewValue>Auto</NewValue>
+          </PropertyChange>
+          <Move X="0" Y="-5">
+            <Element Name="TextBox_1" />
+          </Move>
+          <PropertyChange Object="TextBox_1" Property="VerticalAlignment">
+            <NewValue>Bottom</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBox_1" Property="Margin">
+            <NewValue>51.8100000000001,0,115,-2.03999999999996</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBox_1" Property="Height">
+            <NewValue>24.49</NewValue>
+          </PropertyChange>
+          <Move X="0" Y="2">
+            <Element Name="TextBox_1" />
+          </Move>
+          <PropertyChange Object="TextBox_1" Property="Margin">
+            <NewValue>51.8100000000001,26,115,-0.0399999999999636</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBox_1" Property="Margin">
+            <NewValue>51.8100000000001,0,115,-0.0399999999999636</NewValue>
+          </PropertyChange>
+          <Resize Type="BottomRight" X="0" Y="1.00999999999993">
+            <Element Name="TextBox_1" />
+          </Resize>
+          <PropertyChange Object="TextBox_1" Property="Margin">
+            <NewValue>51.8100000000001,24,115,0.990000000000066</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBox_1" Property="VerticalAlignment">
+            <NewValue>Stretch</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBox_1" Property="Margin">
+            <NewValue>51.8100000000001,24,113,0.990000000000066</NewValue>
+          </PropertyChange>
+          <Resize Type="TopRight" X="0" Y="-1">
+            <Element Name="TextBox_1" />
+          </Resize>
+          <PropertyChange Object="TextBox_1" Property="Height">
+            <NewValue>Auto</NewValue>
+          </PropertyChange>
+          <Resize Type="TopRight" X="-1.5" Y="-3">
+            <Element Name="TextBox_1" />
+          </Resize>
+          <PropertyChange Object="TextBox_1" Property="VerticalAlignment">
+            <NewValue>Bottom</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBox_1" Property="Margin">
+            <NewValue>51.8100000000001,0,112,0.990000000000066</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBox_1" Property="Height">
+            <NewValue>24.48</NewValue>
+          </PropertyChange>
+          <Resize Type="BottomRight" X="-0.5" Y="3">
+            <Element Name="TextBox_1" />
+          </Resize>
+          <PropertyChange Object="TextBox_1" Property="Margin">
+            <NewValue>51.8100000000001,22,111,3.47000000000008</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBox_1" Property="VerticalAlignment">
+            <NewValue>Stretch</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBox_1" Property="Height">
+            <NewValue>Auto</NewValue>
+          </PropertyChange>
+          <Move X="2.14999999999986" Y="6.44999999999999">
+            <Element Name="Label_1" />
+          </Move>
+          <PropertyChange Object="Label_1" Property="VerticalAlignment">
+            <NewValue>Top</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="Label_1" Property="Margin">
+            <NewValue>49.5100000000002,-3.89999999999998,111.15,0</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="Label_1" Property="Height">
+            <NewValue>25.45</NewValue>
+          </PropertyChange>
+          <Move X="2" Y="-3">
+            <Element Name="TextBox_1" />
+          </Move>
+          <Move X="0" Y="-6.55000000000001">
+            <Element Name="Label_1" />
+          </Move>
+          <PropertyChange Object="Label_1" Property="Margin">
+            <NewValue>49.5100000000002,2.65000000000003,111.15,22</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="Label_1" Property="VerticalAlignment">
+            <NewValue>Stretch</NewValue>
+          </PropertyChange>
+          <Resize Type="BottomRight" X="-38" Y="0">
+            <Element Name="AlternateContactInfo" />
+          </Resize>
+          <PropertyChange Object="AlternateContactInfo" Property="HorizontalAlignment">
+            <NewValue>Stretch</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="AlternateContactInfo" Property="Width">
+            <NewValue>Auto</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="AlternateContactInfo" Property="Height">
+            <NewValue>Auto</NewValue>
+          </PropertyChange>
+          <Resize Type="BottomRight" X="-45.925" Y="0.499999999999886">
+            <Element Name="TextBox_1" />
+          </Resize>
+          <Resize Type="BottomRight" X="14" Y="0">
+            <Element Name="TextBox_1" />
+          </Resize>
+          <PropertyChange Object="StopTimerButton" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="IncidentIdTextBox" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TabControl" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TabItem_General" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="AlternateContactInfo" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="AlternateContactInfo" Property="Background">
+            <NewValue>#FFFFFFFF</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="IncidentTitle" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="IncidentTitle" Property="Background">
+            <NewValue>#FFFFFFFF</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="IncidentDescription" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="IncidentDescription" Property="Background">
+            <NewValue>#FFFFFFFF</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="Priority" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="EscalateCheckBox" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBox_1" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBox_1" Property="Background">
+            <NewValue>#FFFFFFFF</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="AffectedServicesListView" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="AddServiceButton" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="DeleteServiceButton" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="OpenServiceButton" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="AddUserOwnerCIButton" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="AffectedItemsListView" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="AddAffectedCIButton" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="DeleteAffectedCIButton" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="OpenAffectedCIButton" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="PrivateCheckBox" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="AnalystCommentText" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="AnalystCommentText" Property="Background">
+            <NewValue>#FFFFFFFF</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="AddCommentButton" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="ExpandAll" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="CollapseAll" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="ScrollViewer253" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="ScrollViewer254" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBlock135" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBlock136" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBlock137" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBlock138" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBlock139" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBlock140" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="TextBlock141" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="ActivitiesTab" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="ScrollViewer253" Property="Background">
+            <NewValue>#FFFFFFFF</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="ActivitiesListView" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="AddActivitybutton" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="RemoveActivitybutton" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="OpenActivitybutton" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="ScrollViewer254" Property="Background">
+            <NewValue>#FFFFFFFF</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="ParentChildIncidents" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="ParentChildControl" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="ParentChildControlMainScrollViewer" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="ParentChildControlWaitDialog" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="ChildIncidentsTab" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="ParentChildControlMainScrollViewer" Property="Background">
+            <NewValue>#FFFFFFFF</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="ChildWorkItemsExpander" Property="BorderBrush">
+            <NewValue>#FFFFFFFF</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="SearchTextBox" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="SearchTextBox" Property="Background">
+            <NewValue>#FFFFFFFF</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="SearchButton" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="ChildWIListView" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="AddChildWIbutton" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="RemoveChildWIbutton" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="OpenChildWIbutton" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="RelatedItemsTab" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="WorkItemListView" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="AddWIButton" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="DeleteWIButton" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="OpenWIButton" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="ConfigurationItemsListView" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="AddCIButton" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="DeleteCIButton" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="OpenCIButton" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="KnowledgeListView" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="AddKnowledgeButton" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="DeleteKnowledgeButton" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="OpenKnowledgeButton" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="KnowledgeCombobox" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="AttachedFilesListView" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="AddAttachFileButton" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="DeleteAttachFileButton" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="SaveAttachmentButton" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="ResolutionTab" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="ResolutionAndBillableHours" Property="Foreground">
+            <NewValue>#FF646464</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="AddBillableHours" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="DeleteBillableHours" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="BillableHoursListView" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="Label448" Property="Foreground">
+            <NewValue>#FF6D6D6D</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="Label449" Property="Foreground">
+            <NewValue>#FF6D6D6D</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="ResolvedDescription" Property="Background">
+            <NewValue>#FFFFFFFF</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="ResolvedByDescription" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="RelatedSLAControlMainScrollViewer" Property="Background">
+            <NewValue>#FFFFFFFF</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="SLAItemsListView" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="historyTabControl" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="listBoxPropertyHistory" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="historyTabItem" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+          <PropertyChange Object="tgbtnNewBannerStopTimerButton" Property="Foreground">
+            <NewValue>#FF000000</NewValue>
+          </PropertyChange>
+        </Customization>
+      </Form>
     </Forms>
   </Presentation>
   <LanguagePacks>
