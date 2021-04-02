@@ -1,5 +1,4 @@
 //Written by Arkam Mazrui for the Cireson web portal
-//Based off of CustomCI.js by Geoff Ross
 //arkam.mazrui@nserc-crsng.gc.ca
 //arkam.mazrui@gmail.com
 
