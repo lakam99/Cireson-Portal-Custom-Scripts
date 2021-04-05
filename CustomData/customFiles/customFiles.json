@@ -68,7 +68,10 @@
             "url": "/CustomSpace/Scripts/portalUserEmailManager/portalUserEmailManager.js"},
 
             {"name": "calendarManager",
-            "url": "/CustomSpace/Scripts/calendarManager/calendarManager.js"}
+            "url": "/CustomSpace/Scripts/calendarManager/calendarManager.js"},
+
+            {"name": "globalSearch",
+            "url": "/CustomSpace/Scripts/globalSearch/globalSearch.js"}
         ]
     },
 

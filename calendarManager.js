@@ -1,10 +1,30 @@
 //Written by Arkam Mazrui for the Cireson web portal
-//Based off of CustomCI.js by Geoff Ross
 //arkam.mazrui@nserc-crsng.gc.ca
 //arkam.mazrui@gmail.com
 
-function calendarEvent(title, description, start, end) {
+function getUid(element) {
+    if (!element.dataset.uid) {
+        return getUid(element.parentNode);
+    } else {
+        return element.dataset.uid;
+    }
+}
+
+function calendarEvent(title, description, start, end, onclick) {
     this.title = title, this.description = description, this.start = new Date(start), this.end = new Date(end);
+
+    this.onclick = function(e) {
+        e.preventDefault();
+        var obj = calendarManager.obj.occurrenceByUid(getUid(e.target));
+        var url = window.location.origin + "/";
+        if (obj.description.includes("SRQ")) {
+            url += "ServiceRequest";
+        } else {
+            url += "Incident";
+        }
+        url += "/Edit/" + ticket.Id + "/";
+        window.location = url;
+    }
 }
 
 var calendarManager = {
@@ -13,6 +33,8 @@ var calendarManager = {
     page: {"/View/dc7957ab-6842-4453-aa7a-a5f2852043d7": "myworkitems", "/View/1ae3ffa1-fc12-4f9b-966b-57671cb06ce8": "myteamsworkitems"},
     data: [],
     data_loaded: false,
+    events_loaded: false,
+
     setup: [
         async function(page_num) {
             page_num = page_num ? page_num : 1;
@@ -50,12 +72,25 @@ var calendarManager = {
                     var clean = [];
                     calendarManager.data.forEach(function(ticket){
                         if (ticket.ScheduledStartDate && ticket.ScheduledEndDate) {
-                            clean.push(new calendarEvent(ticket.Title, ticket.Status, ticket.ScheduledStartDate, ticket.ScheduledEndDate));
+                            clean.push(new calendarEvent(ticket.Id + ":" + ticket.Title, ticket.Id, ticket.ScheduledStartDate, ticket.ScheduledEndDate));
                         }
                     });
                     calendarManager.data = clean;
                     calendarManager.obj.setDataSource(calendarManager.data);    //zinger
                     clearInterval(data_w8);
+                    calendarManager.events_loaded = true;
+                }
+            }, 100);
+        },
+
+        function() {
+            var events_w8 = setInterval(function(){
+                if (calendarManager.events_loaded) {
+                    var items = calendarManager.obj.items();
+                    for (var i = 0, cal_event = items[i]; i < items.length; i++) {
+                        cal_event.onclick = calendarManager.obj.occurrenceByUid(cal_event.dataset.uid).onclick;  //attach listener
+                    }
+                    clearInterval(events_w8);
                 }
             }, 100);
         }
