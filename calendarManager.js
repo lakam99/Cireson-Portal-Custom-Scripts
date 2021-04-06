@@ -2,6 +2,8 @@
 //arkam.mazrui@nserc-crsng.gc.ca
 //arkam.mazrui@gmail.com
 
+const dayMs = 8.64e7;
+
 function getUid(element) {
     if (!element.dataset.uid) {
         return getUid(element.parentNode);
@@ -10,19 +12,27 @@ function getUid(element) {
     }
 }
 
-function calendarEvent(title, description, start, end, onclick) {
-    this.title = title, this.description = description, this.start = new Date(start), this.end = new Date(end);
+function calendarEvent(ticket) {
+    this.title = `${ticket.Id}: ${ticket.Title}`, this.description = ticket.Id, this.start = new Date(ticket.ScheduledStartDate),
+     this.end = new Date(ticket.ScheduledEndDate), this.parentId = ticket.ParentWorkItemId;
+
+    if (this.start && !this.end) {
+        this.end = new Date(this.start.getTime() + dayMs);
+    } else if (!this.start && this.end) {
+        this.start = new Date(this.start.getTime() - Math.round(dayMs / 2));
+    }
 
     this.onclick = function(e) {
         e.preventDefault();
-        var obj = calendarManager.obj.occurrenceByUid(getUid(e.target));
+        var obj = calendarManager.get_by_uid(getUid(e.target));
         var url = window.location.origin + "/";
-        if (obj.description.includes("SRQ")) {
+        var ticket_type = obj.parentId ? obj.parentId : obj.description;
+        if (ticket_type.includes("SRQ")) {
             url += "ServiceRequest";
         } else {
             url += "Incident";
         }
-        url += "/Edit/" + ticket.Id + "/";
+        url += "/Edit/" + ticket_type + "/";
         window.location = url;
     }
 }
@@ -71,8 +81,8 @@ var calendarManager = {
                 if (calendarManager.data_loaded) {
                     var clean = [];
                     calendarManager.data.forEach(function(ticket){
-                        if (ticket.ScheduledStartDate && ticket.ScheduledEndDate) {
-                            clean.push(new calendarEvent(ticket.Id + ":" + ticket.Title, ticket.Id, ticket.ScheduledStartDate, ticket.ScheduledEndDate));
+                        if (ticket.ScheduledStartDate || ticket.ScheduledEndDate) {
+                            clean.push(new calendarEvent(ticket));
                         }
                     });
                     calendarManager.data = clean;
@@ -87,8 +97,8 @@ var calendarManager = {
             var events_w8 = setInterval(function(){
                 if (calendarManager.events_loaded) {
                     var items = calendarManager.obj.items();
-                    for (var i = 0, cal_event = items[i]; i < items.length; i++) {
-                        cal_event.onclick = calendarManager.obj.occurrenceByUid(cal_event.dataset.uid).onclick;  //attach listener
+                    for (var i = 0, cal_event = items[0]; i < items.length; i++, cal_event = items[i]) {
+                        cal_event.onclick = calendarManager.get_by_uid(cal_event.dataset.uid).onclick;  //attach listener
                     }
                     clearInterval(events_w8);
                 }
@@ -107,6 +117,15 @@ var calendarManager = {
             }, 100);
 
         }
+    },
+
+    get_by_uid: function(str_uid) {
+        var items = calendarManager.obj.dataSource.data();
+        var uids = items.map(function(i){return i.uid});
+        var objs = {};
+
+        uids.forEach(function(uid, i){objs[uid] = items[i]});
+        return objs[str_uid];
     }
 }
 
