@@ -166,18 +166,24 @@ var formTasks = {
         sc: "Support Central"
     },
 
+    user_has_permission: function(permission) {
+        var groups = session.user.user_groups;
+        for (var i = 0, group = groups[i]; i < groups.length; i++, group = groups[i]) {
+            if (group.Name.includes(permission)) {
+                return true;
+            }
+        }
+        return false;
+    },
+
     addFormTask: function (type, title, permission, callback) {
         var responses = session.user.user_groups;
-        for (var i = 0, response = responses[i]; i < responses.length; i++) {
-            if (response.Name.includes(permission)) {
-                if (type == formTasks.type.srq || type == formTasks.type.inc) {
-                    app.custom.formTasks.add(type, title, callback);
-                    break;
-                } else if (type == formTasks.type.both) {
-                    app.custom.formTasks.add(formTasks.type.srq, title, callback);
-                    app.custom.formTasks.add(formTasks.type.inc, title, callback);
-                    break;
-                }
+        if (formTasks.user_has_permission(permission)) {
+            if (type == formTasks.type.srq || type == formTasks.type.inc) {
+                app.custom.formTasks.add(type, title, callback);
+            } else if (type == formTasks.type.both) {
+                app.custom.formTasks.add(formTasks.type.srq, title, callback);
+                app.custom.formTasks.add(formTasks.type.inc, title, callback);
             }
         }
     }

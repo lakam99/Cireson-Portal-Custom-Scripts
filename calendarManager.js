@@ -12,13 +12,22 @@ function getUid(element) {
     }
 }
 
+function click_wipe(element) {
+    if (element.childElementCount) {
+        element.onclick = null;
+        [].slice.call(element.children).forEach(function(child){click_wipe(child)});
+    } else {
+        element.onclick = null;
+    }
+}
+
 function calendarEvent(ticket) {
     this.title = `${ticket.Id}: ${ticket.Title}`, this.description = ticket.Id, this.start = new Date(ticket.ScheduledStartDate),
-     this.end = new Date(ticket.ScheduledEndDate), this.parentId = ticket.ParentWorkItemId;
+     this.end = new Date(ticket.ScheduledEndDate), this.parentId = ticket.ParentWorkItemId, this.id = ticket.ParentWorkItemId || ticket.Id;
 
-    if (this.start && !this.end) {
+    if (this.start.getTime() && !this.end.getTime()) {
         this.end = new Date(this.start.getTime() + dayMs);
-    } else if (!this.start && this.end) {
+    } else if (!this.start.getTime() && this.end.getTime()) {
         this.start = new Date(this.start.getTime() - Math.round(dayMs / 2));
     }
 
@@ -32,7 +41,7 @@ function calendarEvent(ticket) {
         } else {
             url += "Incident";
         }
-        url += "/Edit/" + ticket_type + "/";
+        url += "/Edit/" + ticket_type + `?activityId=${obj.description}&tab=activity`;
         window.location = url;
     }
 }
@@ -96,15 +105,24 @@ var calendarManager = {
         function() {
             var events_w8 = setInterval(function(){
                 if (calendarManager.events_loaded) {
-                    var items = calendarManager.obj.items();
-                    for (var i = 0, cal_event = items[0]; i < items.length; i++, cal_event = items[i]) {
-                        cal_event.onclick = calendarManager.get_by_uid(cal_event.dataset.uid).onclick;  //attach listener
-                    }
-                    clearInterval(events_w8);
+                    calendarManager.bind_click();
+                    calendarManager.obj.bind("navigate", function(){
+                        setTimeout(function(){
+                            calendarManager.bind_click()
+                        },100)});
+                    clearInterval(events_w8); 
                 }
             }, 100);
-        }
+        },
     ],
+
+    bind_click: function() {
+        click_wipe(calendarManager.obj.element[0]);
+        var items = calendarManager.obj.items();
+        for (var i = 0, cal_event = items[0]; i < items.length; i++, cal_event = items[i]) {
+            cal_event.onclick = calendarManager.get_by_uid(cal_event.dataset.uid).onclick;  //attach listener
+        }
+    },
 
     stall_start: async function() {
         if (calendarManager.pages.includes(window.location.pathname)) {
