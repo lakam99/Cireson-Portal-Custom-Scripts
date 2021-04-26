@@ -67,6 +67,12 @@
             {"name": "portalUserEmailManager",
             "url": "/CustomSpace/Scripts/portalUserEmailManager/portalUserEmailManager.js"},
 
+            {"name": "DOMRemover",
+            "url": "/CustomSpace/Scripts/DOMRemover/DOMRemover.js"},
+
+            {"name": "AROManager",
+            "url": "/CustomSpace/Scripts/AROManager/AROManager.js"},
+
             {"name": "calendarManager",
             "url": "/CustomSpace/Scripts/calendarManager/calendarManager.js"},
 
@@ -91,7 +97,19 @@
             "url": "/CustomSpace/Templates/customSettings/customSettings.html"},
 
             {"name": "customSettingsConfig",
-            "url": "/CustomSpace/CustomSettings/customSettingsConfig.json"}
+            "url": "/CustomSpace/CustomSettings/customSettingsConfig.json"},
+
+            {"name": "DOMRemover-Config",
+            "url": "/CustomSpace/CustomData/DOMRemover/DOMRemover-Config.json"},
+
+            {"name": "AROManagerConfig",
+            "url":  "/CustomSpace/CustomData/AROManager/AROManager-Config.json"},
+
+            {"name": "SO-template",
+            "url": "/CustomSpace/Templates/AROManager/serviceOfferingTemplate.html"},
+
+            {"name": "RO-template",
+            "url": "/CustomSpace/Templates/AROManager/requestOfferingTemplate.html"}
         ]
     }
 }

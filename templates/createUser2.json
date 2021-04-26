@@ -1,0 +1,57 @@
+{
+    "fields": {
+        "hidden": [
+
+        ],
+
+        "rows": [
+            {
+                "columns": [
+                    {
+                        "size": "col-md-4",
+                        "display": "First Name",
+                        "name": "FirstName",
+                        "required": true
+                    },
+                    {
+                        "size": "col-md-3",
+                        "extra": "padleft10",
+                        "display": "Initial",
+                        "name": "Initials"
+                    },
+                    {
+                        "size": "col-md-4",
+                        "display": "Last Name",
+                        "name": "LastName",
+                        "required": true
+                    }
+                ]
+            },
+            {
+                "columns": [
+                    {
+                        "size": "col-md-7",
+                        "display": "Email Address",
+                        "name": "UPN",
+                        "required": true
+                    },
+                    {
+                        "size": "col-md-5",
+                        "display": "Phone#",
+                        "name": "BusinessPhone"
+                    }
+                ]
+            },
+            {
+                "collapsed": true,
+                "columns": [
+                    {
+                        "size": "col-md-4",
+                        "display": "First Name",
+                        "name": "FirstName"
+                    },
+                ]
+            }
+        ]
+    }
+}

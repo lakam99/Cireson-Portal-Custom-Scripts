@@ -23,7 +23,7 @@ imgs = [
     }
 }, 100);**/
 
-var newBtnPermission = setInterval(function() {
+/**var newBtnPermission = setInterval(function() {
     var a1 = $(".drawertaskbar-newbutton");
     if (formTasks.user_has_permission("Support Central")) {
         clearInterval(newBtnPermission);
@@ -31,7 +31,7 @@ var newBtnPermission = setInterval(function() {
         clearInterval(newBtnPermission);
         a1.remove();
     }
-}, 10);
+}, 10);**/
 
 $(document).ready(function() {
     if (settings_controller.get_setting_value("darkMode")) {
