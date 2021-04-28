@@ -190,5 +190,9 @@ a.k-button.k-button-icon {
   width: fit-content !important;
 }
 
+a.ark.media-link::after {
+  background-color: transparent !important;
+}
+
 .my_nav > .container > .navbar-nav > li > a {padding-top:5px !important; padding-bottom:5px !important;}
 .my_cont > .navbar {min-height:32px !important}

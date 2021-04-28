@@ -13,7 +13,7 @@ var AROManager = {
                 url: window.location.origin + "/ServiceCatalog/GetUserRequestOffering",
                 type: "get",
                 dataType: "json",
-                async: true,
+                async: false,
                 success: function(re) {
                     AROManager.aro = re;
                 }
@@ -36,9 +36,8 @@ var AROManager = {
 
     ready: function() {
         AROManager.queue.forEach(function(so) {
-            so.steal_from.forEach(function(url) {
-                DOMRemover.new_queue_item(`div.cat:has(h4#${so.service_offering_id})`, undefined, url, true);
-            });
+            var name = AROManager.get_SO_from_id(so.service_offering_id).Category.replaceAll(" ", "-").toLowerCase();
+            DOMRemover.new_queue_item(`div.cat:has(h4#${so.service_offering_id}),div.cat-${name}`, undefined, so.steal_from, true);
         });
         AROManager.run_listener();
     },
@@ -64,7 +63,7 @@ var AROManager = {
     },
 
     get_SO_from_id(service_offering_id) {
-        for (var i = 0, item = AROManager.aro[0]; i < AROManager.aro.length; i++, item = AROManager.aro[i]) {
+        for (var i = 0, item = AROManager.aro[i]; i < AROManager.aro.length; i++, item = AROManager.aro[i]) {
             if (item.ServiceOfferingId == service_offering_id) {
                 return item;
             }
@@ -111,7 +110,12 @@ var AROManager = {
             dom_so = dom_so.content.childNodes[0];
             var ros = $(dom_so).find("div.sc-item-list")[0];
             $(ros).append(AROManager.UI_Builder.build_request_offering(so));
-            $("#nserc-dump").append(dom_so);
+            var xyz_summon = setInterval(function(){
+                if ($("#nserc-dump").length) {
+                    $("#nserc-dump").append(dom_so);
+                    clearInterval(xyz_summon);
+                }
+            }, 10);
         },
 
         build_request_offering: function(obj) {

@@ -25,14 +25,16 @@ var DOMRemover = {
     run_queue: function() {
         DOMRemover._main = setInterval(function() {
             if (DOMRemover.queue.length) {
-                DOMRemover.queue.forEach(function(item) {
+                for (var i = 0, item = DOMRemover.queue[i]; i < DOMRemover.queue.length; i++, item = DOMRemover.queue[i]) {
                     if (item.enabled) {
-                        if (item.page && item.page != window.location.pathname) {
+                        if (item.pages && !item.pages.includes(window.location.pathname)) {
                             item.remove = true;
+                            continue;
                         }
-                        else if (item.permission && !item.granted) {
+                        if (item.permission && !item.granted) {
                             if (formTasks.user_has_permission(item.permission)) {
                                 item.remove = true;
+                                continue;
                             } else {
                                 item.granted = true;
                             }
@@ -42,7 +44,7 @@ var DOMRemover = {
                             item.remove = true;
                         }
                     }
-                });
+                }
             }
             DOMRemover.clean_queue();
         }, 100);
@@ -56,8 +58,11 @@ var DOMRemover = {
         });
     },
 
-    new_queue_item(identify, permission, page, enabled) {
-        DOMRemover.queue.push({identify, permission, enabled});
+    new_queue_item(identify, permission, pages, enabled) {
+        if (pages && !Array.isArray(pages)) {
+            throw Error("Pages parameter must be array.");
+        }
+        DOMRemover.queue.push({identify, permission, pages, enabled});
     },
 
     start: function() {
