@@ -47,7 +47,7 @@ var DOMRemover = {
                 }
             }
             DOMRemover.clean_queue();
-        }, 100);
+        }, 10);
     },
 
     clean_queue: function() {

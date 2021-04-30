@@ -37,7 +37,9 @@ var AROManager = {
     ready: function() {
         AROManager.queue.forEach(function(so) {
             var name = AROManager.get_SO_from_id(so.service_offering_id).Category.replaceAll(" ", "-").toLowerCase();
+            var category_id = AROManager.get_SO_from_id(so.service_offering_id).CategoryId;
             DOMRemover.new_queue_item(`div.cat:has(h4#${so.service_offering_id}),div.cat-${name}`, undefined, so.steal_from, true);
+            DOMRemover.new_queue_item(`li:has(a.cat-link[data-target='#${category_id}'])`, undefined, so.steal_from, true);
         });
         AROManager.run_listener();
     },
@@ -63,12 +65,16 @@ var AROManager = {
     },
 
     get_SO_from_id(service_offering_id) {
+        var so = {ro: []};
         for (var i = 0, item = AROManager.aro[i]; i < AROManager.aro.length; i++, item = AROManager.aro[i]) {
             if (item.ServiceOfferingId == service_offering_id) {
-                return item;
+                if (!so.Category) {
+                    so = Object.assign(so, item); 
+                }
+                so.ro.push(item);
             }
         }
-        throw Error("Could not find item with id " + service_offering_id);
+        return so;
     },
 
     start: function() {
@@ -109,7 +115,7 @@ var AROManager = {
             dom_so.innerHTML = html_so;
             dom_so = dom_so.content.childNodes[0];
             var ros = $(dom_so).find("div.sc-item-list")[0];
-            $(ros).append(AROManager.UI_Builder.build_request_offering(so));
+            $(ros).append(AROManager.UI_Builder.build_request_offerings(so));
             var xyz_summon = setInterval(function(){
                 if ($("#nserc-dump").length) {
                     $("#nserc-dump").append(dom_so);
@@ -118,9 +124,17 @@ var AROManager = {
             }, 10);
         },
 
-        build_request_offering: function(obj) {
+        build_request_offerings: function(so) {
+            var html = "";
+            so.ro.forEach(function(ro) {
+                html += AROManager.UI_Builder.build_request_offering(ro);
+            });
+            return html;
+        },
+
+        build_request_offering: function(ro) {
             var template = AROManager.UI_Builder.RO_template;
-            return template(obj);
+            return template(ro);
         }
     },
 }
