@@ -1,0 +1,100 @@
+﻿<ManagementPack ContentReadable="true" SchemaVersion="2.0" OriginalSchemaVersion="1.1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+  <Manifest>
+    <Identity>
+      <ID>CASD.DirectoratesList</ID>
+      <Version>1.0.0.0</Version>
+    </Identity>
+    <Name>CASD.DirectoratesList</Name>
+    <References>
+      <Reference Alias="System">
+        <ID>System.Library</ID>
+        <Version>7.5.8501.0</Version>
+        <PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
+      </Reference>
+      <Reference Alias="Console">
+        <ID>Microsoft.EnterpriseManagement.ServiceManager.UI.Console</ID>
+        <Version>10.19.1035.0</Version>
+        <PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
+      </Reference>
+      <Reference Alias="Alias_5d761df0_5bb5_4a4d_94cb_eb4792d5a0ea">
+        <ID>System.WorkItem.ServiceRequest.Library</ID>
+        <Version>10.19.1035.0</Version>
+        <PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
+      </Reference>
+      <Reference Alias="Alias_15670896_13f8_417e_9872_bd5ab59b2253">
+        <ID>Microsoft.EnterpriseManagement.ServiceManager.UI.Authoring</ID>
+        <Version>10.19.1035.0</Version>
+        <PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
+      </Reference>
+    </References>
+  </Manifest>
+  <TypeDefinitions>
+    <EntityTypes>
+      <ClassTypes>
+        <ClassType ID="ClassExtension_f0a7afca_f6b4_40c4_b047_6904bc5ca680" Accessibility="Public" Abstract="false" Base="Alias_5d761df0_5bb5_4a4d_94cb_eb4792d5a0ea!System.WorkItem.ServiceRequest" Hosted="false" Singleton="false" Extension="true">
+          <Property ID="NSERC_Directorate" Type="enum" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" EnumType="NSERC_Directorates" />
+          <Property ID="CASD_Directorate" Type="enum" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" EnumType="CASD_Directorates" />
+          <Property ID="SSHRC_Directorate" Type="enum" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" EnumType="SSHRC_Directorates" />
+        </ClassType>
+      </ClassTypes>
+      <EnumerationTypes>
+        <EnumerationValue ID="NSERC_Directorates" Accessibility="Public" />
+        <EnumerationValue ID="SSHRC_Directorates" Accessibility="Public" />
+        <EnumerationValue ID="CASD_Directorates" Accessibility="Public" />
+      </EnumerationTypes>
+    </EntityTypes>
+  </TypeDefinitions>
+  <Categories>
+    <Category ID="CASD.DirectoratesList.Category" Value="Console!Microsoft.EnterpriseManagement.ServiceManager.ManagementPack">
+      <ManagementPackName>CASD.DirectoratesList</ManagementPackName>
+      <ManagementPackVersion>1.0.0.0</ManagementPackVersion>
+    </Category>
+    <Category ID="CategoryId_f9faa20b_59ea_4b34_926f_dca3890fca40" Target="NSERC_Directorates" Value="Alias_15670896_13f8_417e_9872_bd5ab59b2253!Microsoft.EnterpriseManagement.ServiceManager.UI.Authoring.EnumerationViewTasks" />
+    <Category ID="CategoryId_26bcd449_c003_449f_b022_f153bd7e8324" Target="NSERC_Directorates" Value="System!VisibleToUser" />
+    <Category ID="CategoryId_573df91f_f29d_4030_8ec1_0ffed888cee0" Target="SSHRC_Directorates" Value="Alias_15670896_13f8_417e_9872_bd5ab59b2253!Microsoft.EnterpriseManagement.ServiceManager.UI.Authoring.EnumerationViewTasks" />
+    <Category ID="CategoryId_83ae9d66_1731_4c6d_8825_0603cea4974e" Target="SSHRC_Directorates" Value="System!VisibleToUser" />
+    <Category ID="CategoryId_6b610ac8_4505_45a3_acf9_139755cd0a1a" Target="CASD_Directorates" Value="Alias_15670896_13f8_417e_9872_bd5ab59b2253!Microsoft.EnterpriseManagement.ServiceManager.UI.Authoring.EnumerationViewTasks" />
+    <Category ID="CategoryId_542bab20_05cd_48e6_9dd2_13dc131d5af6" Target="CASD_Directorates" Value="System!VisibleToUser" />
+  </Categories>
+  <LanguagePacks>
+    <LanguagePack ID="ENC" IsDefault="true">
+      <DisplayStrings>
+        <DisplayString ElementID="CASD.DirectoratesList">
+          <Name>CASD.DirectoratesList</Name>
+        </DisplayString>
+      </DisplayStrings>
+    </LanguagePack>
+    <LanguagePack ID="ENU" IsDefault="false">
+      <DisplayStrings>
+        <DisplayString ElementID="CASD.DirectoratesList">
+          <Name>CASD.DirectoratesList</Name>
+        </DisplayString>
+        <DisplayString ElementID="ClassExtension_f0a7afca_f6b4_40c4_b047_6904bc5ca680">
+          <Name>Extension of Service Request</Name>
+          <Description>Extension of class Service Request</Description>
+        </DisplayString>
+        <DisplayString ElementID="ClassExtension_f0a7afca_f6b4_40c4_b047_6904bc5ca680" SubElementID="CASD_Directorate">
+          <Name>CASD_Directorate</Name>
+        </DisplayString>
+        <DisplayString ElementID="NSERC_Directorates">
+          <Name>NSERC Directorates</Name>
+          <Description></Description>
+        </DisplayString>
+        <DisplayString ElementID="SSHRC_Directorates">
+          <Name>SSHRC Directorates</Name>
+          <Description></Description>
+        </DisplayString>
+        <DisplayString ElementID="CASD_Directorates">
+          <Name>CASD Directorates</Name>
+          <Description></Description>
+        </DisplayString>
+        <DisplayString ElementID="ClassExtension_f0a7afca_f6b4_40c4_b047_6904bc5ca680" SubElementID="NSERC_Directorate">
+          <Name>NSERC_Directorate</Name>
+        </DisplayString>
+        <DisplayString ElementID="ClassExtension_f0a7afca_f6b4_40c4_b047_6904bc5ca680" SubElementID="SSHRC_Directorate">
+          <Name>SSHRC_Directorate</Name>
+        </DisplayString>
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPack>
