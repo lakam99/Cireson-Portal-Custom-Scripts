@@ -67,7 +67,7 @@ var accentSuggest = {
         },
 
         get_page_userpicker_obj: function(element_reference) {
-            return $(element_reference).data("kendoAutoComplete");
+            return $(element_reference).data("kendoAutoComplete") || $(element_reference).data("kendoComboBox");
         },
 
         get_page_userpicker_objs: function() {
@@ -238,7 +238,7 @@ var accentSuggest = {
             //Bind listeners
             accentSuggest.getters.get_page_userpicker_objs().forEach(function(n,i){
                 var timeout = null;
-
+                if (!n || !n.element) {return;}
                 $(n.element).off("focusout");
                 $(n.element).on("keyup", function(){
                     clearTimeout(timeout);
