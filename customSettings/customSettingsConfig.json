@@ -67,6 +67,22 @@
                     "functionName": "scriptPatcherOff"
                 }
             }
+        },
+        {
+            "name": "cssInjector",
+            "displayName": "CS Injector",
+            "ieCompatible": true,
+            "render": false,
+            "value": true,
+            "toggleFunctions": {
+                "functionsLocation":"/CustomSpace/CustomSettings/cssInjector/cssInjector.js",
+                "toggleOn": {
+                    "functionName": "cssInjectorOn"
+                },
+                "toggleOff": {
+                    "functionName": "cssInjectorOff"
+                }
+            }
         }
     ]
 }

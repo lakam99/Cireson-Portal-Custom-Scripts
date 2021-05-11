@@ -19,7 +19,8 @@ var accentSuggest = {
     },
 
     properties: {
-        enabled: null
+        enabled: null,
+        timeout: null
     },
 
     objects: {
@@ -207,7 +208,7 @@ var accentSuggest = {
         request_variations: function*(word) {
             var variations = accentSuggest.functionality.generate_variations(word);
             variations.splice(0,1);
-            for (var i = 0, variation = variations[i]; i < variations.length; i++) {
+            for (var i = 0, variation = variations[i]; i < variations.length; i++, variation = variations[i]) {
                 yield new Promise(function(resolve, reject){
                     accentSuggest.functionality.request_variation(variation).then(function(suggestion){
                         if (suggestion.length)
@@ -216,6 +217,33 @@ var accentSuggest = {
                             reject(suggestion);
                     });
                 });
+            }
+        },
+
+        on_keyup: function(n){
+            return function() {
+                clearTimeout(accentSuggest.properties.timeout);
+
+                //Set a timeout to allow the user to finish typing
+                accentSuggest.properties.timeout = setTimeout(function(){
+                    if (n.popup.visible()) {
+                        var text = n.element.val() || n.text() || "";
+                        if (text.length < 3)
+                            return;
+                        var request = accentSuggest.functionality.request_variations(text);
+                        var respond = null;
+                        while ((response = request.next().value)) {
+                            response.then((respond = function(suggestion){
+                                if (Array.isArray(suggestion)) {
+                                    suggestion.forEach(function(individual_suggestion){respond(individual_suggestion)});
+                                } else {
+                                    if (!hiddenUserFinder.functionality.user_array_includes(n.dataSource.data(), suggestion))
+                                        n.dataSource.add(suggestion);
+                                }
+                            }), function(reject){});
+                        }
+                    }
+                }, accentSuggest.constants.type_speed_allowance);
             }
         }
 
@@ -238,33 +266,12 @@ var accentSuggest = {
             //Bind listeners
             accentSuggest.getters.get_page_userpicker_objs().forEach(function(n,i){
                 var timeout = null;
-                if (!n || !n.element) {return;}
                 $(n.element).off("focusout");
-                $(n.element).on("keyup", function(){
-                    clearTimeout(timeout);
-
-                    //Set a timeout to allow the user to finish typing
-                    timeout = setTimeout(function(){
-                        if (n.popup.visible()) {
-                            var text = n.element.val();
-                            if (text.length < 3)
-                                return;
-                            var request = accentSuggest.functionality.request_variations(text);
-                            var response = null;
-                            var respond = null;
-                            if ((response = request.next().value)) {
-                                response.then((respond = function(suggestion){
-                                    if (Array.isArray(suggestion)) {
-                                        suggestion.forEach(function(individual_suggestion){respond(individual_suggestion)});
-                                    } else {
-                                        if (!hiddenUserFinder.functionality.user_array_includes(n.dataSource.data(), suggestion))
-                                            n.dataSource.add(suggestion);
-                                    }
-                                }), function(reject){});
-                            }
-                        }
-                    }, accentSuggest.constants.type_speed_allowance);
-                });
+                if ($(n.element).hasClass("search-combo")) {
+                    n.bind("filtering", accentSuggest.functionality.on_keyup(n));
+                } else {
+                    $(n.element).on("keyup", accentSuggest.functionality.on_keyup(n));
+                }
                 console.log(i + ":Listener bound.");
             });
         } 

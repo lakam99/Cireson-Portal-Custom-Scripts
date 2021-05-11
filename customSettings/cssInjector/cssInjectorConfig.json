@@ -1,0 +1,9 @@
+{
+    "inject": [
+        {
+            "raw": true,
+            "name": "ro-darkMode-header-patch",
+            "content": "div#servicePanel {padding-left: 3% !important;}"
+        }
+    ]
+}

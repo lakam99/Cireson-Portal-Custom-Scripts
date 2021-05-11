@@ -109,7 +109,10 @@
             "url": "/CustomSpace/Templates/AROManager/serviceOfferingTemplate.html"},
 
             {"name": "RO-template",
-            "url": "/CustomSpace/Templates/AROManager/requestOfferingTemplate.html"}
+            "url": "/CustomSpace/Templates/AROManager/requestOfferingTemplate.html"},
+
+            {"name": "CSSInjector-Config",
+            "url": "/CustomSpace/CustomSettings/cssInjector/cssInjectorConfig.json"}
         ]
     }
 }
