@@ -1,0 +1,9 @@
+{
+    "removeItems": [
+        {
+            "identify": ".drawertaskbar-newbutton",
+            "permission": "Support Central",
+            "enabled": true
+        }
+    ]
+}

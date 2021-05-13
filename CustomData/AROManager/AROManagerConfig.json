@@ -1,0 +1,11 @@
+{
+    "steal": {
+        "service_offerings": [
+            {
+                "service_offering_id": "df3b26fd-911a-69bb-8564-eac0f46967cc",
+                "steal_from": ["/View/02efdc70-55c7-4ba8-9804-ca01631c1a54", "/View/94ecd540-714b-49dc-82d1-0b34bf11888f"],
+                "move_to": "/View/test-offerings"
+            }
+        ]
+    }
+}
