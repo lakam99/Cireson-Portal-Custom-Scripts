@@ -3,6 +3,7 @@
         {
             "raw": true,
             "name": "ro-darkMode-header-patch",
+            "condition": "settings_controller.get_setting_value('darkMode')",
             "content": "div#servicePanel {padding-left: 3% !important;}"
         }
     ]

@@ -12,17 +12,19 @@ customSettings.helperFunctions.cssInjector.inject_css = function(raw_style) {
 customSettings.helperFunctions.cssInjector.ready = function(response) {
     customSettings.helperFunctions.cssInjector.queue = response;
     response.inject.forEach(function(css_inject) {
-        if (!css_inject.raw) {
-            $.ajax({
-                url: customGlobalLoader.get_str_url(css_inject.content),
-                dataType: "text",
-                async: true,
-                success: function(r) {
-                    customSettings.helperFunctions.cssInjector.inject_css(r);
-                }
-            });
-        } else {
-            customSettings.helperFunctions.cssInjector.inject_css(css_inject.content);
+        if (!css_inject.condition || (css_inject.condition && eval(css_inject.condition))) {
+            if (!css_inject.raw) {
+                $.ajax({
+                    url: customGlobalLoader.get_str_url(css_inject.content),
+                    dataType: "text",
+                    async: true,
+                    success: function(r) {
+                        customSettings.helperFunctions.cssInjector.inject_css(r);
+                    }
+                });
+            } else {
+                customSettings.helperFunctions.cssInjector.inject_css(css_inject.content);
+            }
         }
     });
 }
