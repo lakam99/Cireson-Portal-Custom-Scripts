@@ -33,6 +33,18 @@ imgs = [
     }
 }, 10);**/
 
+var fixCommentBox = setInterval(function(){
+    var name = "iframe[title='Editable area. Press F10 for toolbar.']";
+    if (window.location.pathname.includes("/Edit/") && settings_controller.get_setting_value("darkMode")) {
+        if ($(name).length) {
+            $(name)[0].contentDocument.body.style = "background-color: #333333 !important; color: #dcdcdc !important;";
+            clearInterval(fixCommentBox);
+        }
+    } else {
+        clearInterval(fixCommentBox);
+    }
+}, 100);
+
 $(document).ready(function() {
     if (settings_controller.get_setting_value("darkMode")) {
         $("head").append(`

@@ -31,8 +31,7 @@ customSettings.helperFunctions.cssInjector.ready = function(response) {
 
 var cssInjectorOn = function() {
     var link = customGlobalLoader.get_str_url("/CustomSpace/custom.css");
-    $("head").before('<link type="text/css" rel="stylesheet"' +
-    'id="dark-mode-general-link" href="'+link+'">');
+    $("head").before('<link type="text/css" rel="stylesheet" href="'+link+'">');
 
     $.ajax({
         url: customGlobalLoader.get_url("CSSInjector-Config"),
