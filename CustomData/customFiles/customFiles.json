@@ -17,13 +17,16 @@
         "async": true,
         "array":[
             {"name": "templateApplier",
-            "url": "/CustomSpace/Scripts/templateApplier/templateApplier.js"},
+            "url": "/CustomSpace/Scripts/templateApplier/templateApplier.js",
+            "condition": "window.location.pathname.includes('/Edit/')"},
 
             {"name": "activityAdder",
-            "url": "/CustomSpace/Scripts/activityAdder/activityAdder.js"},
+            "url": "/CustomSpace/Scripts/activityAdder/activityAdder.js",
+            "condition": "window.location.pathname.includes('/Edit/')"},
 
             {"name": "ticketConverter",
-            "url": "/CustomSpace/Scripts/ticketConverter/ticketConverter.js"},
+            "url": "/CustomSpace/Scripts/ticketConverter/ticketConverter.js",
+            "condition": "window.location.pathname.includes('/Edit/')"},
 
             {"name": "ticketManipulator",
             "url": "/CustomSpace/Scripts/ticketManipulator/ticketManipulator.js"},
@@ -65,7 +68,8 @@
             "url": "/CustomSpace/Scripts/hiddenUserFinder/hiddenUserFinder.js"},
 
             {"name": "portalUserEmailManager",
-            "url": "/CustomSpace/Scripts/portalUserEmailManager/portalUserEmailManager.js"},
+            "url": "/CustomSpace/Scripts/portalUserEmailManager/portalUserEmailManager.js",
+            "condition": "window.location.pathname.includes('/Edit/')"},
 
             {"name": "DOMRemover",
             "url": "/CustomSpace/Scripts/DOMRemover/DOMRemover.js"},
@@ -74,10 +78,19 @@
             "url": "/CustomSpace/Scripts/AROManager/AROManager.js"},
 
             {"name": "calendarManager",
-            "url": "/CustomSpace/Scripts/calendarManager/calendarManager.js"},
+            "url": "/CustomSpace/Scripts/calendarManager/calendarManager.js",
+            "condition": "window.location.pathname.includes('dc7957ab-6842-4453-aa7a-a5f2852043d7') || window.location.pathname.includes('1ae3ffa1-fc12-4f9b-966b-57671cb06ce8')"},
 
             {"name": "globalSearch",
-            "url": "/CustomSpace/Scripts/globalSearch/globalSearch.js"}
+            "url": "/CustomSpace/Scripts/globalSearch/globalSearch.js"},
+
+            {"name": "SendEmailTask",
+            "url": "/CustomSpace/Scripts/sendEmailTask/sendEmailTask.js",
+            "data_require": {
+                "context": "/CustomSapce/Scripts/sendEmailTask/node_modules/",
+                "module": "eml-format"
+            },
+            "condition": "window.location.pathname.includes('/Edit/')"}
         ]
     },
 
@@ -112,7 +125,10 @@
             "url": "/CustomSpace/Templates/AROManager/requestOfferingTemplate.html"},
 
             {"name": "CSSInjector-Config",
-            "url": "/CustomSpace/CustomSettings/cssInjector/cssInjectorConfig.json"}
+            "url": "/CustomSpace/CustomSettings/cssInjector/cssInjectorConfig.json"},
+
+            {"name": "userGroups-Config",
+            "url": "/CustomSpace/CustomData/customFiles/userGroups.json"}
         ]
     }
 }

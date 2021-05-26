@@ -4,6 +4,11 @@
             "identify": ".drawertaskbar-newbutton",
             "permission": "Support Central",
             "enabled": true
+        },
+        {
+            "identify": ".cs-form__task--sendEmail",
+            "permission": "Support Central",
+            "enabled": true
         }
     ]
 }

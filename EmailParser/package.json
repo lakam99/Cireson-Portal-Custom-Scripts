@@ -1,0 +1,17 @@
+{
+  "name": "sendemailtask",
+  "version": "1.0.0",
+  "description": "portal task for sending emails",
+  "main": "sendEmail.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Arkam A. Mazrui",
+  "license": "ISC",
+  "dependencies": {
+    "eml-format": "^0.6.1"
+  },
+  "devDependencies": {
+    "@types/node": "^15.6.0"
+  }
+}

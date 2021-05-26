@@ -5,7 +5,13 @@
 var portalUserEmailManager = {
     getters: {
         get_affected_user: function() {
-            return window.rawJSON.RequestedWorkItem;
+            var r= null;
+            try {
+                r = window.rawJSON.RequestedWorkItem; 
+            } catch(e) {
+                r = customSettings.helperFunctions.monitorCopy.ticket;
+            }
+            return r;
         },
 
         get_affected_user_obj: function() {

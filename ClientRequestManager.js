@@ -29,12 +29,7 @@ var ClientRequestManager = {
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === XMLHttpRequest.DONE) {
                     console.log("Received response from " + url + ": " + xhr.responseText);
-                    if (xhr.responseText.includes("Err0r")) {
-                        alert(xhr.responseText);
-                    } else {
-                        console.log("ClientRequestManager resolving.");
-                        resolve(xhr.responseText);
-                    }
+                    resolve(xhr.responseText);
                 }
             };
             xhr.send();

@@ -40,6 +40,17 @@ var customGlobalLoader = {
                     customGlobalLoader.files = response;
                 }
             });
+        },
+
+        function() {
+            $.ajax({
+                url: customGlobalLoader.get_url("userGroups-Config"),
+                async: false,
+                dataType: "json",
+                success: function(res) {
+                    formTasks.permissions = res;
+                }
+            })
         }
     ],
 
@@ -55,10 +66,17 @@ var customGlobalLoader = {
 
     main: {
         load_file: function (file_obj) {
+            if (file_obj.condition && !eval(file_obj.condition))
+                return new Promise(function(resolve,reject){resolve(false)});
+                
             var result = $.Deferred(),
             script = document.createElement("script");
+            if (file_obj.data_require) {
+                script.setAttribute("data-requirecontext", file_obj.data_require.context);
+                script.setAttribute("data-requiremodule", file_obj.data_require.module);
+            }
             script.async = "async";
-            script.type = "text/javascript";
+            script.type = file_obj.type ? file_obj.type:"text/javascript";
             script.src = customGlobalLoader.get_str_url(file_obj.url);
             script.onload = script.onreadystatechange = function(_, isAbort) {
                 if (!script.readyState || /loaded|complete/.test(script.readyState)) {
@@ -162,9 +180,7 @@ var formTasks = {
         both: "Both"
     },
     
-    permissions: {
-        sc: "Support Central"
-    },
+    permissions: null,
 
     user_has_permission: function(permission) {
         var groups = session.user.user_groups;
@@ -177,7 +193,6 @@ var formTasks = {
     },
 
     addFormTask: function (type, title, permission, callback) {
-        var responses = session.user.user_groups;
         if (formTasks.user_has_permission(permission)) {
             if (type == formTasks.type.srq || type == formTasks.type.inc) {
                 app.custom.formTasks.add(type, title, callback);

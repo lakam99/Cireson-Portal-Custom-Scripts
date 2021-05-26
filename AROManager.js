@@ -35,13 +35,14 @@ var AROManager = {
     ],
 
     ready: function() {
-        AROManager.queue.forEach(function(so) {
+         for (var i = 0, so = AROManager.queue[i]; i < AROManager.queue.length; i++, so = AROManager.queue[i]) {
             var so_obj = AROManager.get_SO_from_id(so.service_offering_id);
+            if (so_obj.ro.length == 0) {return}
             var name = so_obj.Category.replaceAll(" ", "-").toLowerCase();
             var category_id = so_obj.CategoryId;
             DOMRemover.new_queue_item(`div.cat:has(h4#${so.service_offering_id}),div.cat-${name}`, undefined, so.steal_from, true);
             DOMRemover.new_queue_item(`li:has(a.cat-link[data-target='#${category_id}'])`, undefined, so.steal_from, true);
-        });
+        }
         AROManager.run_listener();
     },
 
