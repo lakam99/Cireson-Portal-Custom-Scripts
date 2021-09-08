@@ -3,7 +3,7 @@ var c = customSettings.helperFunctions.monitorCopy;
 
 c.load_ticket = function() {
     return new Promise(function(resolve,reject){
-        formTasks.addFormTask(formTasks.type.both, null, formTasks.permissions.sc, function(f, v){
+        formTasks.addFormTask(formTasks.type.both, null, null, function(f, v){
             c.ticket = v;
             resolve(true);
         });

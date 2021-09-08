@@ -86,7 +86,7 @@ var customGlobalLoader = {
                         result.resolve();
                 }
             };
-            script.onerror = function () {console.err("FAILED TO LOAD " +file_obj.url);console.log(result); result.reject(); };
+            script.onerror = function () {console.error("FAILED TO LOAD " +file_obj.url);console.log(result); result.reject(); };
             $("head")[0].appendChild(script);
             console.log("Loaded " + script.src);
             return result.promise();
@@ -140,21 +140,17 @@ var customGlobalLoader = {
         load_user_group: function() {
             customGlobalLoader.main.when_session_available(function(){
                 var s = customGlobalLoader.get_settings();
-                if (s.user_groups == undefined) {
-                    $.ajax({
-                        url: window.location.origin + "/api/V3/User/GetUsersSupportGroupEnumerations",
-                        data: {Id: session.user.Id},
-                        dataType: "json",
-                        async: false,
-                        success: function(res) {
-                            s.user_groups = res;
-                            localStorage.setItem("settings", JSON.stringify(s));
-                            session.user.user_groups = customGlobalLoader.get_settings().user_groups;
-                        } 
-                    });
-                } else {
-                    session.user.user_groups = s.user_groups;
-                }
+                $.ajax({
+                    url: window.location.origin + "/api/V3/User/GetUsersSupportGroupEnumerations",
+                    data: {Id: session.user.Id},
+                    dataType: "json",
+                    async: false,
+                    success: function(res) {
+                        s.user_groups = res;
+                        localStorage.setItem("settings", JSON.stringify(s));
+                        session.user.user_groups = customGlobalLoader.get_settings().user_groups;
+                    } 
+                });
             });
         },
 
@@ -182,6 +178,19 @@ var formTasks = {
     
     permissions: null,
 
+    user_has_permissions: function(permissions_array) {
+        if (permissions_array === null)
+            return true;
+        if (Array.isArray(permissions_array)) {
+            res = permissions_array.map(function(permission){
+                return formTasks.user_has_permission(permission);
+            });
+            return res.some(function(value) {return value == true});
+        } else {
+            return formTasks.user_has_permission(permissions_array);
+        }
+    },
+
     user_has_permission: function(permission) {
         var groups = session.user.user_groups;
         for (var i = 0, group = groups[i]; i < groups.length; i++, group = groups[i]) {
@@ -193,7 +202,7 @@ var formTasks = {
     },
 
     addFormTask: function (type, title, permission, callback) {
-        if (formTasks.user_has_permission(permission)) {
+        if (formTasks.user_has_permissions(permission)) {
             if (type == formTasks.type.srq || type == formTasks.type.inc) {
                 app.custom.formTasks.add(type, title, callback);
             } else if (type == formTasks.type.both) {
@@ -207,4 +216,3 @@ var formTasks = {
 
 
 customGlobalLoader.main.load_customspace();
-alert("yoyoyo, if you're seeing this, the patch works...");

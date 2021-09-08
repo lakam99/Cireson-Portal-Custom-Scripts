@@ -9,7 +9,8 @@ var sendEmailTask = {
     ticket: null,
     setup: [
         function () {
-            formTasks.addFormTask(formTasks.type.both, "Quick Reply", formTasks.permissions.sc, sendEmailTask.quickReply);
+            formTasks.addFormTask(formTasks.type.both, "Quick Reply", [formTasks.permissions.sc, formTasks.permissions.sm_mng],
+            sendEmailTask.quickReply);
         }
     ],
     quickReply: function () {

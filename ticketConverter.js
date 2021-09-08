@@ -74,12 +74,14 @@ var ticketConverter = {
         },
 
         function() {
-            formTasks.addFormTask(formTasks.type.inc, "Convert to Service Request", formTasks.permissions.sc, function(formObj, viewModel) {
+            formTasks.addFormTask(formTasks.type.inc, "Convert to Service Request", [formTasks.permissions.sc, formTasks.permissions.sm_mng],
+            function(formObj, viewModel) {
                 ticketConverter.setters.set_currentTicket(formObj, viewModel);
                 ticketConverter.functionality.apply(SRQ);
             });
             
-            formTasks.addFormTask(formTasks.type.srq, "Convert to Incident", formTasks.permissions.sc, function(formObj, viewModel) {
+            formTasks.addFormTask(formTasks.type.srq, "Convert to Incident", [formTasks.permissions.sc, formTasks.permissions.sm_mng],
+            function(formObj, viewModel) {
                 ticketConverter.setters.set_currentTicket(formObj, viewModel);
                 ticketConverter.functionality.apply(INC);
             });

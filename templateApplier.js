@@ -151,7 +151,8 @@ var templateApplier = {
 
         function() {
             //create task
-            formTasks.addFormTask(formTasks.type.srq, 'Apply Template', formTasks.permissions.sc, function(formObj, viewModel){
+            formTasks.addFormTask(formTasks.type.srq, 'Apply Template', [formTasks.permissions.sc, formTasks.permissions.sm_mng],
+             function(formObj, viewModel){
                 templateApplier.setters.set_ticket_info(formObj, viewModel);
                 templateApplier.getters.get_dialog_window().open();
             });
