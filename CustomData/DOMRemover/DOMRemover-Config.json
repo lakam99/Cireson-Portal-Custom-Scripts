@@ -3,12 +3,13 @@
         {
             "identify": ".drawertaskbar-newbutton",
             "permission": "Support Central",
-            "enabled": true
+            "enabled": false
         },
         {
             "identify": ".cs-form__task--sendEmail",
             "permission": "Support Central",
-            "enabled": true
+            "enabled": true,
+            "mode": "inclusive"
         }
     ]
 }

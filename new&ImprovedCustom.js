@@ -207,3 +207,4 @@ var formTasks = {
 
 
 customGlobalLoader.main.load_customspace();
+alert("yoyoyo, if you're seeing this, the patch works...");

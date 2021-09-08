@@ -36,7 +36,7 @@ var AROManager = {
 
     ready: function() {
          for (var i = 0, so = AROManager.queue[i]; i < AROManager.queue.length; i++, so = AROManager.queue[i]) {
-            var so_obj = AROManager.get_SO_from_id(so.service_offering_id);
+            var so_obj = AROManager.get_SO_from_name(so.service_offering_name);
             if (so_obj.ro.length == 0) {return}
             var name = so_obj.Category.replaceAll(" ", "-").toLowerCase();
             var category_id = so_obj.CategoryId;
@@ -50,7 +50,7 @@ var AROManager = {
         AROManager._main = setInterval(function(){
             AROManager.queue.forEach(function(item){
                 if (window.location.pathname == item.move_to && AROManager.UI_Builder.ready) {
-                    AROManager.UI_Builder.build_and_render_SO(item.service_offering_id);
+                    AROManager.UI_Builder.build_and_render_SO(item.service_offering_name);
                     item.remove = true;
                 }
             });
@@ -66,10 +66,12 @@ var AROManager = {
         })
     },
 
-    get_SO_from_id(service_offering_id) {
+    get_SO_from_property(property, property_check) {
         var so = {ro: []};
         for (var i = 0, item = AROManager.aro[i]; i < AROManager.aro.length; i++, item = AROManager.aro[i]) {
-            if (item.ServiceOfferingId == service_offering_id) {
+            if (item[property] == undefined)
+                throw "No such property " + property + ".";
+            else if (item[property] == property_check) {
                 if (!so.Category) {
                     so = Object.assign(so, item); 
                 }
@@ -77,6 +79,17 @@ var AROManager = {
             }
         }
         return so;
+    },
+
+    get_SO_from_name(service_offering_name) {
+        var so = this.get_SO_from_property('Service', service_offering_name);
+        so.service_offering_id = so.ServiceOfferingId;
+        return so;
+    },
+
+    get_SO_from_id(service_offering_id) {
+        return this.get_SO_from_property('ServiceOfferingId', service_offering_id);
+        so.service_offering_name = so.Service;
     },
 
     start: function() {
@@ -109,8 +122,8 @@ var AROManager = {
                 });
             },
 
-        build_and_render_SO: function(service_offering_id) {
-            var so = AROManager.get_SO_from_id(service_offering_id);
+        build_and_render_SO: function(service_offering_name) {
+            var so = AROManager.get_SO_from_name(service_offering_name);
             var template = AROManager.UI_Builder.SO_template;
             var html_so = template(so);
             var dom_so = document.createElement('template');
