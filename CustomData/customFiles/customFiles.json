@@ -37,9 +37,6 @@
             {"name": "map_controller",
             "url": "/CustomSpace/Scripts/mapController/map_controller.js"},
 
-            {"name": "accentSuggest",
-            "url": "/CustomSpace/Scripts/accentSuggest/accentSuggest.js"},
-
             {"name": "htmlInjector",
             "url": "/CustomSpace/Scripts/htmlInjector/htmlInjector.js"},
 

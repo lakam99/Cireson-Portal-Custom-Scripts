@@ -32,7 +32,7 @@ var DOMRemover = {
                             continue;
                         }
                         if (item.permission && !item.granted) {
-                            var condition = formTasks.user_has_permission(item.permission);
+                            var condition = formTasks.user_has_permissions(item.permission);
                             if (item.mode && item.mode == "inclusive")
                                 condition = !condition;
                             if (condition) {

@@ -7,9 +7,14 @@
         },
         {
             "identify": ".cs-form__task--sendEmail",
-            "permission": "Support Central",
+            "permission": "Post Awards",
             "enabled": true,
             "mode": "inclusive"
+        },
+        {
+            "identify": "li[role='treeitem']:has(span.k-in):contains('SCSM Management')",
+            "permission": null,
+            "enabled": true
         }
     ]
 }
