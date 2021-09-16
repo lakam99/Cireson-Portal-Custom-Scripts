@@ -135,7 +135,8 @@ var templateApplier = {
                 ticketManipulator.show_loading();
                 ticketManipulator.commit_new_obj(new_obj, old_obj, function(result) {
                     ticketManipulator.remove_loading();
-                    kendo.alert("<a href='"+window.location.href+"'>Template successfully applied!</a>");
+                    kendo.alert("Template successfully applied!");
+                    window.location.reload();
                 });
             });
         }

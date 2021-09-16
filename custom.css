@@ -173,7 +173,7 @@ margin: 1%;
 }
 
 .k-confirm .k-window-titlebar::before {
-content: 'Support Central 2012 Portal';
+content: 'Support Central 2019 Portal' !important;
 }
 
 .k-confirm .k-window-titlebar .k-dialog-title {        
