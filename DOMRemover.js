@@ -31,7 +31,7 @@ var DOMRemover = {
                             item.remove = true;
                             continue;
                         }
-                        if (item.permission && !item.granted) {
+                        if ((item.permission === null || item.permission) && !item.granted) {
                             var condition = formTasks.user_has_permissions(item.permission);
                             if (item.mode && item.mode == "inclusive")
                                 condition = !condition;
@@ -61,11 +61,11 @@ var DOMRemover = {
         });
     },
 
-    new_queue_item(identify, permission, pages, enabled) {
+    new_queue_item(identify, permission, pages, enabled, mode) {
         if (pages && !Array.isArray(pages)) {
             throw Error("Pages parameter must be array.");
         }
-        DOMRemover.queue.push({identify, permission, pages, enabled});
+        DOMRemover.queue.push({'identify':identify, 'permission':permission, pages, 'enabled':enabled, 'mode':mode});
     },
 
     start: function() {

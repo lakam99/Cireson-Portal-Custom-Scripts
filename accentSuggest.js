@@ -289,7 +289,7 @@ var accentSuggest = {
                     accentSuggest.main.setup();
                     clearInterval(accent_wait);
                 }
-            }, 100);
+            }, 1000);
         }
     }
 

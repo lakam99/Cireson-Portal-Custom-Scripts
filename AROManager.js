@@ -40,8 +40,8 @@ var AROManager = {
             if (so_obj.ro.length == 0) {return}
             var name = so_obj.Category.replaceAll(" ", "-").toLowerCase();
             var category_id = so_obj.CategoryId;
-            DOMRemover.new_queue_item(`div.cat:has(h4#${so.service_offering_id}),div.cat-${name}`, undefined, so.steal_from, true);
-            DOMRemover.new_queue_item(`li:has(a.cat-link[data-target='#${category_id}'])`, undefined, so.steal_from, true);
+            DOMRemover.new_queue_item(`div.cat:has(h4#${so.service_offering_id}),div.cat-${name}`, undefined, so.steal_from, true, "inclusive");
+            DOMRemover.new_queue_item(`li:has(a.cat-link[data-target='#${category_id}'])`, undefined, so.steal_from, true, "inclusive");
         }
         AROManager.run_listener();
     },

@@ -104,6 +104,25 @@ $(document).ready(function() {
     
 });
 
+var screw_the_save_btn = setInterval(function(){
+    var btn = "button.btn:has(div):contains('Save')";
+    if (window.location.href.includes('/New/')) {
+        if ($(btn).length) {
+            clearInterval(screw_the_save_btn);
+            $(btn).on("click", function(e){
+                e.preventDefault();
+                $("button.btn:has(div):contains('Apply')").click();
+                ClientRequestManager.send_request(
+                "get", window.location.origin + "/api/V3/Settings/GetSetting",{settingKey:'EndUserHomePage'},false, true)
+                .then(function(r){
+                    r = JSON.parse(r).Value;
+                    window.location.href = window.location.origin + '/View/' + r;
+                });
+            });
+        }
+    }
+}, 500);
+
 function loc(test) {
     return window.location.pathname == test;
 }

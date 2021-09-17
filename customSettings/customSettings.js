@@ -106,7 +106,7 @@ var customSettings = {
     functionality: {
 
         backup_storage: function() {
-            sessionStorage.setItem("custom_settings", settings_controller.get_storage_settings());
+            settings_controller.backup_settings();
 
         },
         

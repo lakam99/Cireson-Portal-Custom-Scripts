@@ -83,6 +83,22 @@
                     "functionName": "cssInjectorOff"
                 }
             }
+        },
+        {
+            "name": "delayedCallback",
+            "displayName": "Delayed Callback",
+            "ieCompatible": true,
+            "render": false,
+            "value": false,
+            "toggleFunctions": {
+                "functionsLocation": "/CustomSpace/CustomSettings/delayedCallback/delayedCallback.js",
+                "toggleOn": {
+                    "functionName": "delayedCallbackOn"
+                },
+                "toggleOff": {
+                    "functionName": "delayedCallbackOff"
+                }
+            }
         }
     ]
 }

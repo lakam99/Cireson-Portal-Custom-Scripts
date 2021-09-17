@@ -14,7 +14,8 @@
         {
             "identify": "li[role='treeitem']:has(span.k-in):contains('SCSM Management')",
             "permission": null,
-            "enabled": true
+            "enabled": true,
+            "mode":"inclusive"
         }
     ]
 }

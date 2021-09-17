@@ -19,8 +19,13 @@ var settings_controller = {
         }
     },
 
+    backup_settings: function() {
+        sessionStorage.setItem("custom_settings", settings_controller.get_storage_settings());
+    },
+
     set_storage_settings: function(new_settings) {
         localStorage.setItem(settings_controller.key, JSON.stringify(new_settings));
+        settings_controller.backup_settings();
     },
 
     reset_settings: function() {
@@ -48,24 +53,28 @@ var settings_controller = {
     },
 
     append_setting: function(setting_name, appendee) {
-        var setting = settings_controller.get_setting(setting_name);
+        var og_setting = settings_controller.get_setting(setting_name);
+        var setting = og_setting.data === undefined ? og_setting:og_setting.data;
         if (!Array.isArray(setting)) {
             console.warn("Converting " + setting + " to [].");
             settings_controller.set_setting(setting_name, []);
             settings_controller.append_setting(setting_name, appendee);
         } else {
             setting.push(appendee);
-            settings_controller.set_setting(setting_name, setting);
+            og_setting = og_setting.data === undefined ? setting:{data:setting};
+            settings_controller.set_setting(setting_name, og_setting);
         }
     },
 
     de_append_setting: function(setting_name, index) {
-        var setting = settings_controller.get_setting(setting_name);
+        var og_setting = settings_controller.get_setting(setting_name);
+        var setting = og_setting.data === undefined ? og_setting:og_setting.data;
         if (!Array.isArray(setting)) {
             throw Error("Cannot de-append from non-array setting.");
         } else {
             setting.splice(index, 1);
-            settings_controller.set_setting(setting_name, setting);
+            og_setting = og_setting.data === undefined ? setting:{data:setting};
+            settings_controller.set_setting(setting_name, og_setting);
         }
     },
 
