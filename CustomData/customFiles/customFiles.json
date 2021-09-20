@@ -79,15 +79,7 @@
             "condition": "window.location.pathname.includes('dc7957ab-6842-4453-aa7a-a5f2852043d7') || window.location.pathname.includes('1ae3ffa1-fc12-4f9b-966b-57671cb06ce8')"},
 
             {"name": "globalSearch",
-            "url": "/CustomSpace/Scripts/globalSearch/globalSearch.js"},
-
-            {"name": "SendEmailTask",
-            "url": "/CustomSpace/Scripts/sendEmailTask/sendEmailTask.js",
-            "data_require": {
-                "context": "/CustomSapce/Scripts/sendEmailTask/node_modules/",
-                "module": "eml-format"
-            },
-            "condition": "window.location.pathname.includes('/Edit/')"}
+            "url": "/CustomSpace/Scripts/globalSearch/globalSearch.js"}
         ]
     },
 
@@ -125,7 +117,10 @@
             "url": "/CustomSpace/CustomSettings/cssInjector/cssInjectorConfig.json"},
 
             {"name": "userGroups-Config",
-            "url": "/CustomSpace/CustomData/customFiles/userGroups.json"}
+            "url": "/CustomSpace/CustomData/customFiles/userGroups.json"},
+
+            {"name": "autoGroupAssigner-Config",
+            "url": "/CustomSpace/CustomData/AutoGroupAssigner/AutoGroupAssigner-Config.json"}
         ]
     }
 }

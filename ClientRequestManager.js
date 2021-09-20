@@ -36,6 +36,24 @@ var ClientRequestManager = {
         });
 
         return result;
+    },
+
+    get_misc_file: function(name) {
+        var _url = customGlobalLoader.get_url(name);
+        return new Promise(function(resolve, reject){
+            $.ajax({
+                url: _url,
+                type: "get",
+                dataType: "json",
+                async: true,
+                success: function(r) {
+                    resolve(r);
+                },
+                error: function(e) {
+                    reject(e);
+                }
+            });
+        });
     }
 };
 

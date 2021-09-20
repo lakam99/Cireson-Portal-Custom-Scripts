@@ -6,6 +6,7 @@ var autoGroupAssigner = {
     get_userPicker_obj: function() {return $("[name='AssignedWorkItem']")},
     get_assignToMe_task: function() {return $("[data-bind='click: assignToMe']")},
     get_kendo_obj: function() {return autoGroupAssigner.get_userPicker_obj().data("kendoAutoComplete")},
+    default_groups: null,
     get_assignedUser_id: function() {
         var name = autoGroupAssigner.get_userPicker_obj().val();
         var data = autoGroupAssigner.get_kendo_obj().dataSource._data;
@@ -15,10 +16,15 @@ var autoGroupAssigner = {
         }
         return "";
     },
+
     get_user_groups: function(id) {
         if (!id) {return}
         waiter.request("get", window.location.origin+"/api/V3/User/GetUsersSupportGroupEnumerations", {Id: id});
         return waiter.get_return();
+    },
+
+    get_current_user_groups:function() {
+        return autoGroupAssigner.get_user_groups(autoGroupAssigner.get_assignedUser_id());
     },
 
     assigned_picker_exists: function() {return autoGroupAssigner.get_userPicker_obj().length != 0},
@@ -29,6 +35,18 @@ var autoGroupAssigner = {
         }
     },
 
+    get_primary_support_group: function() {
+        var groups = autoGroupAssigner.get_current_user_groups();
+        var primary = undefined;
+        groups.forEach(function(group){
+            if (autoGroupAssigner.default_groups.includes(group.Text)) {
+                primary = group.Text;
+                return;
+            }
+        });
+        return primary === undefined ? groups[0].Text:primary;
+    },
+
     actions: {
         on_enter: function(event) {
             if (event.keyCode == '13') {{
@@ -37,12 +55,16 @@ var autoGroupAssigner = {
         },
 
         main: function() {
-            var id = autoGroupAssigner.get_assignedUser_id();
-            var groups = autoGroupAssigner.get_user_groups(id);
+            var groups = autoGroupAssigner.get_current_user_groups();
             if (groups.length) {
-                var primary = groups[0].Text;
+                var primary = autoGroupAssigner.get_primary_support_group();
                 var index = autoGroupAssigner.support_group.index_of(primary);
                 autoGroupAssigner.support_group.get_dropdown().select(index);
+                if (pageForm.viewModel.TierQueue !== undefined) {
+                    pageForm.viewModel.TierQueue = autoGroupAssigner.support_group.get_dropdown_data()[index];
+                } else {
+                    pageForm.viewModel.SupportGroup = autoGroupAssigner.support_group.get_dropdown_data()[index];
+                }
             }
         },
 
@@ -55,12 +77,16 @@ var autoGroupAssigner = {
     },
 
     support_group: {
-        get_support_group_field: function() {
-            var r = $("[data-role='SupportGroup']");
-            if (!r.length) {
-                r = $("[data-role='TierQueue']");
+        get_support_group_dom: function() {
+            var r = "[data-role='SupportGroup']";
+            if (!$(r).length) {
+                r = "[data-role='TierQueue']";
             }
             return r;
+        },
+
+        get_support_group_field: function() {
+            return $(autoGroupAssigner.support_group.get_support_group_dom());
         },
 
         get_dropdown: function() {
@@ -102,7 +128,7 @@ var autoGroupAssigner = {
 
         function() {
             //When Assign to Me is clicked
-            autoGroupAssigner.get_assignToMe_task().on("click", autoGroupAssigner.actions.do_wait(autoGroupAssigner.actions.main, 300));
+            autoGroupAssigner.get_assignToMe_task().on("click", autoGroupAssigner.actions.main);
         }
     ],
 
@@ -114,12 +140,15 @@ var autoGroupAssigner = {
         },
 
         start: function() {
-            autoGroupAssigner.main.existence_interval = setInterval(function() {
-                autoGroupAssigner.do_if_exists(function() {
-                    autoGroupAssigner.main.activate_listeners();
-                    clearInterval(autoGroupAssigner.main.existence_interval);
-                });
-            }, 800);
+            ClientRequestManager.get_misc_file("autoGroupAssigner-Config").then(function(config){
+                autoGroupAssigner.default_groups = config.default_for;
+                autoGroupAssigner.main.existence_interval = setInterval(function() {
+                    autoGroupAssigner.do_if_exists(function() {
+                        autoGroupAssigner.main.activate_listeners();
+                        clearInterval(autoGroupAssigner.main.existence_interval);
+                    });
+                }, 800);
+            });
         }
     }
 
