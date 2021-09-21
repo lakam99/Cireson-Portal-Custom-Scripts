@@ -48,7 +48,12 @@
                 },
                 {
                     "name": "UPN",
-                    "required": true
+                    "required": true,
+                    "testFunction": {
+                        "functionLocation": "/CustomSpace/Templates/createUser/testUPN.js",
+                        "functionName": "testUPN",
+                        "failedMessage": "Email format must be a@b.c"
+                    }
                 },
                 {
                     "name": "StreetAddress",

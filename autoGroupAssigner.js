@@ -17,14 +17,8 @@ var autoGroupAssigner = {
         return "";
     },
 
-    get_user_groups: function(id) {
-        if (!id) {return}
-        waiter.request("get", window.location.origin+"/api/V3/User/GetUsersSupportGroupEnumerations", {Id: id});
-        return waiter.get_return();
-    },
-
     get_current_user_groups:function() {
-        return autoGroupAssigner.get_user_groups(autoGroupAssigner.get_assignedUser_id());
+        return session.user.user_groups;
     },
 
     assigned_picker_exists: function() {return autoGroupAssigner.get_userPicker_obj().length != 0},
@@ -47,11 +41,25 @@ var autoGroupAssigner = {
         return primary === undefined ? groups[0].Text:primary;
     },
 
+    unassign_assigned_user: function() {
+        autoGroupAssigner.get_kendo_obj().value(null);
+        pageForm.viewModel.AssignedWorkItem.DisplayName = null;
+        pageForm.viewModel.AssignedWorkItem.BaseId = null;
+        pageForm.viewModel.AssignedWorkItem.uid = null;
+    },
+
     actions: {
         on_enter: function(event) {
             if (event.keyCode == '13') {{
                 autoGroupAssigner.get_userPicker_obj().trigger("enterKey");
             }}
+        },
+
+        on_reassign: function(e) {
+            var reassign = e.node.innerText;
+            if (!formTasks.user_has_permission(reassign)) {
+                autoGroupAssigner.unassign_assigned_user();
+            }
         },
 
         main: function() {
@@ -66,14 +74,7 @@ var autoGroupAssigner = {
                     pageForm.viewModel.SupportGroup = autoGroupAssigner.support_group.get_dropdown_data()[index];
                 }
             }
-        },
-
-        do_wait: function(callback, w8) {
-            w8 = !w8?100:w8;
-            return function() {
-                setTimeout(callback, w8);
-            }
-        }
+        } 
     },
 
     support_group: {
@@ -83,6 +84,10 @@ var autoGroupAssigner = {
                 r = "[data-role='TierQueue']";
             }
             return r;
+        },
+
+        get_support_group_dropdown_tree: function() {
+            return $(autoGroupAssigner.support_group.get_support_group_dom()+' > div.k-ext-treeview').data("kendoTreeView");
         },
 
         get_support_group_field: function() {
@@ -129,6 +134,11 @@ var autoGroupAssigner = {
         function() {
             //When Assign to Me is clicked
             autoGroupAssigner.get_assignToMe_task().on("click", autoGroupAssigner.actions.main);
+        },
+
+        function() {
+            //When support group is reassigned
+            autoGroupAssigner.support_group.get_support_group_dropdown_tree().bind('select', autoGroupAssigner.actions.on_reassign);
         }
     ],
 

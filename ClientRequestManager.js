@@ -40,11 +40,17 @@ var ClientRequestManager = {
 
     get_misc_file: function(name) {
         var _url = customGlobalLoader.get_url(name);
+        return ClientRequestManager.get_str_url(_url, "json", true);
+    },
+
+    get_str_url: function(_url, _type, preformatted_url) {
+        _type = _type ? _type:'text';
+        _url = preformatted_url ? _url:customGlobalLoader.get_str_url(_url);
         return new Promise(function(resolve, reject){
             $.ajax({
                 url: _url,
                 type: "get",
-                dataType: "json",
+                dataType: _type,
                 async: true,
                 success: function(r) {
                     resolve(r);

@@ -28,6 +28,8 @@ var formCreateCI = {
         }
     ],
 
+    currentClass: undefined,
+
     helperFunctions: {},
 
     setup: [
@@ -69,8 +71,15 @@ var formCreateCI = {
 
         function() {
             //Generate generators
-            formCreateCI.classes.forEach(function(c,i){
+            formCreateCI.classes.forEach(function(c){
                 formCreateCI.functionality.generate_generators(c.formJSON[c.name].fields);
+            });
+        },
+
+        function() {
+            //Generate test funcs
+            formCreateCI.classes.forEach(function(c){
+                formCreateCI.functionality.generate_test_func(c.formJSON[c.name].fields);
             });
         },
 
@@ -123,6 +132,8 @@ var formCreateCI = {
         },
 
         start_create_listener: function(this_class_id) {
+            this_class_id = this_class_id ? this_class_id:formCreateCI.currentClass;
+            formCreateCI.currentClass = this_class_id;
             var btn = $(".drawermenu-createbutton");
             btn.css("display", "block").on("click", (function() {
                 formCreateCI.functionality.commit_new_class(this_class_id);
@@ -196,13 +207,18 @@ var formCreateCI = {
         generate_generators: function(fields) {
             fields.forEach(function(field,i){
                 if (field.generatorFunction) {
-                    $.ajax({
-                        url: field.generatorFunction.functionLocation,
-                        dataType: "text",
-                        async: false,
-                        success: function(result) {
-                            eval(result + ";field.generatorFunction.function = eval(field.generatorFunction.functionName)");
-                        }
+                    ClientRequestManager.get_str_url(field.generatorFunction.functionLocation).then(function(result){
+                        eval(result + ";field.generatorFunction.function = eval(field.generatorFunction.functionName)");
+                    });
+                }
+            });
+        },
+
+        generate_test_func: function(fields) {
+            fields.forEach(function(field){
+                if (field.testFunction) {
+                    ClientRequestManager.get_str_url(field.testFunction.functionLocation).then(function(result){
+                        eval(result + ";field.testFunction.function = eval(field.testFunction.functionName)");
                     });
                 }
             });
@@ -213,6 +229,7 @@ var formCreateCI = {
             var test = null;
             var l = 0;
             var value = null;
+            var clean = new RegExp(/["\*\d,;{}\[\]!@#$%\^&\(\)/\\\\]/g); //took 2 hours.. regex man... ****
             if (field.generatorFunction) {
                 if (field.generatorFunction.parameters) {
                     l = field.generatorFunction.parameters.length;
@@ -221,10 +238,11 @@ var formCreateCI = {
                         if (!test.length) {
                             throw Error("Parameter name " + param + " did not match any inputs.");
                         } else {
+                            test = field.testFunction ? test.val():test.val().replace(clean,'');
                             if (i != l-1) {
-                                params += "'" + test.val() +"'" + ",";
+                                params += "\"" + test +"\"" + ",";
                             } else {
-                                params += "'" + test.val() +"'";
+                                params += "\"" + test +"\"";
                             }
                         }
                     });
@@ -235,16 +253,30 @@ var formCreateCI = {
             }
         },
 
+        show_error_msg: function(input, msg) {
+            input.after("<div class='alert alert-danger .alert-dismissable'>"+
+            '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'+msg+'</div>');
+        },
+
         test_inputs: function(classId) {
             let c = formCreateCI.functionality.getClassAtId(classId);
             let requirement_met = true;
+            var test = true;
             c.formJSON[c.name].fields.forEach(function(field,i){
                 formCreateCI.functionality.generate_value(field);
                 let input = formCreateCI.functionality.get_input(field.name);
                 if (field.required && !input.val().length) {
                     requirement_met = false;
-                    input.after("<div class='alert alert-danger .alert-dismissable'>"+
-                    '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Required!</div>');
+                    formCreateCI.functionality.show_error_msg(input, 'Required!');
+                }
+                if (field.testFunction) {
+                    eval("test = field.testFunction.function(\"" + input.val() + "\")");
+                    if (!test) {
+                        requirement_met = false;
+                        field.testFunction.failedMessage = 
+                            field.testFunction.failedMessage ? field.testFunction.failedMessage:'Failed to verify field requirements.';
+                        formCreateCI.functionality.show_error_msg(input, field.testFunction.failedMessage);
+                    }
                 }
             });
             return requirement_met;
@@ -291,6 +323,7 @@ var formCreateCI = {
                     });
                 }, function() {
                     kendo.alert("Cancelled creation of new configuration item.");
+                    formCreateCI.functionality.start_create_listener();
                 });
             }
             formCreateCI.functionality.start_create_listener();
