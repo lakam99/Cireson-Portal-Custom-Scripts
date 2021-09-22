@@ -16,6 +16,18 @@
             "permission": null,
             "enabled": true,
             "mode":"inclusive"
+        },
+        {
+            "identify": "li:has(span:contains('Network Services Support')) > ul",
+            "permission": null,
+            "enabled": true,
+            "mode": "inclusive"
+        },
+        {
+            "identify": "li:has(span:contains('Network Services Support')) > div.k-mid > span.k-icon",
+            "permission": null,
+            "enabled": true,
+            "mode":"inclusive"
         }
     ]
 }

@@ -56,6 +56,11 @@ display: none;
   margin: 1% !important;
   }
 
+input:disabled:not(:checked) +.slider {
+  background-color: grey !important;
+  cursor: not-allowed !important;
+}
+
 input:not(:checked)+.slider {
   background-color: lightcoral !important;
 }

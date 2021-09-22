@@ -35,7 +35,8 @@
             "name": "accentSuggest",
             "displayName": "French Accent Suggest",
             "size": "col-md-4",
-            "ieCompatible": true
+            "ieCompatible": true,
+            "disabled": true
         },
         {
             "name": "monitorCopy",

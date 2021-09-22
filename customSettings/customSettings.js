@@ -44,9 +44,11 @@ var customSettings = {
         },
 
         function() {
+            //generate setting HTML
             customSettings.settings.customSettings.forEach(function(setting){
                 if (setting.render || setting.render === undefined) {
                     var value = null;
+                    var enabled = null;
                     if (setting.default !== undefined && !settings_controller.setting_exists(setting.name)) {
                         value = setting.default;
                         settings_controller.set_setting_value(setting.name, value);
@@ -54,20 +56,23 @@ var customSettings = {
                     else
                         value = setting.value ? setting.value:settings_controller.get_setting_value(setting.name);
                     setting.value = value;
-                    if (value) {value = 'checked'} else {value = ''}
-                    setting.html = '<div class="'+setting.size+'"><div class="form-group">'+
-                    '<label class="control-label" for="'+setting.name+'_container">'+setting.displayName+'</label>'+
-                            '<div class="container custom-setting-container" name="'+setting.name+'_container">'+
-                                '<label class="switch" for="'+setting.name+'" aria-label="Enable '+setting.displayName+'">'+
-                                    '<input type="checkbox" id="'+setting.name+'" '+value+'/>'+
-                                    '<div class="slider round"></div>'+
-                                '</label>'+
-                            '</div>'+
-                        '</div>'+
-                    '</div>';
+                    value = value ? 'checked':'';
+                    enabled = setting.disabled ? 'disabled':'';
+                    setting.html = `
+                        <div class='${setting.size}'>
+                            <div class='form-group'>
+                                <label class='control-label' for='${setting.name}_container'>${setting.displayName}</label>
+                                <div class='container custom-setting-container' name='${setting.name}_container'>
+                                    <label class='switch' for='${setting.name}' aria-label='Enable ${setting.displayName}'>
+                                        <input type='checkbox' id='${setting.name}' ${value} ${enabled} />
+                                        <div class='slider round'></div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>`;
                 }
             
-                if (setting.toggleFunctions !== undefined) {
+                if (setting.toggleFunctions !== undefined && !setting.disabled) {
                     $.ajax({
                         url: customGlobalLoader.get_str_url(setting.toggleFunctions.functionsLocation),
                         dataType: "text",
@@ -86,7 +91,7 @@ var customSettings = {
         function() {
             //render setting on each page
             customSettings.settings.customSettings.forEach(function(setting) {
-                if (setting.toggleFunctions !== undefined) {
+                if (setting.toggleFunctions !== undefined && !setting.disabled) {
                     if ((setting.value!==undefined?setting.value:settings_controller.get_setting_value(setting.name))) {
                         setting.toggleFunctions.toggleOn.function();
                     } else {

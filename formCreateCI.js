@@ -132,12 +132,12 @@ var formCreateCI = {
         },
 
         start_create_listener: function(this_class_id) {
+            var btn = $(".drawermenu-createbutton");
+            btn.off("click");
             this_class_id = this_class_id ? this_class_id:formCreateCI.currentClass;
             formCreateCI.currentClass = this_class_id;
-            var btn = $(".drawermenu-createbutton");
             btn.css("display", "block").on("click", (function() {
                 formCreateCI.functionality.commit_new_class(this_class_id);
-                btn.off("click");
             }));
         },
 
@@ -229,7 +229,6 @@ var formCreateCI = {
             var test = null;
             var l = 0;
             var value = null;
-            var clean = new RegExp(/["\*\d,;{}\[\]!@#$%\^&\(\)/\\\\]/g); //took 2 hours.. regex man... ****
             if (field.generatorFunction) {
                 if (field.generatorFunction.parameters) {
                     l = field.generatorFunction.parameters.length;
@@ -238,7 +237,7 @@ var formCreateCI = {
                         if (!test.length) {
                             throw Error("Parameter name " + param + " did not match any inputs.");
                         } else {
-                            test = field.testFunction ? test.val():test.val().replace(clean,'');
+                            test = test.val();
                             if (i != l-1) {
                                 params += "\"" + test +"\"" + ",";
                             } else {
@@ -258,6 +257,12 @@ var formCreateCI = {
             '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'+msg+'</div>');
         },
 
+        clean_input: function(input) {
+            var clean = new RegExp(/["\*\d,;{}\[\]!@#$%\^&\(\)/\\\\]/g); //took 2 hours.. regex man... ****
+            input.val(input.val().replace(clean,''));
+            return input;
+        },
+
         test_inputs: function(classId) {
             let c = formCreateCI.functionality.getClassAtId(classId);
             let requirement_met = true;
@@ -269,7 +274,7 @@ var formCreateCI = {
                     requirement_met = false;
                     formCreateCI.functionality.show_error_msg(input, 'Required!');
                 }
-                if (field.testFunction) {
+                if (input.val().length && field.testFunction) {
                     eval("test = field.testFunction.function(\"" + input.val() + "\")");
                     if (!test) {
                         requirement_met = false;
@@ -277,6 +282,8 @@ var formCreateCI = {
                             field.testFunction.failedMessage ? field.testFunction.failedMessage:'Failed to verify field requirements.';
                         formCreateCI.functionality.show_error_msg(input, field.testFunction.failedMessage);
                     }
+                } else if (!field.ignore_test && !field.generatorFunction) {
+                    input = formCreateCI.functionality.clean_input(input);
                 }
             });
             return requirement_met;
