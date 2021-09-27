@@ -120,8 +120,32 @@ var screw_the_save_btn = setInterval(function(){
                 });
             });
         }
+    } else {
+        clearInterval(screw_the_save_btn);
     }
 }, 500);
+
+var default_private_comments = setInterval(function(){
+    if (!window.location.href.includes('/Edit')) {
+        clearInterval(default_private_comments);
+        return;
+    }
+
+    var priv_check = "input#actionLogisPrivate:nth(0)";
+    var reg_comment_btn = "button.action-log-add-button";
+    var mobile_comment_btn = "button[data-bind='click: addComment']";
+    var comment_btn = "";
+    var mobile_mode = function() {return $("div.action-log-mobile-buttons").parent().parent().css('display') == 'block'};
+
+    if ($(priv_check).length) {
+        $(priv_check).click();
+        comment_btn = mobile_mode() ? mobile_comment_btn:reg_comment_btn;
+        $(comment_btn).on("click", function(e){
+            $(priv_check).click();
+        });
+        clearInterval(default_private_comments);
+    }
+}, 1000);
 
 function loc(test) {
     return window.location.pathname == test;

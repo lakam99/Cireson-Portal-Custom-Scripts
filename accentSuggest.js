@@ -227,9 +227,10 @@ var accentSuggest = {
                 //Set a timeout to allow the user to finish typing
                 accentSuggest.properties.timeout = setTimeout(function(){
                     if (n.popup.visible()) {
-                        var text = n.element.val() || n.text() || "";
+                        var text = n.element.val() || "";
                         if (text.length < 3)
                             return;
+                        text = text.substring(0,6);
                         var request = accentSuggest.functionality.request_variations(text);
                         var respond = null;
                         while ((response = request.next().value)) {
