@@ -75,6 +75,8 @@ $(document).ready(function() {
         dropdown_height: 550,
         dropdown_font_size: 13,
         resized: true,
+        resized_window:false,
+        og_height: undefined,
         set_dropdown_height: function(arg) {dropdown_resizer.dropdown_height = arg; dropdown_resizer.resized = true;},
         resize: function() {
             if (dropdown_resizer.resized) {
@@ -94,8 +96,19 @@ $(document).ready(function() {
                 if ($(n).hasClass("k-custom-visible")) {
                     var n2 = n.getBoundingClientRect();
                     var d = footer.top - n2.bottom;
+                    var nh = d + n2.height;
+                    if (!dropdown_resizer.resized_window) {
+                        dropdown_resizer.og_height = $('body').height();
+                    }
+                    if (nh <= 100) {$('body').css('min-height', dropdown_resizer.og_height+500);dropdown_resizer.resized_window = true}
+                    n2 = n.getBoundingClientRect();
+                    d = footer.top - n2.bottom;
                     if (!$(".drawer-drawermenu").find(n).length) {
                         dropdown_resizer.gogo_resize(d + n2.height);
+                    }
+                } else if (!$('div.k-treeview').toArray().some((n)=>{return $(n).hasClass("k-custom-visible")})) {
+                    if (dropdown_resizer.resized_window) {
+                        $('body').css('min-height', dropdown_resizer.og_height);
                     }
                 }
             });
@@ -146,6 +159,18 @@ var default_private_comments = setInterval(function(){
         clearInterval(default_private_comments);
     }
 }, 1000);
+
+var ARO_changer_cuz_we_cant_be_bothered_to_make_a_new_way_to_make_AROs = setInterval(function(){
+    if (window.location.pathname.includes('RequestOffering')) {
+        if ($('div[data-control="checkboxGridByCriteriaOld"]').length) {
+            $('div[data-control="checkboxGridByCriteriaOld"]').toArray().forEach(function(i){$(i).data('kendoGrid').dataSource.data([])});
+            $('textarea').toArray().forEach(function(i){$(i).on('input', function(e){$(e.currentTarget).css('height','').css('height',e.currentTarget.scrollHeight+'px')});});
+            clearInterval(ARO_changer_cuz_we_cant_be_bothered_to_make_a_new_way_to_make_AROs);
+        }
+    } else {
+        clearInterval(ARO_changer_cuz_we_cant_be_bothered_to_make_a_new_way_to_make_AROs);
+    }
+}, 800);
 
 function loc(test) {
     return window.location.pathname == test;

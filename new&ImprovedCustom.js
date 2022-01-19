@@ -123,7 +123,13 @@ var customGlobalLoader = {
 
         load_customspace: function() {
             customGlobalLoader.main.load_darkmode();
-            customGlobalLoader.main.load_user_group();
+            customGlobalLoader.main.load_user_group(function(){return session.user.Id}, 
+            function(res) {
+                var s = customGlobalLoader.get_settings();
+                s.user_groups = res;
+                localStorage.setItem("settings", JSON.stringify(s));
+                session.user.user_groups = customGlobalLoader.get_settings().user_groups;
+            });
             customGlobalLoader.main.setup();
             customGlobalLoader.main.load_systems();
         },
@@ -131,25 +137,20 @@ var customGlobalLoader = {
         load_darkmode: function() {
             var s = customGlobalLoader.get_settings();
             if (s && s.darkMode && s.darkMode.value) {
-                var link = window.location.origin + "/CustomSpace/CustomSettings/darkMode/darkMode.css";
+                var link = customGlobalLoader.get_str_url("/CustomSpace/CustomSettings/darkMode/darkMode.css");
                 $("head").before('<link type="text/css" rel="stylesheet"' +
                 'id="dark-mode-general-link" href="'+link+'">');
             }
         },
 
-        load_user_group: function() {
+        load_user_group: function(id, callback) {
             customGlobalLoader.main.when_session_available(function(){
-                var s = customGlobalLoader.get_settings();
                 $.ajax({
                     url: window.location.origin + "/api/V3/User/GetUsersSupportGroupEnumerations",
-                    data: {Id: session.user.Id},
+                    data: {Id: id},
                     dataType: "json",
                     async: false,
-                    success: function(res) {
-                        s.user_groups = res;
-                        localStorage.setItem("settings", JSON.stringify(s));
-                        session.user.user_groups = customGlobalLoader.get_settings().user_groups;
-                    } 
+                    success: callback
                 });
             });
         },

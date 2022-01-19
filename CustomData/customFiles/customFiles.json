@@ -43,8 +43,9 @@
             {"name": "quickies",
             "url": "/CustomSpace/Scripts/Quickies/quickies.js"},
 
-            {"name": "homepageLocalizer",
-            "url": "/CustomSpace/Scripts/homepageLocalization/homepageLocalizer.js"},
+            {"name": "emailTemplateClient",
+            "url": "/CustomSpace/Scripts/emailTemplateClient/emailTemplateClient.js",
+            "condition": "window.location.pathname.includes('/Edit/')"},
 
             {"name": "gridControl",
             "url": "/CustomSpace/Scripts/gridControl/gridControl.js"},

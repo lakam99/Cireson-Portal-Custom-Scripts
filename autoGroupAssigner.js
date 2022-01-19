@@ -30,15 +30,15 @@ var autoGroupAssigner = {
     },
 
     get_primary_support_group: function() {
-        var groups = autoGroupAssigner.get_current_user_groups();
+        var groups = autoGroupAssigner.get_current_user_groups().map((group)=>{return group.Name;});
         var primary = undefined;
-        groups.forEach(function(group){
-            if (autoGroupAssigner.default_groups.includes(group.Text)) {
-                primary = group.Text;
-                return;
+        autoGroupAssigner.default_groups.some((default_group)=>{
+            if (groups.includes(default_group)) {
+                primary = default_group;
+                return true;
             }
-        });
-        return primary === undefined ? groups[0].Text:primary;
+        })
+        return primary === undefined ? groups[0]:primary;
     },
 
     unassign_assigned_user: function() {

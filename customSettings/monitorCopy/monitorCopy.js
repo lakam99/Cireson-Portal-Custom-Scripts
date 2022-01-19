@@ -16,7 +16,12 @@ var monitorCopyOn = async function() {
         var field = "input[name='Title']";
         var required = settings_controller.get_setting_value(s_name);
         if (required) {
-            c.ticket.RelatesToWorkItem.addItem(settings_controller.get_setting(s_name).data);
+            debugger;
+            required = settings_controller.get_setting(s_name);
+            required.data.RelatesToWorkItem.forEach((workitem)=>{c.ticket.RelatesToWorkItem.addItem(workitem)});
+            c.ticket.RelatesToWorkItem.addItem(required.data);
+            required.data.RelatesToConfigItem.forEach((configitem)=>{c.ticket.RelatesToConfigItem.push(configitem)});
+            required.data.FileAttachment.forEach((attachment)=>{c.ticket.FileAttachment.push(attachment)});
             c.ticket.Title += " (Copy)";
             $(field).val(c.ticket.Title);
             settings_controller.set_setting(s_name, {value:false});
