@@ -209,3 +209,17 @@ div.k-ext-treeview.k-widget.k-treeview.k-custom-visible {
 
 .my_nav > .container > .navbar-nav > li > a {padding-top:5px !important; padding-bottom:5px !important;}
 .my_cont > .navbar {min-height:32px !important}
+
+/** Portal Homepage Update **/
+
+html {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  background-color: rgb(255, 244, 244);
+}

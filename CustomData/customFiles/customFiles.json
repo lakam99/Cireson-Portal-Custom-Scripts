@@ -69,6 +69,10 @@
             "url": "/CustomSpace/Scripts/portalUserEmailManager/portalUserEmailManager.js",
             "condition": "window.location.pathname.includes('/Edit/')"},
 
+            {"name": "portalHomepage",
+            "url": "/CustomSpace/Scripts/Homepage/portalHomepage.js",
+            "condition": "window.location.pathname.includes('/View/Home')"},
+
             {"name": "DOMRemover",
             "url": "/CustomSpace/Scripts/DOMRemover/DOMRemover.js"},
 
@@ -121,7 +125,16 @@
             "url": "/CustomSpace/CustomData/customFiles/userGroups.json"},
 
             {"name": "autoGroupAssigner-Config",
-            "url": "/CustomSpace/CustomData/AutoGroupAssigner/AutoGroupAssigner-Config.json"}
+            "url": "/CustomSpace/CustomData/AutoGroupAssigner/AutoGroupAssigner-Config.json"},
+
+            {"name": "homepage-stylesheet",
+            "url": "/CustomSpace/CustomData/Homepage/homepage.css"},
+
+            {"name": "homepage-template",
+            "url": "/CustomSpace/Templates/Homepage/homepage.html"},
+
+            {"name": "homepage-head",
+            "url": "/CustomSpace/Templates/Homepage/homepage-head.html"}
         ]
     }
 }
