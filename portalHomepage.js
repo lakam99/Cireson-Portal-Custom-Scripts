@@ -2,7 +2,7 @@ var portalHomepage = {
     homepage_template: customGlobalLoader.get_url('homepage-template'),
     wrapper: '#main_wrapper',
     existence: null,
-    aros: undefined,
+    iframe: '#arkam-homepage',
 
     setup: [
         function() {
@@ -23,15 +23,18 @@ var portalHomepage = {
                 if ($(portalHomepage.wrapper).length) {
                     clearInterval(portalHomepage.existence);
                     $(portalHomepage.wrapper).html(`<iframe id='arkam-homepage' src="${portalHomepage.homepage_template}"></iframe>`);
-                    $('#arkam-homepage').on('load', portalHomepage.ready);
+                    $(portalHomepage.iframe).on('load',(e)=>{
+                        $(portalHomepage.iframe).contents().find('#main').after(`
+                        <script src='ARO-card-builder.js?v=${customGlobalLoader.get_current_version()}' type="text/javascript"></script>
+                        <script src='homepage-render.js?v=${customGlobalLoader.get_current_version()}' type="text/javascript"></script>
+                        <script src='updates-manager.js?v=${customGlobalLoader.get_current_version()}' type="text/javascript"></script>
+                        `);
+                        $(portalHomepage.iframe).off('load');
+                    });
                 }
             }, 500);
         }
     ],
-
-    ready: function() {
-        portalHomepage.aros = parent.window.AROManager.aro;
-    },
 
     start: function() {
         portalHomepage.setup.forEach((f)=>{f()});
