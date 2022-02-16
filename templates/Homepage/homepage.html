@@ -6,14 +6,16 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Readex+Pro&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="http://ottansm2/CustomSpace/CustomData/Homepage/homepage.css">
+    <link rel="stylesheet" href="http://ottansm2/CustomSpace/Templates/Homepage/homepage.css">
     <script src="jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="datepicker.min.css">
+    <script src="datepicker-full.min.js"></script>
   </head>
   <body>
       <div id='homepage-content'>
         <h1 class="text-center display-1"> Service Manager Portal </h1>
       <div id='aro-dropdown'>
-          <h4>I need help with&nbsp;.&nbsp;.&nbsp;.</h4> 
+          <h4><script>document.write(parent.window.localization.HomepageDropdownTitle)</script>&nbsp;.&nbsp;.&nbsp;.</h4> 
           <select class="form-select form-select-lg mb-3" name='ex' title='Dropdown for service offerings' id='help'>
               <option value=0 selected>&nbsp;</option>
           </select>
@@ -22,7 +24,7 @@
           <div id="content">
             <div id='newsletter' name='0' class="service-page border border-4 rounded" style="display: block;">
               <div style="display: flex;">
-                <h1 class="display-6 text-center" style="flex-grow:100">Support Desk Updates</h1>
+                <h1 class="display-6 text-center" style="flex-grow:100"><script>document.write(parent.window.localization.HomepageUpdatesTitle)</script></h1>
                 <a class="edit-btn btn btn-outline-primary btn-sm disabled" id='cancel-btn'><img src="./assets/cancel.png" class="edit-img"></a>
                 <a class="edit-btn btn btn-outline-primary btn-sm disabled" id='save-btn'><img src="./assets/complete.png" class="edit-img"></a>
                 <a class="edit-btn btn btn-outline-primary btn-sm" id='edit-btn'><img src='./assets/edit.png' class="edit-img"></a>

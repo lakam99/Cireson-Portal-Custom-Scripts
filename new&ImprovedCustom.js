@@ -194,6 +194,7 @@ var formTasks = {
 
     user_has_permission: function(permission) {
         var groups = session.user.user_groups;
+        if (!groups) {return false;}
         for (var i = 0, group = groups[i]; i < groups.length; i++, group = groups[i]) {
             if (group.Name.includes(permission)) {
                 return true;

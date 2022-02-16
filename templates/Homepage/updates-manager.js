@@ -39,9 +39,18 @@ var updatesManager = {
         },
 
         function() {
-            updatesManager.listeners.forEach((f)=>{f()});
+            updatesManager.button_listeners.forEach((f)=>{f()});
+        },
+
+        function () {
+            updatesManager.UI.existing.build_updates();
         }
     ],
+
+    next_week: function() {
+        let date = new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000);
+        return `${date.getUTCMonth()+1}/${date.getUTCDate()}/${date.getUTCFullYear()}`;
+    },
 
     UI: {
         reset_container: function() {
@@ -56,8 +65,9 @@ var updatesManager = {
         existing: {
             build_update: function(update_obj) {
                 updatesManager.item_count++;
+                let item_count = updatesManager.item_count;
                 let icon = updatesManager.icons[update_obj.type];
-                update_obj.timestamp === undefined ? new Date().toDateString():update_obj.timestamp;
+                update_obj.timestamp = update_obj.timestamp === undefined ? new Date().toDateString():update_obj.timestamp;
                 return `
                 <div class="col-sm-4">
                   <div class="accordion" id='item-${item_count}'>
@@ -91,8 +101,9 @@ var updatesManager = {
         modify: {
             build_update: function(update_obj) {
                 updatesManager.item_count++;
+                let item_count = updatesManager.item_count;
                 let icon = updatesManager.icons[update_obj.type];
-                update_obj.timestamp === undefined ? new Date().toDateString():update_obj.timestamp;
+                update_obj.timestamp = update_obj.timestamp === undefined ? new Date().toDateString():update_obj.timestamp;
                 return `
                 <div class="col-sm-4">
                   <div class="accordion" id='item-${item_count}'>
@@ -107,7 +118,14 @@ var updatesManager = {
                         <div class="accordion-body">
                             <textarea class='form-control' id='modify-text-${item_count}'>${update_obj.text}</textarea>
                             <p class="timestamp"> Posted ${update_obj.timestamp} </p>
-                            <div class='float-right garbage'></div>
+                            <p style='font-size: smaller'>Expires on <input type'text' id='expiry-${item_count}' class='update-datepicker' name='start' value='${update_obj.expiry_date || updatesManager.next_week()}'></p>
+                            <div class='float-right garbage'>
+                            <a class="garbage-click" style="
+                                float: right;
+                                width: 1.5vw;
+                                height: 3vh;
+                            "></a>
+                            </div>
                         </div>
                       </div>
                     </div>
@@ -122,12 +140,12 @@ var updatesManager = {
                     $(updatesManager.container).append(updatesManager.UI.modify.build_update(update));
                 });
                 $(updatesManager.container).append(updatesManager.new_template);
-
+                updatesManager.passive_listeners.hook_update_icons();
             }
         }
     },
 
-    listeners: [
+    button_listeners: [
         function() {
             $(updatesManager.buttons.edit).on('click', (e)=>{
                 updatesManager.UI.modify.build_updates();
@@ -155,15 +173,68 @@ var updatesManager = {
         }
     ],
 
+    passive_listeners: {
+        hook_new_update: function() {
+            updatesManager.passive_listeners.build_calendars();
+            var elem = '#item-x';
+            $(elem).on('click', (e)=>{
+                let new_update = {type: 1, title: '', text: '', timestamp: undefined};
+                $(elem).parent().before(updatesManager.UI.modify.build_update(new_update));
+                updatesManager.passive_listeners.hook_update_icons();
+                updatesManager.passive_listeners.build_calendars();
+            })
+        },
+
+        build_calendars: function() {
+            $('.update-datepicker').toArray().forEach((d)=>{
+                if (!$(d).data('datepicker')) {
+                    $(d).data('datepicker', new Datepicker(d, {minDate: new Date()}));
+                }
+            })
+        },
+
+        hook_update_icons: function() {
+            $('.update-icon:not(#edit-btn)').toArray().forEach((i)=>{
+                $(i).on('click', async (e)=>{
+                var current = $(e.currentTarget).attr('src');
+                let next = (()=> {
+                    let current_i = Number.parseInt(Object.keys(updatesManager.icons).filter((i)=>{return updatesManager.icons[i].src == current})[0]);
+                    current_i = current_i != 3 ? current_i+1:1;
+                    return updatesManager.icons[current_i];
+                })();
+                $(e.currentTarget).attr('src', next.src);
+                $(e.currentTarget).attr('alt', next.alt);
+                $(e.currentTarget).parent().removeClass('type-1').removeClass('type-2').removeClass('type-3').addClass('type-'+next.type);
+                });
+            });
+            updatesManager.passive_listeners.hook_garbage_cans();
+        },
+              
+        hook_garbage_cans: function() {
+            $('.garbage-click').toArray().forEach((i)=>{
+                $(i).on('click', async (e)=>{
+                let parent = $(e.currentTarget).parent().parent().parent().parent();
+                let index = $('.accordion').toArray().indexOf(parent[0]);
+                if (index != -1) {
+                    updatesManager.updates.splice(index, 1);
+                    //indexes.splice(index, 1);
+                }
+                parent.parent().parent().remove();
+                });
+            });
+        }
+    },
+
     save_updates: function() {
         var indexes = updatesManager.UI.get_indexes();
         var new_updates = [];
         indexes.forEach((i)=>{
           new_updates.push({
-            type: $(`#item${i}-h > div > img`).attr('alt'),
+            type: updatesManager.icons[Object.keys(updatesManager.icons).filter((b)=>{return updatesManager.icons[b].alt == $(`#item${i}-h > div > img`).attr('alt')})[0]].type ,
             title: $(`#modify-title-${i}`).val(),
             text: $(`#modify-text-${i}`).val(),
-            timestamp: $(`#item-${i} > .accordion-item > div > div > .timestamp`).text().replace('Posted ','').substring(1) || new Date().toDateString()
+            timestamp: $(`#item-${i} > .accordion-item > div > div > .timestamp`).text().replace('Posted ','').substring(1) || new Date().toDateString(),
+            expiry_date: $(`#expiry-${i}`).val() || updatesManager.next_week()
           });
         });
         updatesManager.updates = new_updates;
@@ -188,6 +259,7 @@ var updatesManager = {
         if (updatesManager.edit_mode) {
             $(updatesManager.buttons.save).removeClass('disabled');
             $(updatesManager.buttons.cancel).removeClass('disabled');
+            updatesManager.passive_listeners.hook_new_update();
         } else {
             $(updatesManager.buttons.save).addClass('disabled');
             $(updatesManager.buttons.cancel).addClass('disabled');

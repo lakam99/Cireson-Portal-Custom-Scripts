@@ -212,14 +212,6 @@ div.k-ext-treeview.k-widget.k-treeview.k-custom-visible {
 
 /** Portal Homepage Update **/
 
-html {
-  height: 100%;
-  width: 100%;
-}
-
-body {
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
-  background-color: rgb(255, 244, 244);
+label.checkbox-label {
+  text-transform: unset !important;
 }
