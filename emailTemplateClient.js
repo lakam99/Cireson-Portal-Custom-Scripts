@@ -11,6 +11,7 @@ var emailTemplateClient = {
         modal: true,
         visible: false
     },
+    promise_resolver:undefined,
 
     dialog: {
         get_dialog: function() {
@@ -29,41 +30,55 @@ var emailTemplateClient = {
             submit: function() {
                 var template = $("#edit-template-text").val();
                 var data = {username: session.user.UserName, template: template};
-                
+                emailTemplateClient.api_scope(`
                 $.ajax({
-                    url: emailTemplateClient.api + "/write",
+                    url: "${emailTemplateClient.api}/write",
                     type: "post",
                     data: data,
                     async: false,
                     success: (r) => {
-                        kendo.alert("Successfully saved template.");
-                        window.location.reload();
+                        parent.window.postMessage({type: 'write-template', success: true}, '*');
                     },
                     error: (e) => {
-                        kendo.alert("Failed to save template..." + e);
+                        parent.window.postMessage({type: 'write-template', success: false, error: e}, '*');
                     }
                 });
+                `);
             }
         }
     },
 
     setup: function() {
-        return new Promise((resolve,reject)=>{
-            $.ajax({
-                url: emailTemplateClient.api,
-                type: 'get',
-                data: {username: session.user.UserName},
-                dataType: 'json',
-                async: true,
-                success: (r) => {
-                    this.existing_template = r;
-                    resolve(true);
-                },
-                error: (e) => {
-                    resolve(false);
-                }
-            });
+        $("body").append(`<iframe id='api-scope' src='http://ottansm1:6942/index'></iframe>`);
+        window.addEventListener('message', (e)=>{
+            switch (e.data.type) {
+                case 'get-template':
+                    emailTemplateClient.promise_resolver(e.data.data);
+                    break;
+                case 'write-template':
+                    if (e.data.success) {
+                        kendo.alert("Successfully saved template.");
+                        window.location.reload();
+                    } else {
+                        kendo.alert("Failed to save template..." + e.data.error);
+                    }
+                    break;
+                default:
+                    break;
+            }
         })
+        emailTemplateClient.api_scope(`
+        $.ajax({
+            url: "${emailTemplateClient.api}",
+            type: 'get',
+            data: {username: "${session.user.UserName}"},
+            dataType: 'json',
+            async: true,
+            success: (r) => {
+                parent.window.postMessage({type: 'get-template', data: r}, '*');
+            }
+        });`)
+        return new Promise((resolve,reject)=>{emailTemplateClient.promise_resolver = resolve});
     },
     
     load_ui: function() {
@@ -96,8 +111,13 @@ var emailTemplateClient = {
         });
     },
 
+    api_scope: function(str_function) {
+        document.getElementById('api-scope').contentWindow.postMessage({method: str_function}, '*');
+    },
+
     start: function() {
         emailTemplateClient.setup().then((r)=>{
+            emailTemplateClient.existing_template = r;
             $(body).append(`<div id='email-template-edit-container'></div>`);
             $('#email-template-edit-container').kendoDialog(emailTemplateClient.dialog.get_dialog());
             emailTemplateClient.load_ui()

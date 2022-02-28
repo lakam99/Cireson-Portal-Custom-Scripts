@@ -6,6 +6,7 @@ var updatesManager = {
         1: {src:'./assets/warn.png', alt:'issue', type: 1},
         3: {src:'./assets/complete.png', alt:'resolved', type: 3}
     },
+    user_list: undefined,
     item_count: 0,
     container: '#updates',
     new_template: undefined,
@@ -15,37 +16,80 @@ var updatesManager = {
         save: '#save-btn',
         cancel: '#cancel-btn'
     },
+    button_interval: undefined,
 
     setup: [
         function() {
+          window.addEventListener('message', (e)=>{
+              switch (e.data.type) {
+                    case 'get':
+                        updatesManager[e.data.property.name] = e.data.property.data;
+                        break;
+                    default:
+                        break;
+              }
+              if (e.data.property.name == 'updates') {
+                  updatesManager.UI.existing.build_updates();
+              }
+          }) 
+        },
+
+        function() {
+            updatesManager.api_scope(`
+                $.ajax({
+                    url: "${updatesManager.api}",
+                    dataType: "json",
+                    async: false,
+                    xhrFields: {withCredentials: true},
+                    success: (r) => {
+                        parent.window.postMessage({type:'get', property: {name:'updates', data:r}}, '*');
+                    }
+                })
+            `);
+        },
+
+        function() {
+            updatesManager.api_scope(`
+                $.ajax({
+                    url: "${updatesManager.api}" + "/new-template",
+                    async: false,
+                    xhrFields: {withCredentials: true},
+                    success: (r) => {
+                        parent.window.postMessage({type:'get', property: {name:'new_template', data:r}}, '*');
+                    }
+                })
+            `);
+        },
+
+        function() {
             $.ajax({
-                url: updatesManager.api,
+                url: parent.window.customGlobalLoader.get_str_url('/CustomSpace/CustomData/Homepage/update-managers.json'),
                 dataType: "json",
-                async: false,
+                async: true,
                 success: (r) => {
-                    updatesManager.updates = r;
+                    //permissions to modify
+                    var p = parent.window;
+                    if (r.users.includes(p.session.user.UserName)) {
+                        updatesManager.button_interval = setInterval(()=>{
+                            let id = '#homepage-title';
+                            if ($(id).length) {
+                                clearInterval(updatesManager.button_interval);
+                                $(id).after(`
+                                <a class="edit-btn btn btn-outline-primary btn-sm disabled" id='cancel-btn'><img src="./assets/cancel.png" class="edit-img"></a>
+                                <a class="edit-btn btn btn-outline-primary btn-sm disabled" id='save-btn'><img src="./assets/complete.png" class="edit-img"></a>
+                                <a class="edit-btn btn btn-outline-primary btn-sm" id='edit-btn'><img src='./assets/edit.png' class="edit-img"></a>`);
+                                updatesManager.button_listeners.forEach((f)=>{f()});
+                            }
+                        },500)
+                    }
                 }
             })
-        },
-
-        function() {
-            $.ajax({
-                url: updatesManager.api + "/new-template",
-                async: false,
-                success: (r) => {
-                    updatesManager.new_template = r;
-                }
-            })
-        },
-
-        function() {
-            updatesManager.button_listeners.forEach((f)=>{f()});
-        },
-
-        function () {
-            updatesManager.UI.existing.build_updates();
         }
     ],
+
+    api_scope: function(str_function) {
+        document.getElementById('api-scope').contentWindow.postMessage({method: str_function}, '*');
+    },
 
     next_week: function() {
         let date = new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000);
