@@ -25,10 +25,13 @@ var updatesManager = {
                     case 'get':
                         updatesManager[e.data.property.name] = e.data.property.data;
                         break;
+                    case 'users':
+                        updatesManager.permission_to_modify(e.data.users.HomeUpdates);
+                        break;
                     default:
                         break;
               }
-              if (e.data.property.name == 'updates') {
+              if (e.data.property && e.data.property.name == 'updates') {
                   updatesManager.UI.existing.build_updates();
               }
           }) 
@@ -62,30 +65,38 @@ var updatesManager = {
         },
 
         function() {
-            $.ajax({
-                url: parent.window.customGlobalLoader.get_str_url('/CustomSpace/CustomData/Homepage/update-managers.json'),
-                dataType: "json",
-                async: true,
-                success: (r) => {
-                    //permissions to modify
-                    var p = parent.window;
-                    if (r.users.includes(p.session.user.UserName)) {
-                        updatesManager.button_interval = setInterval(()=>{
-                            let id = '#homepage-title';
-                            if ($(id).length) {
-                                clearInterval(updatesManager.button_interval);
-                                $(id).after(`
-                                <a class="edit-btn btn btn-outline-primary btn-sm disabled" id='cancel-btn'><img src="./assets/cancel.png" class="edit-img"></a>
-                                <a class="edit-btn btn btn-outline-primary btn-sm disabled" id='save-btn'><img src="./assets/complete.png" class="edit-img"></a>
-                                <a class="edit-btn btn btn-outline-primary btn-sm" id='edit-btn'><img src='./assets/edit.png' class="edit-img"></a>`);
-                                updatesManager.button_listeners.forEach((f)=>{f()});
-                            }
-                        },500)
+            updatesManager.api_scope(`
+                $.ajax({
+                    url: "http://ottansm1:6942/auth-users",
+                    dataType: "json",
+                    async: true,
+                    success: (r) => {
+                        parent.window.postMessage({type:'users', users:r}, '*');
                     }
-                }
-            })
+                })
+            `);
         }
     ],
+
+    permission_to_modify: function(auth_users) {
+        var p = parent.window;
+        let modify_allowed = auth_users.filter((u)=>{
+            return u.domain.toLowerCase() == p.session.user.Domain.toLowerCase() && u.username.toLowerCase() == p.session.user.UserName.toLowerCase()
+        }).length == 1;
+        if (modify_allowed) {
+            updatesManager.button_interval = setInterval(()=>{
+                let id = '#homepage-title';
+                if ($(id).length) {
+                    clearInterval(updatesManager.button_interval);
+                    $(id).after(`
+                    <a class="edit-btn btn btn-outline-primary btn-sm disabled" id='cancel-btn'><img src="./assets/cancel.png" class="edit-img"></a>
+                    <a class="edit-btn btn btn-outline-primary btn-sm disabled" id='save-btn'><img src="./assets/complete.png" class="edit-img"></a>
+                    <a class="edit-btn btn btn-outline-primary btn-sm" id='edit-btn'><img src='./assets/edit.png' class="edit-img"></a>`);
+                    updatesManager.button_listeners.forEach((f)=>{f()});
+                }
+            },500)
+        }
+    },
 
     api_scope: function(str_function) {
         document.getElementById('api-scope').contentWindow.postMessage({method: str_function}, '*');
@@ -287,15 +298,18 @@ var updatesManager = {
 
     request_save: function() {
         let data = {empty:this.updates.length == 0, updates: updatesManager.updates};
+        updatesManager.api_scope(`
+        let data = ${JSON.stringify(data)};
         $.ajax({
-            url: updatesManager.api + "/write",
+            url: "${updatesManager.api}/write",
             async: true,
             type: "post",
             data: data,
             success: (r) => {
-                kendo.Alert("Successfully saved updates.");
+                console.log(r);
             }
         })
+        `);
     },
 
     toggle_edit_mode: function(toggle) {
