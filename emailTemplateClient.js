@@ -34,7 +34,7 @@ var emailTemplateClient = {
                 $.ajax({
                     url: "${emailTemplateClient.api}/write",
                     type: "post",
-                    data: data,
+                    data: ${JSON.stringify(data)},
                     async: false,
                     success: (r) => {
                         parent.window.postMessage({type: 'write-template', success: true}, '*');
@@ -48,7 +48,7 @@ var emailTemplateClient = {
         }
     },
 
-    setup: function() {
+    setup: async function() {
         $("body").append(`<iframe id='api-scope' src='http://ottansm1:6942/index'></iframe>`);
         window.addEventListener('message', (e)=>{
             switch (e.data.type) {
@@ -67,7 +67,7 @@ var emailTemplateClient = {
                     break;
             }
         })
-        emailTemplateClient.api_scope(`
+        await emailTemplateClient.api_scope(`
         $.ajax({
             url: "${emailTemplateClient.api}",
             type: 'get',
@@ -76,6 +76,9 @@ var emailTemplateClient = {
             async: true,
             success: (r) => {
                 parent.window.postMessage({type: 'get-template', data: r}, '*');
+            },
+            error: (e) => {
+                parent.window.postMessage({type: 'get-template', data: undefined}, '*');
             }
         });`)
         return new Promise((resolve,reject)=>{emailTemplateClient.promise_resolver = resolve});
@@ -91,19 +94,28 @@ var emailTemplateClient = {
                         if (emailTemplateClient.existing_template) {
                             emailTemplateClient.kendo_ui.dataSource.add(emailTemplateClient.existing_template);
                             emailTemplateClient.kendo_ui.dataSource.add({Id:'', Name:emailTemplateClient.text[1]});
-                            var modify_btn = Array.from(emailTemplateClient.kendo_ui.ul.children()).find((e)=>{return $(e).text() == emailTemplateClient.text[1]});
-                            $(modify_btn).on('click', (e)=>{
-                                e.preventDefault();
-                                emailTemplateClient.dialog.open_dialog();
-                                $("#edit-template-text").val(emailTemplateClient.existing_template.Content);
-                            })
+                            var bind_click = ()=>{
+                                var modify_btn = Array.from(emailTemplateClient.kendo_ui.ul.children()).find((e)=>{return $(e).text() == emailTemplateClient.text[1]});
+                                $(modify_btn).on('click', (e)=>{
+                                    e.preventDefault();
+                                    emailTemplateClient.dialog.open_dialog();
+                                    $("#edit-template-text").val(emailTemplateClient.existing_template.Content);
+                                })
+                            };
+                            bind_click();
+                            emailTemplateClient.kendo_ui.bind('change', bind_click);
+
                         } else {
                             emailTemplateClient.kendo_ui.dataSource.add({Id:'', Name:emailTemplateClient.text[0]});
-                            var create_btn = Array.from(emailTemplateClient.kendo_ui.ul.children()).find((e)=>{return $(e).text() == emailTemplateClient.text[0]});
-                            $(create_btn).on('click', (e)=>{
-                                e.preventDefault();
-                                emailTemplateClient.dialog.open_dialog();
-                            })
+                            var bind_click = ()=>{
+                                var create_btn = Array.from(emailTemplateClient.kendo_ui.ul.children()).find((e)=>{return $(e).text() == emailTemplateClient.text[0]});
+                                $(create_btn).on('click', (e)=>{
+                                    e.preventDefault();
+                                    emailTemplateClient.dialog.open_dialog();
+                                })
+                            };
+                            bind_click();
+                            emailTemplateClient.kendo_ui.bind('change', bind_click);
                         }
                     }
                 },500);
@@ -112,7 +124,16 @@ var emailTemplateClient = {
     },
 
     api_scope: function(str_function) {
-        document.getElementById('api-scope').contentWindow.postMessage({method: str_function}, '*');
+        return new Promise((resolve,reject)=>{
+            var b = setInterval(()=>{
+                var n = 'api-scope';
+                if ((`#${n}`).length) {
+                    clearInterval(b);
+                    $(`#${n}`)[0].contentWindow.postMessage({method: str_function}, '*');
+                    resolve(true);
+                }
+            }, 500);
+        })
     },
 
     start: function() {
