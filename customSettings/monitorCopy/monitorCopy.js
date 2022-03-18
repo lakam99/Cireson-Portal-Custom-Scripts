@@ -21,7 +21,11 @@ var monitorCopyOn = async function() {
             required.data.RelatesToWorkItem.forEach((workitem)=>{c.ticket.RelatesToWorkItem.addItem(workitem)});
             c.ticket.RelatesToWorkItem.addItem(required.data);
             required.data.RelatesToConfigItem.forEach((configitem)=>{c.ticket.RelatesToConfigItem.push(configitem)});
-            required.data.FileAttachment.forEach((attachment)=>{c.ticket.FileAttachment.push(attachment)});
+            if (c.ticket.Notes === null) {c.ticket.Notes = ''}
+            c.ticket.Notes += `~!~!${required.data.Id}~!~!`;
+            required.data.FileAttachment.forEach((attachment)=>{
+                c.ticket.FileAttachment.push(attachment);
+            });
             c.ticket.Title += " (Copy)";
             $(field).val(c.ticket.Title);
             settings_controller.set_setting(s_name, {value:false});

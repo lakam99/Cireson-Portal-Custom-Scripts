@@ -9,6 +9,14 @@ var HomepageRenderer = {
     options: '.service-option',
 
     setup: [
+        function() {
+            if (parent.settings_controller.get_setting_value('darkMode')) {
+                var link = parent.customGlobalLoader.get_str_url("/CustomSpace/CustomSettings/darkMode/darkMode.css");
+                $("head").before('<link type="text/css" rel="stylesheet"' +
+                'id="dark-mode-general-link" href="'+link+'">');
+            }
+        },
+        
         function () {
             $(document).prop('title', 'Service Manager Portal Homepage');
         },

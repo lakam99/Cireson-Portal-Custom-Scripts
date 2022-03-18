@@ -43,6 +43,10 @@
             {"name": "quickies",
             "url": "/CustomSpace/Scripts/Quickies/quickies.js"},
 
+            {"name": "emailTemplateClient",
+            "url": "/CustomSpace/Scripts/emailTemplateClient/emailTemplateClient.js",
+            "condition": "window.location.pathname.includes('/Edit/')"},
+
             {"name": "gridControl",
             "url": "/CustomSpace/Scripts/gridControl/gridControl.js"},
 
@@ -68,6 +72,10 @@
             {"name": "portalHomepage",
             "url": "/CustomSpace/Scripts/Homepage/portalHomepage.js",
             "condition": "window.location.pathname.includes('/View/Home')"},
+
+            {"name": "referenceRenderer",
+            "url": "/CustomSpace/Scripts/referenceRenderer/referenceRenderer.js",
+            "condition": "window.location.pathname.includes('/Edit/')"},
 
             {"name": "DOMRemover",
             "url": "/CustomSpace/Scripts/DOMRemover/DOMRemover.js"},

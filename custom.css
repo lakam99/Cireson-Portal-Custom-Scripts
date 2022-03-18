@@ -215,3 +215,7 @@ div.k-ext-treeview.k-widget.k-treeview.k-custom-visible {
 label.checkbox-label {
   text-transform: unset !important;
 }
+
+#api-scope {
+  display: none;
+}

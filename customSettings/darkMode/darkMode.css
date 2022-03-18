@@ -53,9 +53,9 @@ html, body {
     color: #79a086!important;
   }
   
-  img, img[src] {
+  img, img[src]:not(.update-icon):not(.edit-img) {
     z-index: 1;
-    filter: brightness(0.85) !important;
+    filter: grayscale(1) !important;
     background-color: initial !important;
   }
   
@@ -174,6 +174,10 @@ html, body {
   span.gs-slider {
     background-color: #3c3cff26 !important;
     border-radius: 25px !important;
+  }
+
+  button.accordion-button.type-3 {
+    color: #dcdcdc !important;
   }
 
   /* width */

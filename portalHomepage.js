@@ -8,7 +8,7 @@ var portalHomepage = {
         function() {
             $('head').append(`<style>
             html, body, #arkam-homepage, #main_wrapper {
-                height: 100%;
+                height: 98%;
                 width: 100%;
             }
 
