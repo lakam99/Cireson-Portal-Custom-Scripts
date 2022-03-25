@@ -85,3 +85,5 @@ var map_controller = {
         map_controller.wipe_property(grid_id, column_states);
     }
 };
+
+//Hello scott
