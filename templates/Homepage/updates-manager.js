@@ -1,6 +1,6 @@
 var updatesManager = {
     updates: undefined,
-    api: "http://ottansm1:6942/home-update",
+    api: "https://ottansm1.nserc.ca:6942/home-update",
     icons: {
         2: {src:'./assets/maintenance.png', alt:'maintenance', type: 2},
         1: {src:'./assets/warn.png', alt:'issue', type: 1},
@@ -67,7 +67,7 @@ var updatesManager = {
         function() {
             updatesManager.api_scope(`
                 $.ajax({
-                    url: "http://ottansm1:6942/auth-users",
+                    url: "https://ottansm1.nserc.ca:6942/auth-users",
                     dataType: "json",
                     async: true,
                     success: (r) => {
