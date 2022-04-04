@@ -107,12 +107,16 @@ div.border.border-4.rounded {
     max-height: 6.9vh;
     min-height: 5vh;
     overflow-y: auto;
+    font-size: 1.45vh;
+}
+
+.aro-button-container {
+    margin: auto auto 1;
 }
 
 .aro-btn {
-    margin-left: 26%;
-    margin-top: auto;
-    margin-bottom: 1vh;
+    margin: 0 auto 1vh;
+    display: block;
 }
 
 .my-flex {
@@ -125,6 +129,10 @@ div.border.border-4.rounded {
     margin-top: 1vh;
 }
 
+.display-1 {
+    font-size: 8.6vh;
+}
+
 @media (max-width: 800px) {
     .my-flex {
         flex-direction: column;
@@ -132,6 +140,14 @@ div.border.border-4.rounded {
     .my-card-body {
         width: 100%;
         align-items: center;
+    }
+
+    .card-title {
+        font-size: inherit !important;
+    }
+
+    .my-card-text-body {
+        font-size: inherit !important;
     }
 
     .my-card-body > img {
@@ -149,6 +165,7 @@ div.border.border-4.rounded {
 
 .card-title {
     text-align: center;
+    font-size: 2vh;
 }
 
 .update-icon,.edit-img {

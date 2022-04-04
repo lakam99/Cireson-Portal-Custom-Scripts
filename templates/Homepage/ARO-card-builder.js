@@ -12,7 +12,7 @@ var AROCardBuilder = {
                         ${aro_obj.RequestOfferingDescription}
                     </div>
                     </div>
-                    <div style='margin-top:auto'>
+                    <div class='aro-button-container'>
                         <a target="_blank" href='${window.location.origin + "/SC/ServiceCatalog/RequestOffering/" + aro_obj.RequestOfferingId + "," + aro_obj.ServiceOfferingId}' class="btn btn-primary aro-btn">${ aro_obj.type == 'aro' ? 'Start request':'Start reading' }</a>
                     </div>
                 </div>
