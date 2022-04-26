@@ -7,7 +7,7 @@ var portalUserEmailManager = {
         get_affected_user: function() {
             var r= null;
             try {
-                r = window.rawJSON.RequestedWorkItem; 
+                r = window.customGlobalLoader.ticket.RequestedWorkItem; 
             } catch(e) {
                 r = customSettings.helperFunctions.monitorCopy.ticket;
             }
@@ -69,7 +69,7 @@ var portalUserEmailManager = {
                     }
                     clearInterval(existence_interval);
                 }
-            }, 100);
+            }, 1000);
         }
     }
 }

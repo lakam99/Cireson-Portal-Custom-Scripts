@@ -44,7 +44,7 @@ var hiddenUserFinder = {
                         console.log(i + ":Listener bound.");
                     });
                 }
-            }, 100);
+            }, 1000);
         } 
     ],
 

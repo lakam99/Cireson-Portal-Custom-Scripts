@@ -1,3 +1,7 @@
+//Written by Arkam Mazrui for the Cireson web portal
+//arkam.mazrui@nserc-crsng.gc.ca
+//arkam.mazrui@gmail.com
+
 var referenceRender = {
     ticket: undefined,
     waiter: undefined,
@@ -5,15 +9,17 @@ var referenceRender = {
     setup: function() {
         return new Promise((resolve,reject)=>{
             referenceRender.waiter = setInterval(()=>{
-                if (rawJSON !== undefined) {
+                if (customGlobalLoader.ticket !== undefined) {
                     clearInterval(referenceRender.waiter);
-                    var start = rawJSON.Notes.indexOf(referenceRender.captureString) + referenceRender.captureString.length;
-                    var end = rawJSON.Notes.lastIndexOf(referenceRender.captureString);
-                    if (start != referenceRender.captureString.length - 1 && end != -1) { 
-                        var og_ticket_id = rawJSON.Notes.substring(start, end);
-                        resolve(og_ticket_id);
-                    } else {
-                        reject(rawJSON.Notes);
+                    if (!customGlobalLoader.ticket.Notes) {reject(false)} else {
+                        var start = customGlobalLoader.ticket.Notes.indexOf(referenceRender.captureString) + referenceRender.captureString.length;
+                        var end = customGlobalLoader.ticket.Notes.lastIndexOf(referenceRender.captureString);
+                        if (start != referenceRender.captureString.length - 1 && end != -1) { 
+                            var og_ticket_id = customGlobalLoader.ticket.Notes.substring(start, end);
+                            resolve(og_ticket_id);
+                        } else {
+                            reject(customGlobalLoader.ticket.Notes);
+                        }
                     }
                 }
             }, 500);

@@ -377,6 +377,8 @@ var activityAdder = {
                     kendo.alert("Cannot modify activities of a completed ticket.");
                     return;
                 }
+                if (activityAdder.properties.currentTicket.viewModel.Activity === undefined)
+                activityAdder.properties.currentTicket.viewModel.Activity = [];
                 activityAdder.functionality.represent_current_wrapper();
                 activityAdder.getters.get_dialog_window().open();
             });

@@ -9,7 +9,11 @@
             "url": "/CustomSpace/Scripts/settings_controller/settings_controller.js"},
 
             {"name": "accentSuggest",
-            "url": "/CustomSpace/Scripts/accentSuggest/accentSuggest.js"}
+            "url": "/CustomSpace/Scripts/accentSuggest/accentSuggest.js"},
+
+            {"name": "consistentFormTasks",
+            "url": "/CustomSpace/Scripts/consistentFormTasks/consistentFormTasks.js",
+            "condition": "window.location.pathname.includes('/Edit/')"}
         ]
     },
 
@@ -42,10 +46,6 @@
 
             {"name": "quickies",
             "url": "/CustomSpace/Scripts/Quickies/quickies.js"},
-
-            {"name": "emailTemplateClient",
-            "url": "/CustomSpace/Scripts/emailTemplateClient/emailTemplateClient.js",
-            "condition": "window.location.pathname.includes('/Edit/')"},
 
             {"name": "gridControl",
             "url": "/CustomSpace/Scripts/gridControl/gridControl.js"},
@@ -85,10 +85,7 @@
 
             {"name": "calendarManager",
             "url": "/CustomSpace/Scripts/calendarManager/calendarManager.js",
-            "condition": "window.location.pathname.includes('dc7957ab-6842-4453-aa7a-a5f2852043d7') || window.location.pathname.includes('1ae3ffa1-fc12-4f9b-966b-57671cb06ce8')"},
-
-            {"name": "globalSearch",
-            "url": "/CustomSpace/Scripts/globalSearch/globalSearch.js"}
+            "condition": "window.location.pathname.includes('dc7957ab-6842-4453-aa7a-a5f2852043d7') || window.location.pathname.includes('1ae3ffa1-fc12-4f9b-966b-57671cb06ce8')"}
         ]
     },
 

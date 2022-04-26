@@ -1,5 +1,5 @@
 var emailTemplateClient = {
-    api: "https://ottansm1.nserc.ca:6942/template",
+    api: "https://ottansm1.nserc.ca:5000/template",
     existing_template: null,
     existence: null,
     ui_hook: '#templateDiv > span > input',
@@ -49,7 +49,7 @@ var emailTemplateClient = {
     },
 
     setup: async function() {
-        $("body").append(`<iframe id='api-scope' src='https://ottansm1.nserc.ca:6942/index'></iframe>`);
+        $("body").append(`<iframe id='api-scope' src='https://ottansm1.nserc.ca:5000/index'></iframe>`);
         window.addEventListener('message', (e)=>{
             switch (e.data.type) {
                 case 'get-template':

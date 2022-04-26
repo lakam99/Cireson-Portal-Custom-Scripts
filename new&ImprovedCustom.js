@@ -5,9 +5,15 @@
 var customGlobalLoader = {
     files: "/CustomSpace/CustomData/customFiles/customFiles.json",
     version: 0,
+    ticket: undefined,
 
     get_settings: function() {
-        return JSON.parse(localStorage.getItem("settings"));
+        var r = JSON.parse(localStorage.getItem("settings"));
+        if (!r) {
+            localStorage.setItem('settings', '{}');
+            return customGlobalLoader.get_settings();
+        }
+        return r;
     },
 
     get_current_version: function() {
@@ -129,9 +135,11 @@ var customGlobalLoader = {
                 s.user_groups = res;
                 localStorage.setItem("settings", JSON.stringify(s));
                 session.user.user_groups = customGlobalLoader.get_settings().user_groups;
+                customGlobalLoader.main.setup();
+                customGlobalLoader.main.load_systems();
             });
-            customGlobalLoader.main.setup();
-            customGlobalLoader.main.load_systems();
+            app.custom.formTasks.add(formTasks.type.srq, null, (f,v)=>customGlobalLoader.ticket = v);
+            app.custom.formTasks.add(formTasks.type.inc, null, (f,v)=>customGlobalLoader.ticket = v);
         },
         
         load_darkmode: function() {
@@ -165,7 +173,7 @@ var customGlobalLoader = {
                 } catch (e) {
                     console.warn(e);
                 }
-            }, 100);
+            }, 1000);
         }
     }
 }
@@ -206,10 +214,10 @@ var formTasks = {
     addFormTask: function (type, title, permission, callback) {
         if (formTasks.user_has_permissions(permission)) {
             if (type == formTasks.type.srq || type == formTasks.type.inc) {
-                app.custom.formTasks.add(type, title, callback);
+                consistentFormTasks.add(type, title, callback);
             } else if (type == formTasks.type.both) {
-                app.custom.formTasks.add(formTasks.type.srq, title, callback);
-                app.custom.formTasks.add(formTasks.type.inc, title, callback);
+                consistentFormTasks.add(formTasks.type.srq, title, callback);
+                consistentFormTasks.add(formTasks.type.inc, title, callback);
             }
         }
     }

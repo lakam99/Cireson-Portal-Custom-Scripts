@@ -50,7 +50,7 @@ var DOMRemover = {
                 }
             }
             DOMRemover.clean_queue();
-        }, 10);
+        }, 1000);
     },
 
     clean_queue: function() {
