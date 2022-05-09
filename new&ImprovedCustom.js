@@ -20,12 +20,12 @@ var customGlobalLoader = {
         if ((s = customGlobalLoader.get_settings()) && s["scriptPatcher-data"]) {
             return s["scriptPatcher-data"].data.version;
         } else {
-            return 0;
+            return customGlobalLoader.get_random_int(1000);
         }
     },
 
     get_str_url: function(url) {
-        return window.location.origin + url + "?v=" + customGlobalLoader.version;
+        return window.location.origin + url + "?v=" + customGlobalLoader.get_current_version();
     },
 
     get_random_int: function(max) {
@@ -72,35 +72,31 @@ var customGlobalLoader = {
 
     main: {
         load_file: function (file_obj) {
-            if (file_obj.condition && !eval(file_obj.condition))
-                return new Promise(function(resolve,reject){resolve(false)});
+            return new Promise((resolve,reject)=>{
+                if (file_obj.condition && !eval(file_obj.condition))
+                    resolve(false);
                 
-            var result = $.Deferred(),
-            script = document.createElement("script");
-            if (file_obj.data_require) {
-                script.setAttribute("data-requirecontext", file_obj.data_require.context);
-                script.setAttribute("data-requiremodule", file_obj.data_require.module);
-            }
-            script.async = "async";
-            script.type = file_obj.type ? file_obj.type:"text/javascript";
-            script.src = customGlobalLoader.get_str_url(file_obj.url);
-            script.onload = script.onreadystatechange = function(_, isAbort) {
-                if (!script.readyState || /loaded|complete/.test(script.readyState)) {
-                    if (isAbort)
-                        result.reject();
-                    else
-                        result.resolve();
-                }
-            };
-            script.onerror = function () {console.error("FAILED TO LOAD " +file_obj.url);console.log(result); result.reject(); };
-            $("head")[0].appendChild(script);
-            console.log("Loaded " + script.src);
-            return result.promise();
+                var script = document.createElement("script");
+                script.async = "async";
+                script.type = file_obj.type ? file_obj.type:"text/javascript";
+                script.src = customGlobalLoader.get_str_url(file_obj.url);
+                script.onload = script.onreadystatechange = (_, isAbort) => {
+                    if (!script.readyState || /loaded|complete/.test(script.readyState)) {
+                        if (isAbort) reject();
+                        else {
+                            resolve();
+                            console.log("Loaded " + script.src);
+                        }
+                    }
+                };
+                script.onerror = () => {console.error("FAILED TO LOAD " +file_obj.url);console.log(result); reject(); };
+                document.getElementsByTagName('head')[0].appendChild(script);
+            });
         },
 
         load_files: function (files) {
-            files.array.forEach(function (file) {
-                customGlobalLoader.main.load_file(file, files.async);
+            return files.array.map(function (file) {
+                return customGlobalLoader.main.load_file(file, files.async);
             })
         },
 

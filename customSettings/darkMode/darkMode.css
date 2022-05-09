@@ -9,7 +9,7 @@ html, body {
   }
   
   html *:not(input):not(textarea) {color: #dcdcdc !important}
-  html *:not(td[style^="background-color"]):not(span.k-selected-color){background-color: rgb(41, 41, 41, 0.90) !important}
+  html *:not(td[style^="background-color"]):not(span.k-selected-color):not(.slider.round){background-color: rgb(41, 41, 41, 0.90) !important}
   
   html *, html *[id], html *[class]:not(.global-search__body):not(.slider.round):not(.gs-slider):not(table.k-palette > tbody > tr > td) {
     box-shadow: none !important;

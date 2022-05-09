@@ -150,6 +150,7 @@ var autoGroupAssigner = {
         },
 
         start: function() {
+            if (!settings_controller.get_setting_value('autoGroupAssigner')) return;
             ClientRequestManager.get_misc_file("autoGroupAssigner-Config").then(function(config){
                 autoGroupAssigner.default_groups = config.default_for;
                 autoGroupAssigner.main.existence_interval = setInterval(function() {
