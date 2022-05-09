@@ -74,23 +74,24 @@ var customGlobalLoader = {
         load_file: function (file_obj) {
             return new Promise((resolve,reject)=>{
                 if (file_obj.condition && !eval(file_obj.condition))
-                    resolve(false);
-                
-                var script = document.createElement("script");
-                script.async = "async";
-                script.type = file_obj.type ? file_obj.type:"text/javascript";
-                script.src = customGlobalLoader.get_str_url(file_obj.url);
-                script.onload = script.onreadystatechange = (_, isAbort) => {
-                    if (!script.readyState || /loaded|complete/.test(script.readyState)) {
-                        if (isAbort) reject();
-                        else {
-                            resolve();
-                            console.log("Loaded " + script.src);
+                    resolve(false); 
+                else {
+                    var script = document.createElement("script");
+                    script.async = "async";
+                    script.type = file_obj.type ? file_obj.type:"text/javascript";
+                    script.src = customGlobalLoader.get_str_url(file_obj.url);
+                    script.onload = script.onreadystatechange = (_, isAbort) => {
+                        if (!script.readyState || /loaded|complete/.test(script.readyState)) {
+                            if (isAbort) reject();
+                            else {
+                                resolve();
+                                console.log("Loaded " + script.src);
+                            }
                         }
-                    }
-                };
-                script.onerror = () => {console.error("FAILED TO LOAD " +file_obj.url);console.log(result); reject(); };
-                document.getElementsByTagName('head')[0].appendChild(script);
+                    };
+                    script.onerror = () => {console.error("FAILED TO LOAD " +file_obj.url);console.log(result); reject(); };
+                    document.getElementsByTagName('head')[0].appendChild(script);
+                }
             });
         },
 
