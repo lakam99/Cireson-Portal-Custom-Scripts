@@ -219,3 +219,8 @@ label.checkbox-label {
 #api-scope {
   display: none;
 }
+
+#old-tickets-container {
+  max-height: 15vh;
+  overflow: auto;
+}

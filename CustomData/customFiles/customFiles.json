@@ -138,7 +138,10 @@
             "url": "/CustomSpace/Templates/Homepage/homepage.html"},
 
             {"name": "homepage-head",
-            "url": "/CustomSpace/Templates/Homepage/homepage-head.html"}
+            "url": "/CustomSpace/Templates/Homepage/homepage-head.html"},
+
+            {"name": "old-open-tickets-ui",
+            "url": "/CustomSpace/Sockets/Templates/Old Open Tickets/old-open-tickets-ui.html"}
         ]
     }
 }
