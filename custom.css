@@ -220,7 +220,60 @@ label.checkbox-label {
   display: none;
 }
 
-#old-tickets-container {
-  max-height: 15vh;
+.old-ticket-container {
+  height: 36%;
+  width: 43%;
+  
+  }
+
+.old-ticket-list {
+  height: 100%;
+  background-color: rgb(255 233 215 / 30%);
+  font-size: 2vh;
   overflow: auto;
+  border: 1px solid rgba(0, 0, 0, 0.034);
+  border-radius: 20px;
+  width: 100%;
+  display: flex;
+  flex-basis: 10%;
+flex-direction: column;overflow-x: hidden;}
+
+.list-item {
+  padding-left: 2%;background-color: aliceblue;
+height: 15%;padding-top: 1%;display: flex;flex-direction: row;justify-content: space-between;border: 1px solid #0000000f;}
+
+.list-item:hover {
+  background-color: rgba(83, 124, 73, 0.322);
+}
+
+.close-ticket:hover {
+  text-decoration: none;
+}
+
+.old-ticket-title {
+  width: 71%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.old-ticket-counter {
+  text-align: center;
+  margin: unset;
+}
+
+.old-ticket-app {
+  height: 100%;
+  width: 100%;
+  margin-right: unset;
+  background-color: rgb(185 177 177);
+  padding: 2%;
+  padding-bottom: 3vh;overflow: hidden;
+}
+
+.close-ticket {
+  margin-right: 1vw;
+}
+
+.groovy {
+  height: 100%;
 }

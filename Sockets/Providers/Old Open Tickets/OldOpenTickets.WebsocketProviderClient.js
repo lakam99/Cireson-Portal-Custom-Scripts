@@ -7,7 +7,7 @@ class OldOpenTickets extends WebsocketProviderClient {
     construct_ui() {
         this.ui = {
             template: '/CustomSpace/Templates/Old Open Tickets/old-open-tickets-ui.html',
-            required_elem: '/CustomSpace/CustomElements/ArrayList.js',
+            required_elems: ['/CustomSpace/CustomElements/OldTickets.js', '/CustomSpace/CustomElements/OldTicket.js'],
             dialog: {
                 width: '600px',
                 title: 'Your Old Open Tickets',
@@ -29,32 +29,11 @@ class OldOpenTickets extends WebsocketProviderClient {
                 success: (r) => {this.ui.template = r;resolve()},
                 error: (e) => {reject(e)}
             })
-        }), customGlobalLoader.main.load_file({url:this.ui.required_elem})]
+        }), Promise.all(customGlobalLoader.main.load_files({array:this.ui.required_elems.map(elem=>new url(elem))}))]
     }
 
     ask_provider_to_work() {
         this.send({request:'work', params: {userId:session.user.Id}});
-    }
-
-    static get_ticket_url(ticket) {
-        var url = '';
-        if (ticket.WorkItemType.includes('ServiceRequest')) {
-            url = window.location.origin + '/ServiceRequest/Edit/';
-        } else if (ticket.WorkItemType.includes('Incident')) {
-            url = window.location.origin + '/Incident/Edit/'
-        } else if (ticket.WorkItemType.includes('Activity')) {
-            url = window.location.origin + '/Activity/Edit/';
-        } else {
-            return '#'
-        }
-        url += ticket.Id;
-        return url;
-    }
-
-    static format_data(data) {
-        return data.map((ticket)=>{
-            return `<a title='${ticket.Created}' href='${OldOpenTickets.get_ticket_url(ticket)}'>${ticket.Id}: ${ticket.Title}</a>`;
-        })
     }
 
     build_ui(data) {
@@ -63,9 +42,9 @@ class OldOpenTickets extends WebsocketProviderClient {
                 this.ui.dialog.content = this.ui.template;
                 $('body').append(this.ui.dialog.content);
                 this.ui.model = $('#old-open-tickets-ui').kendoDialog(this.ui.dialog);
-                let list = document.createElement('array-list');
-                $(list).data({array:OldOpenTickets.format_data(data)});
-                $('#old-tickets-container').append(list);
+                let reactRoot = $('.old-ticket-container')[0];
+                reactRoot = ReactDOM.createRoot(reactRoot);
+                reactRoot.render(React.createElement(OldTicket, {tickets:data}));
                 resolve(true);
         })});
     }

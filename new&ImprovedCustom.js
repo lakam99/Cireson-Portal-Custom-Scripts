@@ -2,6 +2,10 @@
 //arkam.mazrui@nserc-crsng.gc.ca
 //arkam.mazrui@gmail.com
 
+function url(url_str) {
+    this.url = url_str;
+} 
+
 var customGlobalLoader = {
     files: "/CustomSpace/CustomData/customFiles/customFiles.json",
     version: 0,
@@ -126,6 +130,7 @@ var customGlobalLoader = {
 
         load_customspace: function() {
             customGlobalLoader.main.load_darkmode();
+            customGlobalLoader.main.load_react();
             customGlobalLoader.main.load_user_group(function(){return session.user.Id}, 
             function(res) {
                 var s = customGlobalLoader.get_settings();
@@ -137,6 +142,11 @@ var customGlobalLoader = {
             });
             app.custom.formTasks.add(formTasks.type.srq, null, (f,v)=>customGlobalLoader.ticket = v);
             app.custom.formTasks.add(formTasks.type.inc, null, (f,v)=>customGlobalLoader.ticket = v);
+        },
+
+        load_react: function() {
+            $('head').append(`<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+            <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>`);
         },
         
         load_darkmode: function() {
