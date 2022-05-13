@@ -39,7 +39,13 @@ var OldTicket = function (_React$Component) {
     }, {
         key: 'close_ticket',
         value: function close_ticket(e) {
+            $(e.target).before('<img alt=\'loading\' name=\'' + this.ticket.Id + '\' src="' + customGlobalLoader.get_str_url('/CustomSpace/CustomElements/loading.gif') + '"></img>');
             this.props._close(this.ticket);
+        }
+    }, {
+        key: 'open_ticket',
+        value: function open_ticket() {
+            this.window = window.open(this.get_ticket_url(), '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes');
         }
     }, {
         key: 'render',
@@ -49,7 +55,7 @@ var OldTicket = function (_React$Component) {
                 { 'class': 'list-item' },
                 React.createElement(
                     'a',
-                    { title: this.ticket.CreatedDate, 'class': 'old-ticket-title', href: this.get_ticket_url() },
+                    { title: this.ticket.CreatedDate, 'class': 'old-ticket-title', onClick: this.open_ticket.bind(this) },
                     this.ticket.Id,
                     ':',
                     this.ticket.Title

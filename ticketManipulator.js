@@ -5,7 +5,7 @@
 
 var ticketManipulator = {
     properties: {
-        loader_html: "<div class='k-overlay' id='loader_overlay' style='z-index: 12002; opacity: 0.5;'></div>",
+        loader_html: "<div class='k-overlay' id='loader_overlay' style='z-index: 9000; opacity: 0.5;'></div>",
         resolveFunc: null
     },
 
@@ -18,7 +18,9 @@ var ticketManipulator = {
             completed: {srq: {Id: "b026fdfd-89bd-490b-e1fd-a599c78d440f", Name: "Completed"},
                         inc: {Id: "2b8830b6-59f0-f574-9c2a-f4b4682f1681", Name: "Resolved"}},
             pending: {srq: {Id: "50c667cf-84e5-97f8-f6f8-d8acd99f181c", Name: "Pending"},
-                      inc: {}}
+                      inc: {}},
+            closed: {'System.WorkItem.ServiceRequest': {Id: 'c7b65747-f99e-c108-1e17-3c1062138fc4', Name: 'ServiceRequestStatusEnum.Closed'},
+                    'System.WorkItem.Incident': {Id: 'bd0ae7c4-3315-2eb3-7933-82dfc482dbaf', Name: 'Closed'}}
         }
     },
 

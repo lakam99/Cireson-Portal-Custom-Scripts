@@ -18,23 +18,45 @@ var OldTickets = function (_React$Component) {
             tickets: Array.isArray(props.tickets) ? props.tickets : []
         };
         _this.original_count = _this.state.tickets.length;
+        window.oldTicketsUI = _this;
         return _this;
     }
 
     _createClass(OldTickets, [{
+        key: 'close_all_tickets',
+        value: function close_all_tickets() {
+            var _this2 = this;
+
+            return new Promise(function (resolve, reject) {
+                OldTickets.dynamic_request_tickets_close(_this2.state.tickets).then(function () {
+                    resolve(true);
+                    _this2.setState({ tickets: [] });
+                }, function (e) {
+                    return reject(e);
+                });
+            });
+        }
+    }, {
         key: 'close_ticket',
         value: function close_ticket(ticket) {
-            var ticket_index = this.state.tickets.indexOf(ticket);
-            if (ticket_index == -1) throw "Cannot find ticket in array.";
-            var tickets = this.state.tickets.filter(function (parent_ticket) {
-                return parent_ticket != ticket;
+            var _this3 = this;
+
+            return new Promise(function (resolve) {
+                var ticket_index = _this3.state.tickets.indexOf(ticket);
+                if (ticket_index == -1) throw "Cannot find ticket in array.";
+                OldTickets.dynamic_request_tickets_close([ticket]).then(function (r) {
+                    var tickets = _this3.state.tickets.filter(function (parent_ticket) {
+                        return parent_ticket != ticket;
+                    });
+                    _this3.setState({ tickets: tickets });
+                    resolve(true);
+                });
             });
-            this.setState({ tickets: tickets });
         }
     }, {
         key: 'render',
         value: function render() {
-            var _this2 = this;
+            var _this4 = this;
 
             return React.createElement(
                 'div',
@@ -50,10 +72,59 @@ var OldTickets = function (_React$Component) {
                     'div',
                     { 'class': 'old-ticket-list' },
                     this.state.tickets.length > 0 ? this.state.tickets.map(function (ticket) {
-                        return React.createElement(OldTicket, { key: ticket.Id, ticket: ticket, _close: _this2.close_ticket.bind(_this2) });
-                    }) : React.createElement('img', { alt: 'groovy', 'class': 'groovy', src: 'groovy.png' })
+                        return React.createElement(OldTicket, { key: ticket.Id, ticket: ticket, _close: _this4.close_ticket.bind(_this4) });
+                    }) : React.createElement('img', { alt: 'groovy', 'class': 'groovy', src: customGlobalLoader.get_str_url('/CustomSpace/CustomElements/groovy.png') })
                 )
             );
+        }
+    }], [{
+        key: 'request_tickets_close',
+        value: function request_tickets_close(tickets) {
+            return new Promise(function (resolve, reject) {
+                if (!tickets.length) {
+                    resolve(false);return;
+                }
+                var ticket_projection = tickets[0].WorkItemType == 'System.WorkItem.ServiceRequest' ? '7ffc8bb7-2c2c-0bd9-bd37-2b463a0f1af7' : '2d460edd-d5db-bc8c-5be7-45b050cba652';
+                var close_status = ticketManipulator.constants.statuses.closed[tickets[0].WorkItemType].Id;
+                $.ajax({
+                    url: window.location.origin + '/api/V3/WorkItem/BulkEditWorkItems',
+                    dataType: 'json',
+                    type: 'post',
+                    data: JSON.stringify({
+                        ProjectionId: ticket_projection,
+                        UpdateServiceManagement: true,
+                        ItemIds: tickets.map(function (ticket) {
+                            return ticket.BaseId;
+                        }),
+                        EditedFields: [{ PropertyName: 'Status',
+                            PropertyType: 'enum',
+                            EditedValue: close_status }]
+                    }),
+                    success: function success(r) {
+                        resolve(r);
+                    },
+                    error: function error(e) {
+                        reject(e);
+                    }
+                });
+            });
+        }
+    }, {
+        key: 'dynamic_request_tickets_close',
+        value: function dynamic_request_tickets_close(tickets) {
+            return new Promise(function (resolve, reject) {
+                var srqs = tickets.filter(function (ticket) {
+                    return ticket.WorkItemType == 'System.WorkItem.ServiceRequest';
+                });
+                var incs = tickets.filter(function (ticket) {
+                    return ticket.WorkItemType == 'System.WorkItem.Incident';
+                });
+                Promise.all([OldTickets.request_tickets_close(srqs), OldTickets.request_tickets_close(incs)]).then(function (r) {
+                    return resolve(true);
+                }, function (e) {
+                    return reject(e);
+                });
+            });
         }
     }]);
 

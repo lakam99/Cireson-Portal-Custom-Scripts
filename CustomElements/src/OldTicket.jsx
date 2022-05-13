@@ -22,13 +22,18 @@ class OldTicket extends React.Component {
     }
 
     close_ticket(e) {
+        $(e.target).before(`<img alt='loading' name='${this.ticket.Id}' src="${customGlobalLoader.get_str_url('/CustomSpace/CustomElements/loading.gif')}"></img>`)
         this.props._close(this.ticket);
+    }
+
+    open_ticket() {
+        this.window = window.open(this.get_ticket_url(), '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes');
     }
 
     render() {
         return (
             <div class='list-item'>
-                <a title={this.ticket.CreatedDate} class="old-ticket-title" href={this.get_ticket_url()}>{this.ticket.Id}:{this.ticket.Title}</a>
+                <a title={this.ticket.CreatedDate} class="old-ticket-title" onClick={this.open_ticket.bind(this)}>{this.ticket.Id}:{this.ticket.Title}</a>
                 <a class="close-ticket" onClick={this.close_ticket.bind(this)}>Close</a>
             </div>
         );

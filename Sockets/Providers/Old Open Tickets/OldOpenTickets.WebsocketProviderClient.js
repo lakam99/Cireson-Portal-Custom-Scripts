@@ -14,7 +14,7 @@ class OldOpenTickets extends WebsocketProviderClient {
                 modal: true,
                 visible: false,
                 actions: [
-                    {text: "Close All", action: undefined, primary: true},
+                    {text: "Close All", action: this.close_all.bind(this), primary: true},
                     {text: "Acknowledge", action: this.send_acknowledgement.bind(this), primary: false}]
             },
             model:undefined
@@ -59,6 +59,15 @@ class OldOpenTickets extends WebsocketProviderClient {
     show_ui(data) {
         if (!this.ui_built) this.build_ui(data);
         this.ui_built.then(()=>{this.model.open()});
+    }
+
+    close_all() {
+        this.model.close();
+        ticketManipulator.show_loading();
+        window.oldTicketsUI.close_all_tickets().then(()=>{
+            ticketManipulator.remove_loading();
+            this.model.open();
+        })
     }
 
     send_acknowledgement() {
