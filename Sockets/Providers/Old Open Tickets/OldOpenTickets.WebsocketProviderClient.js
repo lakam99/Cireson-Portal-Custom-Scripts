@@ -6,10 +6,10 @@ class OldOpenTickets extends WebsocketProviderClient {
 
     construct_ui() {
         this.ui = {
-            template: '/CustomSpace/Templates/Old Open Tickets/old-open-tickets-ui.html',
+            template: customGlobalLoader.get_str_url('/CustomSpace/Templates/Old Open Tickets/old-open-tickets-ui.html'),
             required_elems: ['/CustomSpace/CustomElements/OldTickets.js', '/CustomSpace/CustomElements/OldTicket.js'],
             dialog: {
-                width: '600px',
+                height: "85%",
                 title: 'Your Old Open Tickets',
                 modal: true,
                 visible: false,
@@ -38,15 +38,18 @@ class OldOpenTickets extends WebsocketProviderClient {
 
     build_ui(data) {
         this.ui_built = new Promise((resolve) => {
-            Promise.all(this.load_assets()).then(()=>{
-                this.ui.dialog.content = this.ui.template;
-                $('body').append(this.ui.dialog.content);
-                this.ui.model = $('#old-open-tickets-ui').kendoDialog(this.ui.dialog);
-                let reactRoot = $('.old-ticket-container')[0];
-                reactRoot = ReactDOM.createRoot(reactRoot);
-                reactRoot.render(React.createElement(OldTicket, {tickets:data}));
-                resolve(true);
-        })});
+            customGlobalLoader.main.load_react().then(()=>{
+                Promise.all(this.load_assets()).then(()=>{
+                    this.ui.dialog.content = this.ui.template;
+                    $('body').append(this.ui.dialog.content);
+                    this.ui.model = $('#old-open-tickets-ui').kendoDialog(this.ui.dialog);
+                    let reactRoot = $('.old-ticket-container')[0];
+                    reactRoot = ReactDOM.createRoot(reactRoot);
+                    reactRoot.render(React.createElement(OldTickets, {tickets:data}));
+                    resolve(true);
+                })
+            })
+        });
     }
 
     get model() {

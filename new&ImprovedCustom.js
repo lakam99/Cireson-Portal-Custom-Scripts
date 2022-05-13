@@ -10,6 +10,7 @@ var customGlobalLoader = {
     files: "/CustomSpace/CustomData/customFiles/customFiles.json",
     version: 0,
     ticket: undefined,
+    react_state: undefined,
 
     get_settings: function() {
         var r = JSON.parse(localStorage.getItem("settings"));
@@ -130,7 +131,6 @@ var customGlobalLoader = {
 
         load_customspace: function() {
             customGlobalLoader.main.load_darkmode();
-            customGlobalLoader.main.load_react();
             customGlobalLoader.main.load_user_group(function(){return session.user.Id}, 
             function(res) {
                 var s = customGlobalLoader.get_settings();
@@ -145,8 +145,20 @@ var customGlobalLoader = {
         },
 
         load_react: function() {
-            $('head').append(`<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-            <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>`);
+            if (customGlobalLoader.react_state === undefined) {
+                customGlobalLoader.react_state = new Promise((resolve)=>{
+                    requirejs.config({paths:{
+                        react: 'https://unpkg.com/react@18/umd/react.production.min',
+                        reactdom: 'https://unpkg.com/react-dom@18/umd/react-dom.production.min'
+                    }});
+                    requirejs(['react','reactdom'], (React,ReactDOM)=>{
+                        window.React = React;
+                        window.ReactDOM = ReactDOM;
+                        resolve(true);
+                    })
+                })
+            }
+            return customGlobalLoader.react_state;
         },
         
         load_darkmode: function() {
