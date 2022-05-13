@@ -16,7 +16,6 @@ var OldTicket = function (_React$Component) {
 
         if (!props.ticket) throw "Must include ticket data.";
         _this.ticket = props.ticket;
-        _this.parent = props.parent;
         return _this;
     }
 
@@ -40,10 +39,7 @@ var OldTicket = function (_React$Component) {
     }, {
         key: 'close_ticket',
         value: function close_ticket(e) {
-            var parent_tickets = Object.create(this.parent.state.tickets);
-            var me = parent_tickets.indexOf(this.ticket);
-            parent_tickets.splice(me, 1);
-            this.parent.setState({ tickets: parent_tickets });
+            this.props._close(this.ticket);
         }
     }, {
         key: 'render',
@@ -53,7 +49,9 @@ var OldTicket = function (_React$Component) {
                 { 'class': 'list-item' },
                 React.createElement(
                     'a',
-                    { title: this.ticket.CreatedDate, 'class': 'old-ticket-title', href: '#' },
+                    { title: this.ticket.CreatedDate, 'class': 'old-ticket-title', href: this.get_ticket_url() },
+                    this.ticket.Id,
+                    ':',
                     this.ticket.Title
                 ),
                 React.createElement(

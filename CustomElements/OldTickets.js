@@ -22,6 +22,16 @@ var OldTickets = function (_React$Component) {
     }
 
     _createClass(OldTickets, [{
+        key: 'close_ticket',
+        value: function close_ticket(ticket) {
+            var ticket_index = this.state.tickets.indexOf(ticket);
+            if (ticket_index == -1) throw "Cannot find ticket in array.";
+            var tickets = this.state.tickets.filter(function (parent_ticket) {
+                return parent_ticket != ticket;
+            });
+            this.setState({ tickets: tickets });
+        }
+    }, {
         key: 'render',
         value: function render() {
             var _this2 = this;
@@ -40,7 +50,7 @@ var OldTickets = function (_React$Component) {
                     'div',
                     { 'class': 'old-ticket-list' },
                     this.state.tickets.length > 0 ? this.state.tickets.map(function (ticket) {
-                        return React.createElement(OldTicket, { ticket: ticket, parent: _this2 });
+                        return React.createElement(OldTicket, { key: ticket.Id, ticket: ticket, _close: _this2.close_ticket.bind(_this2) });
                     }) : React.createElement('img', { alt: 'groovy', 'class': 'groovy', src: 'groovy.png' })
                 )
             );
