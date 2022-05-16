@@ -28,7 +28,7 @@ var AROManager = {
                 success: function(re) {
                     AROManager.config = re;
                     AROManager.queue = AROManager.config.steal.service_offerings;
-                    AROManager.ready();
+                    //AROManager.ready();
                 }
             });
         }
@@ -89,11 +89,10 @@ var AROManager = {
 
     get_SO_from_id(service_offering_id) {
         return this.get_SO_from_property('ServiceOfferingId', service_offering_id);
-        so.service_offering_name = so.Service;
     },
 
     start: function() {
-        AROManager.UI_Builder.setup();
+        //AROManager.UI_Builder.setup();
         AROManager.setup.forEach(function(f){f()});
     },
 

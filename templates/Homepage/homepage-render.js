@@ -1,5 +1,6 @@
 var HomepageRenderer = {
     aros: parent.window.AROManager.aro,
+    test_so: parent.window.AROManager.config.steal.service_offerings,
     service_offerings: undefined,
     request_offerings: {},
     dropdown: '#help',
@@ -32,6 +33,10 @@ var HomepageRenderer = {
                 HomepageRenderer.request_offerings[service] = HomepageRenderer.aros.filter((aro)=>{
                     return aro.Service == service;
                 });
+
+                var is_test_so = HomepageRenderer.test_so.filter(so=>so.service_offering_name == service).length > 0;
+                var user_groups = (parent.session.user_groups || parent.customGlobalLoader.get_settings().user_groups || []).map(group=>group.Name);
+                if (is_test_so && !user_groups.includes('SCSM Management')) return; 
 
                 $(HomepageRenderer.dropdown).append(`<option class='service-option' value='${i+1}'>${service}</option>`);
                 $(HomepageRenderer.content).append(`<div name='${i+1}' id="${service.replace(' ','-')}" class="service-page border border-4 rounded" style="display:none"></div>`);

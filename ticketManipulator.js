@@ -115,4 +115,45 @@ var ticketManipulator = {
             }
         });
     },
+
+    get_bulk_edit_fields: (tickets, close_comment) => {
+        var close_status = ticketManipulator.constants.statuses.closed[tickets[0].WorkItemType].Id;
+        return [
+            {PropertyName: 'Status',
+            PropertyType: 'enum',
+            EditedValue: close_status},
+            {PropertyName: 'Notes',
+            PropertyType: 'string',
+            EditedValue: close_comment}
+        ];
+    },
+
+    request_tickets_close: (tickets, close_comment) => {
+        return new Promise((resolve,reject)=>{
+            if (!tickets.length) {resolve(false);return;}
+            var ticket_projection = tickets[0].WorkItemType == 'System.WorkItem.ServiceRequest' ? '7ffc8bb7-2c2c-0bd9-bd37-2b463a0f1af7':'2d460edd-d5db-bc8c-5be7-45b050cba652';
+            
+            $.ajax({
+                url: window.location.origin + '/api/V3/WorkItem/BulkEditWorkItems',
+                dataType: 'json',
+                type: 'post',
+                data: JSON.stringify({
+                    ProjectionId: ticket_projection,
+                    UpdateServiceManagement: true,
+                    ItemIds: tickets.map(ticket=>ticket.BaseId),
+                    EditedFields: ticketManipulator.get_bulk_edit_fields(tickets, close_comment)
+                }),
+                success: (r)=>{resolve(r)},
+                error: (e)=> {reject(e)}
+            })
+        })
+    },
+
+    dynamic_request_tickets_close: (tickets, close_comment) => {
+        return new Promise((resolve,reject)=>{
+            let srqs = tickets.filter(ticket=>ticket.WorkItemType=='System.WorkItem.ServiceRequest');
+            let incs = tickets.filter(ticket=>ticket.WorkItemType=='System.WorkItem.Incident');
+            Promise.all([OldTickets.request_tickets_close(srqs, close_comment), OldTickets.request_tickets_close(incs, close_comment)]).then(r=>resolve(true),e=>reject(e));
+        })
+    }
 }

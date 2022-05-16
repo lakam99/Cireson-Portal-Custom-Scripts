@@ -13,9 +13,24 @@ class OldOpenTickets extends WebsocketProviderClient {
                 title: 'Your Old Open Tickets',
                 modal: true,
                 visible: false,
+                closable: false,
                 actions: [
                     {text: "Close All", action: this.close_all.bind(this), primary: true},
                     {text: "Acknowledge", action: this.send_acknowledgement.bind(this), primary: false}]
+            },
+            comment_dialog: {
+                built: undefined,
+                model: undefined,
+                properties: {
+                    height: "45%",
+                    title: "Enter resolution comments",
+                    modal: false,
+                    closable: false,
+                    actions: [
+                        {text: "Submit", action: undefined, primary: true},
+                        {text: "Cancel", action: undefined, primary: false}
+                    ]
+                }
             },
             model:undefined
         }
@@ -50,6 +65,16 @@ class OldOpenTickets extends WebsocketProviderClient {
                 })
             })
         });
+    }
+
+    build_comment_model() {
+        this.ui.comment_dialog.built = new Promise((resolve)=>{
+            //TODO: this.ui.comment_dialog.model
+        })
+    }
+
+    get comment_model() {
+        return this.ui.comment_dialog.model.data('kendoDialog');
     }
 
     get model() {
