@@ -4,29 +4,29 @@ class OldTickets extends React.Component {
         this.state = {
             tickets: Array.isArray(props.tickets) ? props.tickets:[]
         }
+        this.socket_provider = props.socket_provider;
         this.original_count = this.state.tickets.length;
         window.oldTicketsUI = this;
-    }
-
-    close_all_tickets() {
-        return new Promise((resolve,reject)=>{
-            ticketManipulator.dynamic_request_tickets_close(this.state.tickets).then(()=>{
-                resolve(true);
-                this.setState({tickets:[]});
-            }, e=>reject(e));
-        })
+        this.close_notes = new textBoxPopup("Resolution Comments", 5, "Please provide a detailed resolution comment.");
     }
 
     close_ticket(ticket) {
-        return new Promise((resolve)=>{
+        var p_resolve = undefined;
+        var r = new Promise((resolve)=>p_resolve = resolve);
+        this.close_notes.prompt_comment().then((cancelled)=>{
+            let resolution = this.close_notes.get_comment();
+            if (cancelled || cancelled == '!criteria') {p_resolve(false);return;}
+
             let ticket_index = this.state.tickets.indexOf(ticket);
             if (ticket_index == -1) throw "Cannot find ticket in array.";
-            ticketManipulator.dynamic_request_tickets_close([ticket]).then((r)=>{
-                let tickets = this.state.tickets.filter(parent_ticket=>parent_ticket!=ticket);
+            ticketManipulator.dynamic_request_tickets_close([ticket], resolution).then((r)=>{
+                let tickets = this.state.tickets.filter(parent_ticket=>parent_ticket!=ticket); //remove ticket from ticket array
                 this.setState({tickets});
-                resolve(true);
+                this.socket_provider.report_update(tickets);
+                p_resolve(true);
             })
         })
+        return r;
     }
 
     render() {

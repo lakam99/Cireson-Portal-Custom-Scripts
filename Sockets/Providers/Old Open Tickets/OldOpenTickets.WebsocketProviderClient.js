@@ -2,6 +2,7 @@ class OldOpenTickets extends WebsocketProviderClient {
     constructor() {
         super('Old Open Tickets');
         this.construct_ui();
+        this.close_notes = new textBoxPopup("Resolution Comments", 5, "Please provide a detailed resolution comment.");
     }
 
     construct_ui() {
@@ -10,6 +11,7 @@ class OldOpenTickets extends WebsocketProviderClient {
             required_elems: ['/CustomSpace/CustomElements/OldTickets.js', '/CustomSpace/CustomElements/OldTicket.js'],
             dialog: {
                 height: "85%",
+                width: "45%",
                 title: 'Your Old Open Tickets',
                 modal: true,
                 visible: false,
@@ -17,20 +19,6 @@ class OldOpenTickets extends WebsocketProviderClient {
                 actions: [
                     {text: "Close All", action: this.close_all.bind(this), primary: true},
                     {text: "Acknowledge", action: this.send_acknowledgement.bind(this), primary: false}]
-            },
-            comment_dialog: {
-                built: undefined,
-                model: undefined,
-                properties: {
-                    height: "45%",
-                    title: "Enter resolution comments",
-                    modal: false,
-                    closable: false,
-                    actions: [
-                        {text: "Submit", action: undefined, primary: true},
-                        {text: "Cancel", action: undefined, primary: false}
-                    ]
-                }
             },
             model:undefined
         }
@@ -51,6 +39,10 @@ class OldOpenTickets extends WebsocketProviderClient {
         this.send({request:'work', params: {userId:session.user.Id}});
     }
 
+    report_update(data) {
+        this.send({request:'report', data:data});
+    }
+
     build_ui(data) {
         this.ui_built = new Promise((resolve) => {
             customGlobalLoader.main.load_react().then(()=>{
@@ -60,21 +52,11 @@ class OldOpenTickets extends WebsocketProviderClient {
                     this.ui.model = $('#old-open-tickets-ui').kendoDialog(this.ui.dialog);
                     let reactRoot = $('.old-ticket-container')[0];
                     reactRoot = ReactDOM.createRoot(reactRoot);
-                    reactRoot.render(React.createElement(OldTickets, {tickets:data}));
+                    reactRoot.render(React.createElement(OldTickets, {tickets:data, socket_provider:this}));
                     resolve(true);
                 })
             })
         });
-    }
-
-    build_comment_model() {
-        this.ui.comment_dialog.built = new Promise((resolve)=>{
-            //TODO: this.ui.comment_dialog.model
-        })
-    }
-
-    get comment_model() {
-        return this.ui.comment_dialog.model.data('kendoDialog');
     }
 
     get model() {
@@ -87,12 +69,17 @@ class OldOpenTickets extends WebsocketProviderClient {
     }
 
     close_all() {
-        this.model.close();
-        ticketManipulator.show_loading();
-        window.oldTicketsUI.close_all_tickets().then(()=>{
-            ticketManipulator.remove_loading();
-            this.model.open();
-        })
+        this.close_notes.prompt_comment();
+        this.close_notes.comment_added.then((cancelled)=>{
+            if (cancelled) return;
+            this.model.close();
+            ticketManipulator.show_loading();
+            window.oldTicketsUI.close_all_tickets().then(()=>{
+                ticketManipulator.remove_loading();
+                this.model.open();
+                this.report_update([]);
+            })
+        });
     }
 
     send_acknowledgement() {
@@ -112,3 +99,5 @@ class OldOpenTickets extends WebsocketProviderClient {
         }
     }
 }
+
+const oldOpenTickets = new OldOpenTickets();

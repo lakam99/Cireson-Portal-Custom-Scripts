@@ -116,7 +116,7 @@ var ticketManipulator = {
         });
     },
 
-    get_bulk_edit_fields: (tickets, close_comment) => {
+    get_bulk_close_fields: (tickets, close_comment) => {
         var close_status = ticketManipulator.constants.statuses.closed[tickets[0].WorkItemType].Id;
         return [
             {PropertyName: 'Status',
@@ -141,7 +141,7 @@ var ticketManipulator = {
                     ProjectionId: ticket_projection,
                     UpdateServiceManagement: true,
                     ItemIds: tickets.map(ticket=>ticket.BaseId),
-                    EditedFields: ticketManipulator.get_bulk_edit_fields(tickets, close_comment)
+                    EditedFields: ticketManipulator.get_bulk_close_fields(tickets, close_comment)
                 }),
                 success: (r)=>{resolve(r)},
                 error: (e)=> {reject(e)}
@@ -153,7 +153,7 @@ var ticketManipulator = {
         return new Promise((resolve,reject)=>{
             let srqs = tickets.filter(ticket=>ticket.WorkItemType=='System.WorkItem.ServiceRequest');
             let incs = tickets.filter(ticket=>ticket.WorkItemType=='System.WorkItem.Incident');
-            Promise.all([OldTickets.request_tickets_close(srqs, close_comment), OldTickets.request_tickets_close(incs, close_comment)]).then(r=>resolve(true),e=>reject(e));
+            Promise.all([ticketManipulator.request_tickets_close(srqs, close_comment), ticketManipulator.request_tickets_close(incs, close_comment)]).then(r=>resolve(true),e=>reject(e));
         })
     }
 }

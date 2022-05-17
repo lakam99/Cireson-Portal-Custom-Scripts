@@ -17,63 +17,62 @@ var OldTickets = function (_React$Component) {
         _this.state = {
             tickets: Array.isArray(props.tickets) ? props.tickets : []
         };
+        _this.socket_provider = props.socket_provider;
         _this.original_count = _this.state.tickets.length;
         window.oldTicketsUI = _this;
+        _this.close_notes = new textBoxPopup("Resolution Comments", 5, "Please provide a detailed resolution comment.");
         return _this;
     }
 
     _createClass(OldTickets, [{
-        key: 'close_all_tickets',
-        value: function close_all_tickets() {
+        key: "close_ticket",
+        value: function close_ticket(ticket) {
             var _this2 = this;
 
-            return new Promise(function (resolve, reject) {
-                ticketManipulator.dynamic_request_tickets_close(_this2.state.tickets).then(function () {
-                    resolve(true);
-                    _this2.setState({ tickets: [] });
-                }, function (e) {
-                    return reject(e);
+            var p_resolve = undefined;
+            var r = new Promise(function (resolve) {
+                return p_resolve = resolve;
+            });
+            this.close_notes.prompt_comment().then(function (cancelled) {
+                var resolution = _this2.close_notes.get_comment();
+                if (cancelled || cancelled == '!criteria') {
+                    p_resolve(false);return;
+                }
+
+                var ticket_index = _this2.state.tickets.indexOf(ticket);
+                if (ticket_index == -1) throw "Cannot find ticket in array.";
+                ticketManipulator.dynamic_request_tickets_close([ticket], resolution).then(function (r) {
+                    var tickets = _this2.state.tickets.filter(function (parent_ticket) {
+                        return parent_ticket != ticket;
+                    }); //remove ticket from ticket array
+                    _this2.setState({ tickets: tickets });
+                    _this2.socket_provider.report_update(tickets);
+                    p_resolve(true);
                 });
             });
+            return r;
         }
     }, {
-        key: 'close_ticket',
-        value: function close_ticket(ticket) {
+        key: "render",
+        value: function render() {
             var _this3 = this;
 
-            return new Promise(function (resolve) {
-                var ticket_index = _this3.state.tickets.indexOf(ticket);
-                if (ticket_index == -1) throw "Cannot find ticket in array.";
-                ticketManipulator.dynamic_request_tickets_close([ticket]).then(function (r) {
-                    var tickets = _this3.state.tickets.filter(function (parent_ticket) {
-                        return parent_ticket != ticket;
-                    });
-                    _this3.setState({ tickets: tickets });
-                    resolve(true);
-                });
-            });
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var _this4 = this;
-
             return React.createElement(
-                'div',
-                { 'class': 'old-ticket-app' },
+                "div",
+                { "class": "old-ticket-app" },
                 React.createElement(
-                    'h4',
-                    { 'class': 'old-ticket-counter' },
+                    "h4",
+                    { "class": "old-ticket-counter" },
                     this.state.tickets.length,
-                    '\xA0/\xA0',
+                    "\xA0/\xA0",
                     this.original_count
                 ),
                 React.createElement(
-                    'div',
-                    { 'class': 'old-ticket-list' },
+                    "div",
+                    { "class": "old-ticket-list" },
                     this.state.tickets.length > 0 ? this.state.tickets.map(function (ticket) {
-                        return React.createElement(OldTicket, { key: ticket.Id, ticket: ticket, _close: _this4.close_ticket.bind(_this4) });
-                    }) : React.createElement('img', { alt: 'groovy', 'class': 'groovy', src: customGlobalLoader.get_str_url('/CustomSpace/CustomElements/groovy.png') })
+                        return React.createElement(OldTicket, { key: ticket.Id, ticket: ticket, _close: _this3.close_ticket.bind(_this3) });
+                    }) : React.createElement("img", { alt: "groovy", "class": "groovy", src: customGlobalLoader.get_str_url('/CustomSpace/CustomElements/groovy.png') })
                 )
             );
         }

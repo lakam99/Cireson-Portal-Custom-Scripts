@@ -39,8 +39,12 @@ var OldTicket = function (_React$Component) {
     }, {
         key: 'close_ticket',
         value: function close_ticket(e) {
+            var _this2 = this;
+
             $(e.target).before('<img alt=\'loading\' name=\'' + this.ticket.Id + '\' src="' + customGlobalLoader.get_str_url('/CustomSpace/CustomElements/loading.gif') + '"></img>');
-            this.props._close(this.ticket);
+            this.props._close(this.ticket).then(function () {
+                $('img[name=\'' + _this2.ticket.Id + '\']').remove();
+            });
         }
     }, {
         key: 'open_ticket',

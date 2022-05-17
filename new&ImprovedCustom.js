@@ -11,6 +11,7 @@ var customGlobalLoader = {
     version: 0,
     ticket: undefined,
     react_state: undefined,
+    files_loaded: {},
 
     get_settings: function() {
         var r = JSON.parse(localStorage.getItem("settings"));
@@ -77,7 +78,7 @@ var customGlobalLoader = {
 
     main: {
         load_file: function (file_obj) {
-            return new Promise((resolve,reject)=>{
+            var r = new Promise((resolve,reject)=>{
                 if (file_obj.condition && !eval(file_obj.condition))
                     resolve(false); 
                 else {
@@ -98,6 +99,8 @@ var customGlobalLoader = {
                     document.getElementsByTagName('head')[0].appendChild(script);
                 }
             });
+            if (file_obj.name) customGlobalLoader.files_loaded[file_obj.name] = r;
+            return r;
         },
 
         load_files: function (files) {

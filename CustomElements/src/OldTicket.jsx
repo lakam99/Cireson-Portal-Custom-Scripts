@@ -23,7 +23,9 @@ class OldTicket extends React.Component {
 
     close_ticket(e) {
         $(e.target).before(`<img alt='loading' name='${this.ticket.Id}' src="${customGlobalLoader.get_str_url('/CustomSpace/CustomElements/loading.gif')}"></img>`)
-        this.props._close(this.ticket);
+        this.props._close(this.ticket).then(()=>{
+            $(`img[name='${this.ticket.Id}']`).remove();
+        });
     }
 
     open_ticket() {
