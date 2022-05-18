@@ -13,7 +13,7 @@
 
             {"name": "consistentFormTasks",
             "url": "/CustomSpace/Scripts/consistentFormTasks/consistentFormTasks.js",
-            "condition": "window.location.pathname.includes('/Edit/')"}
+            "condition": "window.location.pathname.includes('/ServiceRequest/Edit/') || window.location.pathname.includes('/Incident/Edit/')"}
         ]
     },
 
@@ -22,15 +22,15 @@
         "array":[
             {"name": "templateApplier",
             "url": "/CustomSpace/Scripts/templateApplier/templateApplier.js",
-            "condition": "window.location.pathname.includes('/Edit/')"},
+            "condition": "window.location.pathname.includes('/ServiceRequest/Edit/') || window.location.pathname.includes('/Incident/Edit/')"},
 
             {"name": "activityAdder",
             "url": "/CustomSpace/Scripts/activityAdder/activityAdder.js",
-            "condition": "window.location.pathname.includes('/Edit/')"},
+            "condition": "window.location.pathname.includes('/ServiceRequest/Edit/') || window.location.pathname.includes('/Incident/Edit/')"},
 
             {"name": "ticketConverter",
             "url": "/CustomSpace/Scripts/ticketConverter/ticketConverter.js",
-            "condition": "window.location.pathname.includes('/Edit/')"},
+            "condition": "window.location.pathname.includes('/ServiceRequest/Edit/') || window.location.pathname.includes('/Incident/Edit/')"},
 
             {"name": "ticketManipulator",
             "url": "/CustomSpace/Scripts/ticketManipulator/ticketManipulator.js"},
@@ -67,7 +67,7 @@
 
             {"name": "portalUserEmailManager",
             "url": "/CustomSpace/Scripts/portalUserEmailManager/portalUserEmailManager.js",
-            "condition": "window.location.pathname.includes('/Edit/')"},
+            "condition": "window.location.pathname.includes('/ServiceRequest/Edit/') || window.location.pathname.includes('/Incident/Edit/')"},
 
             {"name": "portalHomepage",
             "url": "/CustomSpace/Scripts/Homepage/portalHomepage.js",
@@ -75,7 +75,7 @@
 
             {"name": "referenceRenderer",
             "url": "/CustomSpace/Scripts/referenceRenderer/referenceRenderer.js",
-            "condition": "window.location.pathname.includes('/Edit/')"},
+            "condition": "window.location.pathname.includes('/ServiceRequest/Edit/') || window.location.pathname.includes('/Incident/Edit/')"},
 
             {"name": "DOMRemover",
             "url": "/CustomSpace/Scripts/DOMRemover/DOMRemover.js"},
@@ -91,7 +91,11 @@
             "url": "/CustomSpace/Scripts/TextboxPopup/TextboxPopup.js"},
 
             {"name": "SocketLoader",
-            "url": "/CustomSpace/Sockets/socketLoader.js"}
+            "url": "/CustomSpace/Sockets/socketLoader.js"},
+
+            {"name": "AffectedUserView",
+            "url": "/CustomSpace/Scripts/AffectedUserView/AffectedUserView.js",
+            "condition": "window.location.pathname.includes('/ServiceRequest/Edit/') || window.location.pathname.includes('/Incident/Edit/') || window.location.pathname.includes('/New/')"}
         ]
     },
 

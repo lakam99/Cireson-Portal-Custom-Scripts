@@ -32,7 +32,7 @@ class OldOpenTickets extends WebsocketProviderClient {
                 success: (r) => {this.ui.template = r;resolve()},
                 error: (e) => {reject(e)}
             })
-        }), Promise.all(customGlobalLoader.main.load_files({array:this.ui.required_elems.map(elem=>new url(elem))}))]
+        }), Promise.all(customGlobalLoader.main.load_files({array:this.ui.required_elems.map(elem=>new urlObj(elem))}))]
     }
 
     ask_provider_to_work() {
@@ -94,6 +94,8 @@ class OldOpenTickets extends WebsocketProviderClient {
             this.data = data.data;
             if (!data.acknowledged)
                 this.show_ui(this.data);
+            else
+                this.connection.close();
         } else {
             console.log(data);
         }

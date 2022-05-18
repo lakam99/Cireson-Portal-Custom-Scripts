@@ -2,7 +2,7 @@
 //arkam.mazrui@nserc-crsng.gc.ca
 //arkam.mazrui@gmail.com
 
-function url(url_str) {
+function urlObj(url_str) {
     this.url = url_str;
 } 
 

@@ -294,3 +294,19 @@ img[alt='loading'] {
   width: 5%;
   height: 3vh;
 }
+
+#af-view {
+  position: absolute;
+    width: 46vw;
+    height: 11vh;
+    border: 1px solid black;
+    top: -4vh;
+}
+
+#af-view > div > table > tbody > tr > td[role="gridcell"] {
+  background-color: rgb(221 204 80 / 12%);
+}
+
+#af-view > div > div > table > thead > tr > th {
+  background-color: beige;
+}
