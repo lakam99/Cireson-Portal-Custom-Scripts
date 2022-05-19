@@ -41,9 +41,6 @@
             {"name": "map_controller",
             "url": "/CustomSpace/Scripts/mapController/map_controller.js"},
 
-            {"name": "htmlInjector",
-            "url": "/CustomSpace/Scripts/htmlInjector/htmlInjector.js"},
-
             {"name": "quickies",
             "url": "/CustomSpace/Scripts/Quickies/quickies.js"},
 
@@ -107,9 +104,6 @@
 
             {"name": "darkModeStylesheet",
             "url": "/CustomSpace/CustomSettings/darkMode/darkMode.css"},
-
-            {"name": "htmlInjectorConfig",
-            "url": "/CustomSpace/Scripts/htmlInjector/htmlInjectorConfig.json"},
 
             {"name": "customSettingsTemplate",
             "url": "/CustomSpace/Templates/customSettings/customSettings.html"},

@@ -55,7 +55,7 @@ html, body {
   
   img, img[src]:not(.update-icon):not(.edit-img) {
     z-index: 1;
-    filter: grayscale(1) !important;
+    /*filter: grayscale(1) !important;*/
     background-color: initial !important;
   }
   

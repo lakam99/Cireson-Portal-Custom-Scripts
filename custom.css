@@ -238,11 +238,11 @@ label.checkbox-label {
 flex-direction: column;overflow-x: hidden;}
 
 .list-item {
-  padding-left: 2%;background-color: aliceblue;
+  padding-left: 2%;background-color: #d7edff;
 height: 4vh;padding-top: 1%;display: flex;flex-direction: row;justify-content: space-between;border: 1px solid #0000000f;}
 
 .list-item:hover {
-  background-color: rgb(228 253 221 / 32%);
+  background-color: rgb(121 192 243 / 37%);
 }
 
 .close-ticket:hover {
@@ -265,7 +265,7 @@ height: 4vh;padding-top: 1%;display: flex;flex-direction: row;justify-content: s
   height: 100%;
   width: 100%;
   margin-right: unset;
-  background-color: rgb(241 237 237);
+  background-color: rgb(213 229 255);
   padding: unset;
   padding-bottom: 3vh;overflow: hidden;
 }
@@ -280,6 +280,7 @@ height: 4vh;padding-top: 1%;display: flex;flex-direction: row;justify-content: s
 
 #old-open-tickets-ui {
   height: 85% !important;
+  background-color: #e9f5ff;
 }
 
 .k-window.k-dialog {
@@ -288,6 +289,7 @@ height: 4vh;padding-top: 1%;display: flex;flex-direction: row;justify-content: s
 
 .k-window-titlebar {
   text-align: center;
+  background-color: #d7edffa8;
 }
 
 img[alt='loading'] {
@@ -304,9 +306,88 @@ img[alt='loading'] {
 }
 
 #af-view > div > table > tbody > tr > td[role="gridcell"] {
-  background-color: rgb(221 204 80 / 12%);
+  background-color: rgb(119 98 169 / 17%);
 }
 
 #af-view > div > div > table > thead > tr > th {
-  background-color: beige;
+  background-color: rgb(221 204 80 / 5%);
 }
+
+#side_nav, #side_nav>ul, .drawer, .navbar:not(.my_nav), ul.navbar-nav {
+	background-color: #0b0b32 !important;
+}
+
+#myTab > li > a {
+  color: #18272e !important;
+}
+
+td[role=gridcell] {
+  background-color: #7b9fb32e !important;
+}
+
+.nav-icon-color {
+  color: #8ebed7;
+}
+
+.sub_panel {
+  background-color: #0b0b32 !important;
+}
+
+.k-dialog-button-layout-stretched .k-button {
+  background-color: #e6f1fb;
+}
+
+.k-dialog-button-layout-stretched .k-button:hover {
+  background-color: #4c93b7 !important;
+}
+
+.k-grid tr:hover td.grid-highlight-column, .k-grid tr:hover td.grid-highlight-column-last, .k-grid tr:hover td.grid-highlight-column-mid, .k-grid tr:hover td.grid-highlight-column-title,
+.k-grid tr:hover td.grid-highlight-column a, .k-grid tr:hover td.grid-highlight-column-last a, .k-grid tr:hover td.grid-highlight-column-mid a, .k-grid tr:hover td.grid-highlight-column-title a {
+  color: black !important;
+}
+
+.k-button.btn-default {
+  border-color: #00293e;
+  color: #000000;
+  background-color: #c9def587;
+}
+
+.k-button.btn-default:hover {
+  color: #fff!important;
+  background-color: #041c28!important;
+  border-color: #000000!important;
+}
+
+  /* width */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #b1bbd1fd; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #363e55; 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(157, 175, 233, 0.575); 
+  }
+  
+  ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: rgba(255, 255, 255, 0.897) !important;
+    opacity: 1; /* Firefox */
+  }
+  
+  :-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: rgba(0, 0, 0, 0.8) !important;
+  }
+  
+  ::-ms-input-placeholder { /* Microsoft Edge */
+    color: rgba(0, 0, 0, 0.8) !important;
+  }

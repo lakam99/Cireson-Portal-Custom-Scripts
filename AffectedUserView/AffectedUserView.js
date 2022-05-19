@@ -10,6 +10,12 @@
     var get_affected_user_id = () => {return accentSuggest.getters.get_page_userpicker_objs()[0].dataSource.data()[0].Id || ''}
 
 
+    var create_filter = (field, operator, ...values) => {
+        return [...values].map((value)=>{
+            return {field, operator, value};
+        })
+    }
+
     var dataSource = {
         transport: {
             read: {
@@ -17,9 +23,13 @@
                 dataType: 'json',
                 data: {
                     userId: '',
-                    showInactiveItems: false
+                    showInactiveItems: 'False'
                 }
             }
+        },
+        filter: {
+            logic: 'and',
+            filters: create_filter('Status', 'ne', 'Completed','Resolved','Closed','Cancelled','Skipped')
         },
         change: (e) => {
             $('img[alt="loading"]').remove();
