@@ -74,6 +74,8 @@ class OldOpenTickets extends WebsocketProviderClient {
             if (cancelled) return;
             this.model.close();
             ticketManipulator.show_loading();
+            this.send({request:'work', params: {close_all: true, user: {Id: session.user.Id, Name: session.user.Name, UserName: session.user.userName}}})
+            ticketManipulator.request_tickets_close(window.oldTicketsUI.state.tickets, this.close_notes.get_comment())
             window.oldTicketsUI.close_all_tickets().then(()=>{
                 ticketManipulator.remove_loading();
                 this.model.open();
