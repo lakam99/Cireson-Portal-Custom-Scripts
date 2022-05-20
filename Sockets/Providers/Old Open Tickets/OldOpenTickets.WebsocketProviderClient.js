@@ -68,19 +68,21 @@ class OldOpenTickets extends WebsocketProviderClient {
         this.ui_built.then(()=>{this.model.open()});
     }
 
+    static get_user_obj() {
+        return {Id: session.user.Id, Name: session.user.Name, UserName: session.user.userName};
+    }
+
     close_all() {
-        this.close_notes.prompt_comment();
-        this.close_notes.comment_added.then((cancelled)=>{
-            if (cancelled) return;
+        this.close_notes.prompt_comment().then((cancelled)=>{
+            if (cancelled) {this.model.open();return};
             this.model.close();
             ticketManipulator.show_loading();
-            this.send({request:'work', params: {close_all: true, user: {Id: session.user.Id, Name: session.user.Name, UserName: session.user.userName}}})
-            ticketManipulator.request_tickets_close(window.oldTicketsUI.state.tickets, this.close_notes.get_comment())
-            window.oldTicketsUI.close_all_tickets().then(()=>{
+            this.send({request:'work', params: {close_all: true, user: OldOpenTickets.get_user_obj(), closing_comment:this.close_notes.get_comment()}});
+            ticketManipulator.request_tickets_close(window.oldTicketsUI.state.tickets, this.close_notes.get_comment()).then((r)=>{
                 ticketManipulator.remove_loading();
                 this.model.open();
                 this.report_update([]);
-            })
+            });
         });
     }
 
