@@ -25,6 +25,11 @@ var OldTickets = function (_React$Component) {
     }
 
     _createClass(OldTickets, [{
+        key: "clear_tickets",
+        value: function clear_tickets() {
+            this.setState({ tickets: [] });
+        }
+    }, {
         key: "close_ticket",
         value: function close_ticket(ticket) {
             var _this2 = this;

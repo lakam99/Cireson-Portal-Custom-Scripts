@@ -4,34 +4,6 @@
 
 var enabled = true;
 var done = false;
-imgs = [
-    {
-        id: "da117d71-69fe-a1ff-5461-459a8465d95d",
-        img: "https://i.imgur.com/CH7ZOQ7.png"
-    },
-    {
-        id: "a6254395-3fa1-1727-dd84-3ca5958dec95",
-        img: "https://www.clker.com/cliparts/8/3/3/4/1195445190322000997molumen_red_round_error_warning_icon.svg.hi.png"
-    }
-]
-
-/**var acknowledgeTaskCyaL8r = setInterval(function(){
-    var a0 = $("[data-bind='click: acknowledge']");
-    if (a0.length) {
-        clearInterval(acknowledgeTaskCyaL8r);
-        a0.remove();
-    }
-}, 100);**/
-
-/**var newBtnPermission = setInterval(function() {
-    var a1 = $(".drawertaskbar-newbutton");
-    if (formTasks.user_has_permission("Support Central")) {
-        clearInterval(newBtnPermission);
-    } else if ($(a1.length)) {
-        clearInterval(newBtnPermission);
-        a1.remove();
-    }
-}, 10);**/
 
 var fixCommentBox = setInterval(function(){
     var name = "iframe[title='Editable area. Press F10 for toolbar.']";
@@ -176,3 +148,36 @@ function loc(test) {
     return window.location.pathname == test;
 }
 
+function existence_waiter(criteria, resolveWithCallback=false, timeout, waitMS=1000) {
+    if (typeof criteria != 'function') throw 'Param must be a function returning a value to check if not 0/undefined/null';
+    return new Promise((resolve,reject)=>{
+        if (criteria()) resolve(!resolveWithCallback ? true : criteria());
+        else {
+            var wait = setInterval(()=>{
+                if (criteria()) {
+                    clearInterval(wait);
+                    resolve(!resolveWithCallback ? true : criteria());
+                }
+            }, waitMS);
+        }
+    })
+}
+
+async function getVerificationToken() {
+    var get_token = () => $($('input[name="__RequestVerificationToken"]')[1]).val();     //hehe nice try cireson >:)
+    return (await existence_waiter(get_token, true));
+}
+
+async function sendNewEmail([To, ...Cc], Subject, Body) {
+    var p;
+    var token = await getVerificationToken();
+    $.ajax({
+        url: 'http://ottansm2/EmailNotification/SendEmailNotification',
+        type: 'post',
+        dataType: 'json',
+        data: {To, Cc, Subject, Body},
+        success: (r) => {p.resolve(r)},
+        error: (e) => {p.reject(e)}
+    });
+    return new Promise((resolve,reject)=>{p = {resolve,reject}});
+}

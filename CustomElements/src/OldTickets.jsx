@@ -10,6 +10,10 @@ class OldTickets extends React.Component {
         this.close_notes = new textBoxPopup("Resolution Comments", 5, "Please provide a detailed resolution comment.");
     }
 
+    clear_tickets() {
+        this.setState({tickets:[]})
+    }
+
     close_ticket(ticket) {
         var p_resolve = undefined;
         var r = new Promise((resolve)=>p_resolve = resolve);

@@ -73,8 +73,9 @@ class OldOpenTickets extends WebsocketProviderClient {
     }
 
     close_all() {
-        this.close_notes.prompt_comment().then((cancelled)=>{
+        this.close_notes.prompt_comment().then(async (cancelled)=>{
             if (cancelled) {this.model.open();return};
+            oldTicketsUI.clear_tickets();
             this.model.close();
             ticketManipulator.show_loading();
             this.send({request:'work', params: {close_all: true, user: OldOpenTickets.get_user_obj(), closing_comment:this.close_notes.get_comment()}});

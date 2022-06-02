@@ -12,7 +12,7 @@ class WebsocketProviderClient {
     }
 
     send(data) {
-        this.connection.send(JSON.stringify(data));
+        this.connection.send(JSON.stringify(Object.assign(data, {user: session.user.Id})));
     }
 
     static receive(data) {
