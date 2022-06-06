@@ -13,7 +13,11 @@
 
             {"name": "consistentFormTasks",
             "url": "/CustomSpace/Scripts/consistentFormTasks/consistentFormTasks.js",
-            "condition": "window.location.pathname.includes('/ServiceRequest/Edit/') || window.location.pathname.includes('/Incident/Edit/')"}
+            "condition": "window.location.pathname.includes('/ServiceRequest/Edit/') || window.location.pathname.includes('/Incident/Edit/')"},
+
+            {"name": "customDashboardsManager",
+            "url": "/CustomSpace/Scripts/CustomDashboardsManager/CustomDashboardsManager.js",
+            "condition": "window.location.pathname.includes('/View/Dashboards')"}
         ]
     },
 

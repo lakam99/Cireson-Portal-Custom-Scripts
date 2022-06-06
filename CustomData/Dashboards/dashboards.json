@@ -1,0 +1,9 @@
+[
+    {
+        "name": "All tickets by date",
+        "dashboard_id": "all-tickets-by-date",
+        "queryId": "d6ebc9a8-89ce-706e-a461-8deb8bf33f60",
+        "filter": ">~<today>~<",
+        "sortOn": "Created"
+    }
+]
