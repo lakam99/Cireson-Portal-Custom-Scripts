@@ -358,6 +358,11 @@ td[role=gridcell] {
   border-color: #000000!important;
 }
 
+.cust-dashboard {
+  width: 90%;
+  margin: auto;
+}
+
   /* width */
   ::-webkit-scrollbar {
     width: 10px;

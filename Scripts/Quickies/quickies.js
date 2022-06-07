@@ -4,6 +4,10 @@
 
 var enabled = true;
 var done = false;
+var rgbToHex = (r, g, b) => "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+var rand = (max) => Math.round(Math.random() * max + 1);
+var randColor = () => rgbToHex(rand(255), rand(255), rand(255));
+
 
 var fixCommentBox = setInterval(function(){
     var name = "iframe[title='Editable area. Press F10 for toolbar.']";

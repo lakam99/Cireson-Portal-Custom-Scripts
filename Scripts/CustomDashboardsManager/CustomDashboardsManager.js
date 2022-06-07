@@ -1,20 +1,25 @@
 !(async function() {
+    $('head').append(`<style>body, #root {height: 100%; width: 100%} #root {margin: auto; margin-top: 3vh}</style>`)
+
     const config_path = customGlobalLoader.get_str_url("/CustomSpace/CustomData/Dashboards/dashboards.json");
     const wrapper = '#main_wrapper';
     var config = await $.getJSON(config_path);
     await customGlobalLoader.main.load_react();
-    var assets = customGlobalLoader.main.load_file(new urlObj("/CustomSpace/CustomElements/Dashboard.js"));
+    var asset = customGlobalLoader.main.load_file(new urlObj("/CustomSpace/CustomElements/Dashboard.js"));
+    const expressionRegex = /{{([\s\S]*?)}}/g;
 
     config.forEach((c)=>{
-        if (c.filter == ">~<today>~<")
-            c.filter = moment().format('MM/DD/yy');
+        c.filters.forEach((filter, i)=>{
+            let expressions = [...filter.matchAll(expressionRegex)]; //returns all the expressions in THIS filter
+            let compiled = expressions.map((expression)=>eval(expression[0]));
+            expressions.forEach((expression,j)=>c.filters[i].replace(expression[0], compiled[j])); //need to test
+        })
     })
-
 
     $(wrapper).html('<div id="root"></div>');
     var root = $('#root')[0];
     var reactRoot = ReactDOM.createRoot(root);
-    await assets;
+    await asset;
     reactRoot.render(React.createElement(Dashboard, config[0]))
 
 })()

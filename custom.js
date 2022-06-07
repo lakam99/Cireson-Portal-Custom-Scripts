@@ -85,7 +85,7 @@ var customGlobalLoader = {
                     var script = document.createElement("script");
                     script.async = "async";
                     script.type = file_obj.type ? file_obj.type:"text/javascript";
-                    script.src = customGlobalLoader.get_str_url(file_obj.url);
+                    script.src = file_obj.url.includes('http') ? file_obj.url : customGlobalLoader.get_str_url(file_obj.url);
                     script.onload = script.onreadystatechange = (_, isAbort) => {
                         if (!script.readyState || /loaded|complete/.test(script.readyState)) {
                             if (isAbort) reject();
