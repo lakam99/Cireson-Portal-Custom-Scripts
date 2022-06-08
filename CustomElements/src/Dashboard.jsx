@@ -1,21 +1,21 @@
-var {useEffect, useState} = React;
+var {useEffect, useState, useRef} = React;
 function Dashboard(props) {
-    var {filter, dashboard_id, queryId, sortOn, name} = props;
-    var data = useState({});
-    var dimensions = useState({width:window.innerWidth, height:window.innerHeight});
+    var {filters, dashboard_id, queryId, sortOn, name} = props;
+    var [selectedFilterIndex, setFilterIndex] = useState(0);
+    var data = useRef([]);
 
-    var getData = async () => await $.getJSON(window.location.origin + "/Dashboard/GetDashboardDataById", {queryId, filter});
-    var getCountData = (data) => {
+    var getData = async () => await $.getJSON(window.location.origin + "/Dashboard/GetDashboardDataById", {queryId, filter:filters[selectedFilterIndex].filter});
+    var getCountData = () => {
         var r = {};
-        data.forEach((item) =>  {
+        data.current.forEach((item) =>  {
             if (r[item[sortOn]]) r[item[sortOn]]++;
             else r[item[sortOn]] = 1;
         });
         return r;
     }
 
-    var getConfig = (data) => {
-        let countData = getCountData(data);
+    var getConfig = () => {
+        let countData = getCountData(data.current);
         let labels = Object.keys(countData);
         let values = Object.values(countData);
         let cdata = {labels, datasets: [{label: name, data:values, borderColor: values.map(()=>randColor()), backgroundColor: values.map(()=>randColor())}]};
@@ -25,20 +25,31 @@ function Dashboard(props) {
 
     var render = () => {
         let dashboard_elem = $(`#${dashboard_id}`);
-        dashboard_elem.data({chart: new Chart(dashboard_elem[0].getContext('2d'), getConfig(data))});
+        if (dashboard_elem.data('chart')) {
+            dashboard_elem.data('chart').data = getConfig(data.current).data;
+            dashboard_elem.data('chart').update();
+        }
+        else dashboard_elem.data({chart: new Chart(dashboard_elem[0], getConfig(data.current))});
     }
 
-    useEffect(async ()=>{
-        data = await getData();
-        render();
-    }, []);
+    var setFilterIndexCB = (e) => { ticketManipulator.show_loading(); setFilterIndex(e.target.value);};
 
-    useEffect(()=>render(), [data]);
+    useEffect(()=>{
+        getData().then((results)=>{
+            data.current = results;
+            ticketManipulator.remove_loading();
+            render();
+        })
+    }, [selectedFilterIndex]);
+
+    useEffect(()=>{
+        $('.cust-dashboard-filter').on('change', setFilterIndexCB);
+    },[]);
 
     return (
         <div className="cust-dashboard">
             <select className="cust-dashboard-filter">
-
+                {filters.map((filter, i)=><option value={i} key={'filter-'+i}>{filter.name}</option>)}
             </select>
             <canvas id={dashboard_id}></canvas>
         </div>

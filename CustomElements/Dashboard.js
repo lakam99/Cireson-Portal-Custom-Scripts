@@ -1,102 +1,65 @@
-import _regeneratorRuntime from 'babel-runtime/regenerator';
-
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
-
-var _React = React,
-    useEffect = _React.useEffect,
-    useState = _React.useState;
-
+var {useEffect, useState, useRef} = React;
 function Dashboard(props) {
-    var _this = this;
+    var {filters, dashboard_id, queryId, sortOn, name} = props;
+    var [selectedFilterIndex, setFilterIndex] = useState(0);
+    var data = useRef([]);
 
-    var filter = props.filter,
-        dashboard_id = props.dashboard_id,
-        queryId = props.queryId,
-        sortOn = props.sortOn,
-        name = props.name;
-
-    var data = useState({});
-    var dimensions = useState({ width: window.innerWidth, height: window.innerHeight });
-
-    var getData = function () {
-        var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee() {
-            return _regeneratorRuntime.wrap(function _callee$(_context) {
-                while (1) {
-                    switch (_context.prev = _context.next) {
-                        case 0:
-                            _context.next = 2;
-                            return $.getJSON(window.location.origin + "/Dashboard/GetDashboardDataById", { queryId: queryId, filter: filter });
-
-                        case 2:
-                            return _context.abrupt('return', _context.sent);
-
-                        case 3:
-                        case 'end':
-                            return _context.stop();
-                    }
-                }
-            }, _callee, _this);
-        }));
-
-        return function getData() {
-            return _ref.apply(this, arguments);
-        };
-    }();
-    var getCountData = function getCountData(data) {
+    var getData = async () => await $.getJSON(window.location.origin + "/Dashboard/GetDashboardDataById", {queryId, filter:filters[selectedFilterIndex].filter});
+    var getCountData = () => {
         var r = {};
-        data.forEach(function (item) {
-            if (r[item[sortOn]]) r[item[sortOn]]++;else r[item[sortOn]] = 1;
+        data.current.forEach((item) =>  {
+            if (r[item[sortOn]]) r[item[sortOn]]++;
+            else r[item[sortOn]] = 1;
         });
         return r;
-    };
+    }
 
-    var getConfig = function getConfig(data) {
-        var countData = getCountData(data);
-        var labels = Object.keys(countData);
-        var values = Object.values(countData);
-        var cdata = { labels: labels, datasets: [{ label: name, data: values, borderColor: values.map(function () {
-                    return randColor();
-                }), backgroundColor: values.map(function () {
-                    return randColor();
-                }) }] };
-        var config = { type: 'line', data: cdata, options: {} };
+    var getConfig = () => {
+        let countData = getCountData(data.current);
+        let labels = Object.keys(countData);
+        let values = Object.values(countData);
+        let cdata = {labels, datasets: [{label: name, data:values, borderColor: values.map(()=>randColor()), backgroundColor: values.map(()=>randColor())}]};
+        let config = {type: 'line', data:cdata, options: {}};
         return config;
-    };
+    }
 
-    var render = function render() {
-        var dashboard_elem = $('#' + dashboard_id);
-        dashboard_elem.data({ chart: new Chart(dashboard_elem[0].getContext('2d'), getConfig(data)) });
-    };
+    var render = () => {
+        let dashboard_elem = $(`#${dashboard_id}`);
+        if (dashboard_elem.data('chart')) {
+            dashboard_elem.data('chart').data = getConfig(data.current).data;
+            dashboard_elem.data('chart').update();
+        }
+        else dashboard_elem.data({chart: new Chart(dashboard_elem[0], getConfig(data.current))});
+    }
 
-    useEffect(_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee2() {
-        return _regeneratorRuntime.wrap(function _callee2$(_context2) {
-            while (1) {
-                switch (_context2.prev = _context2.next) {
-                    case 0:
-                        _context2.next = 2;
-                        return getData();
+    var setFilterIndexCB = (e) => { ticketManipulator.show_loading(); setFilterIndex(e.target.value);};
 
-                    case 2:
-                        data = _context2.sent;
+    useEffect(()=>{
+        getData().then((results)=>{
+            data.current = results;
+            ticketManipulator.remove_loading();
+            render();
+        })
+    }, [selectedFilterIndex]);
 
-                        render();
-
-                    case 4:
-                    case 'end':
-                        return _context2.stop();
-                }
-            }
-        }, _callee2, _this);
-    })), []);
-
-    useEffect(function () {
-        return render();
-    }, [data]);
+    useEffect(()=>{
+        $('.cust-dashboard-filter').on('change', setFilterIndexCB);
+    },[]);
 
     return React.createElement(
         'div',
         { className: 'cust-dashboard' },
-        React.createElement('select', { className: 'cust-dashboard-filter' }),
+        React.createElement(
+            'select',
+            { className: 'cust-dashboard-filter'},
+            filters.map(function (filter, i) {
+                return React.createElement(
+                    'option',
+                    { value: i, key: 'filter-' + i },
+                    filter.name
+                );
+            })
+        ),
         React.createElement('canvas', { id: dashboard_id })
     );
 }

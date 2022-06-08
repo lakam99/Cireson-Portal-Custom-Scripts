@@ -359,8 +359,12 @@ td[role=gridcell] {
 }
 
 .cust-dashboard {
-  width: 90%;
+  width: 85%;
   margin: auto;
+}
+
+.cust-dashboard-filter {
+  width: 15%;
 }
 
   /* width */

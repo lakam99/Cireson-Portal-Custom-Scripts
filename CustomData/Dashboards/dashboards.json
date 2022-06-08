@@ -3,8 +3,31 @@
         "name": "All tickets by date",
         "dashboard_id": "all-tickets-by-date",
         "queryId": "d6ebc9a8-89ce-706e-a461-8deb8bf33f60",
-        "filters": [
-            "Created >= '{{moment().substract(7,'d').format('MM/DD/yy')}}' and Created <= '{{moment().format('MM/DD/yy')}}'"
+        "filters": [ 
+            {
+                "name": "This Week",
+                "filter": "Created >= '{{moment().subtract(7,'d').format('yy/MM/DD')}}' and Created <= '{{moment().add(1,'d').format('yy/MM/DD')}}'"
+            },
+            {
+                "name": "This Month",
+                "filter": "Created >= '{{moment().format('yy/MM/01')}}' and Created <= '{{moment().add(1,'d').format('yy/MM/DD')}}'"
+            },
+            {
+                "name": "This Quarter",
+                "filter": "Created >= '{{moment().startOf('quarter').format('yy/MM/DD')}}' and Created <= '{{moment().endOf('quarter').format('yy/MM/DD')}}'"
+            },
+            {
+                "name": "Last Quarter",
+                "filter": "Created >= '{{moment().subtract(1, 'quarter').startOf('quarter').format('yy/MM/DD')}}' and Created <= '{{moment().subtract(1, 'quarter').endOf('quarter').format('yy/MM/DD')}}'"
+            },
+            {
+                "name": "This Year",
+                "filter": "Created >= '{{moment().format('yy/01/01')}}' and Created <= '{{moment().add(1,'d').format('yy/MM/DD')}}'"
+            },
+            {
+                "name": "Last Year",
+                "filter": "Created >= '{{moment().subtract(1,'y').format('yy/01/01')}}' and Created <= '{{moment().subtract(1,'y').format('yy/12/31')}}'"
+            }
         ],
         "sortOn": "Created"
     }

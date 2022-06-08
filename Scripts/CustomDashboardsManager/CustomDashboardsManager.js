@@ -9,10 +9,10 @@
     const expressionRegex = /{{([\s\S]*?)}}/g;
 
     config.forEach((c)=>{
-        c.filters.forEach((filter, i)=>{
+        c.filters.forEach(({filter}, i)=>{
             let expressions = [...filter.matchAll(expressionRegex)]; //returns all the expressions in THIS filter
-            let compiled = expressions.map((expression)=>eval(expression[0]));
-            expressions.forEach((expression,j)=>c.filters[i].replace(expression[0], compiled[j])); //need to test
+            let compiled = expressions.map((expression)=>eval(expression[1]));
+            expressions.forEach((expression,j)=>c.filters[i].filter = c.filters[i].filter.replace(expression[0], compiled[j])); //need to test
         })
     })
 
