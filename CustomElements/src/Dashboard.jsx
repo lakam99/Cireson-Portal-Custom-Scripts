@@ -1,10 +1,12 @@
 var {useEffect, useState, useRef} = React;
 function Dashboard(props) {
     var {filters, dashboard_id, queryId, sortOn, name} = props;
-    var [selectedFilterIndex, setFilterIndex] = useState(0);
+    var filterIndex = useRef(0);
+    var [selectedFilter, setSelectedFilter] = useState(filters[filterIndex.current]);
+    var [dateRangeRender, setDateRange] = useState(false);
     var data = useRef([]);
 
-    var getData = async () => await $.getJSON(window.location.origin + "/Dashboard/GetDashboardDataById", {queryId, filter:filters[selectedFilterIndex].filter});
+    var getData = async () => await $.getJSON(window.location.origin + "/Dashboard/GetDashboardDataById", {queryId, filter:selectedFilter});
     var getCountData = () => {
         var r = {};
         data.current.forEach((item) =>  {
@@ -26,13 +28,27 @@ function Dashboard(props) {
     var render = () => {
         let dashboard_elem = $(`#${dashboard_id}`);
         if (dashboard_elem.data('chart')) {
-            dashboard_elem.data('chart').data = getConfig(data.current).data;
+            dashboard_elem.data('chart').data = getConfig().data;
             dashboard_elem.data('chart').update();
         }
         else dashboard_elem.data({chart: new Chart(dashboard_elem[0], getConfig(data.current))});
     }
 
-    var setFilterIndexCB = (e) => { ticketManipulator.show_loading(); setFilterIndex(e.target.value);};
+    var setFilter = (e) => {
+        let index = e.target.value;
+        let filter = filters[index].filter;
+        if (!filter) setDateRange(true); //render daterangepicker
+        else {
+            ticketManipulator.show_loading();
+            filterIndex.current = e.target.value;
+            setSelectedFilter(filters[filterIndex.current].filter);
+        }
+    }
+
+    useEffect(()=>{
+        setSelectedFilter(filters[filterIndex.current].filter);
+        $('.cust-dashboard-filter').on('change', setFilter);
+    },[]);
 
     useEffect(()=>{
         getData().then((results)=>{
@@ -40,17 +56,23 @@ function Dashboard(props) {
             ticketManipulator.remove_loading();
             render();
         })
-    }, [selectedFilterIndex]);
+    }, [selectedFilter]);
 
-    useEffect(()=>{
-        $('.cust-dashboard-filter').on('change', setFilterIndexCB);
-    },[]);
+    var useCustomFilter = (filter) => setFilter(filter);
 
     return (
         <div className="cust-dashboard">
-            <select className="cust-dashboard-filter">
-                {filters.map((filter, i)=><option value={i} key={'filter-'+i}>{filter.name}</option>)}
-            </select>
+            <div className="cust-dashboard-tools">
+                <div className="cust-dashboard-tool">
+                    { data.current ? 
+                    <select className="cust-dashboard-filter">
+                        {filters.map((filter, i)=><option value={i} key={'filter-'+i}>{filter.name}</option>)}
+                    </select> : undefined }
+                </div>
+                <div className="cust-dashboard-tool">
+                    { dateRangeRender ? <DateRangePickerComponent float="right" id={dashboard_id + "-date-range"} onApply={useCustomFilter}></DateRangePickerComponent> : undefined }
+                </div>
+            </div>
             <canvas id={dashboard_id}></canvas>
         </div>
     )

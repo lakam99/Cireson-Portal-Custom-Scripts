@@ -27,6 +27,10 @@
             {
                 "name": "Last Year",
                 "filter": "Created >= '{{moment().subtract(1,'y').format('yy/01/01')}}' and Created <= '{{moment().subtract(1,'y').format('yy/12/31')}}'"
+            },
+            {
+                "name": "Custom Range",
+                "filter": ""
             }
         ],
         "sortOn": "Created"

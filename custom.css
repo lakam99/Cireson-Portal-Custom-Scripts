@@ -364,7 +364,22 @@ td[role=gridcell] {
 }
 
 .cust-dashboard-filter {
-  width: 15%;
+  width: 100%;
+}
+
+.date-range-input {
+  width: 25%;
+}
+
+.cust-dashboard-tools {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.cust-dashboard-tool {
+  margin-right: 1%;
+  width: fit-content;
 }
 
   /* width */
