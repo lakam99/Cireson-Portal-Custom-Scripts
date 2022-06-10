@@ -1,6 +1,7 @@
 function DateRangePickerComponent(_ref) {
     var id = _ref.id,
-        onApply = _ref.onApply;
+        onApply = _ref.onApply,
+        hidden = _ref.hidden;
 
 
     var elem = function elem() {
@@ -24,7 +25,7 @@ function DateRangePickerComponent(_ref) {
 
     return React.createElement(
         'div',
-        { id: id },
+        { id: id, hidden: hidden },
         React.createElement('input', { type: 'text', name: 'start', className: 'date-range-input', autoComplete: 'off' }),
         React.createElement(
             'span',

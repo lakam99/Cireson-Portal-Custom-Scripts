@@ -1,4 +1,4 @@
-function DateRangePickerComponent({id, onApply}) {
+function DateRangePickerComponent({id, onApply, hidden}) {
 
     var elem = () => $(`#${id}`);
 
@@ -17,7 +17,7 @@ function DateRangePickerComponent({id, onApply}) {
     }
 
     return (
-        <div id={id}>
+        <div id={id} hidden={hidden}>
             <input type="text" name="start" className="date-range-input" autoComplete="off"></input>
             <span>&nbsp;to&nbsp;</span>
             <input type="text" name="end" className="date-range-input" autoComplete="off"></input>

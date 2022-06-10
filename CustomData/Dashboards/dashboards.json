@@ -34,5 +34,42 @@
             }
         ],
         "sortOn": "Created"
+    },
+    {
+        "name": "All tickets by type",
+        "dashboard_id": "all-tickets-by-type",
+        "queryId": "e62cb83d-a4fc-558e-4017-22f24d9250a3",
+        "chartType": "bar",
+        "filters": [ 
+            {
+                "name": "This Week",
+                "filter": "Created >= '{{moment().subtract(7,'d').format('yy/MM/DD')}}' and Created <= '{{moment().add(1,'d').format('yy/MM/DD')}}'"
+            },
+            {
+                "name": "This Month",
+                "filter": "Created >= '{{moment().format('yy/MM/01')}}' and Created <= '{{moment().add(1,'d').format('yy/MM/DD')}}'"
+            },
+            {
+                "name": "This Quarter",
+                "filter": "Created >= '{{moment().startOf('quarter').format('yy/MM/DD')}}' and Created <= '{{moment().endOf('quarter').format('yy/MM/DD')}}'"
+            },
+            {
+                "name": "Last Quarter",
+                "filter": "Created >= '{{moment().subtract(1, 'quarter').startOf('quarter').format('yy/MM/DD')}}' and Created <= '{{moment().subtract(1, 'quarter').endOf('quarter').format('yy/MM/DD')}}'"
+            },
+            {
+                "name": "This Year",
+                "filter": "Created >= '{{moment().format('yy/01/01')}}' and Created <= '{{moment().add(1,'d').format('yy/MM/DD')}}'"
+            },
+            {
+                "name": "Last Year",
+                "filter": "Created >= '{{moment().subtract(1,'y').format('yy/01/01')}}' and Created <= '{{moment().subtract(1,'y').format('yy/12/31')}}'"
+            },
+            {
+                "name": "Custom Range",
+                "filter": ""
+            }
+        ],
+        "sortOn": "ClassName"
     }
 ]
