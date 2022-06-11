@@ -17,7 +17,7 @@ function DashboardsView(_ref) {
                     { id: "dashboard-mgr-main-title" },
                     React.createElement(
                         "h1",
-                        { "class": "jumbotron" },
+                        { className: "jumbotron" },
                         "Dashboards"
                     )
                 ),
@@ -28,7 +28,7 @@ function DashboardsView(_ref) {
                         Object.assign(dashboard, { aspectRatio: aspectRatio });
                         return React.createElement(
                             "div",
-                            { className: "lil-chart", onClick: function onClick() {
+                            { className: "lil-chart", key: dashboard.dashboard_id + '-lil', onClick: function onClick() {
                                     expandChart(dashboard);
                                 } },
                             React.createElement(ChartComponent, dashboard)

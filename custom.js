@@ -151,8 +151,8 @@ var customGlobalLoader = {
             if (customGlobalLoader.react_state === undefined) {
                 customGlobalLoader.react_state = new Promise((resolve)=>{
                     requirejs.config({paths:{
-                        react: 'https://unpkg.com/react@18/umd/react.production.min',
-                        reactdom: 'https://unpkg.com/react-dom@18/umd/react-dom.production.min'
+                        react: 'https://unpkg.com/react@18/umd/react.development',
+                        reactdom: 'https://unpkg.com/react-dom@18/umd/react-dom.development'
                     }});
                     requirejs(['react','reactdom'], (React,ReactDOM)=>{
                         window.React = React;

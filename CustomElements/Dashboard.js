@@ -25,19 +25,18 @@ var Dashboard = function (_React$Component) {
         Object.assign(_this, { filters: filters, dashboard_id: dashboard_id, queryId: queryId, sortOn: sortOn, name: name, data: [] });
         Object.assign(_this, { backToMgr: props.resetView });
         _this.state = { filter: { index: 0, filter: _this.filters[0].filter }, useDateRange: false };
-        _this.setState(_this.state);
         return _this;
     }
 
     _createClass(Dashboard, [{
-        key: 'getStateCopy',
+        key: "getStateCopy",
         value: function getStateCopy() {
             var current = {};
             Object.assign(current, this.state);
             return current;
         }
     }, {
-        key: 'updateFilterByIndex',
+        key: "updateFilterByIndex",
         value: function updateFilterByIndex(index) {
             var current = this.getStateCopy();
             current.filter.index = index;
@@ -45,26 +44,21 @@ var Dashboard = function (_React$Component) {
             this.setState(current);
         }
     }, {
-        key: '_updateFilter',
+        key: "_updateFilter",
         value: function _updateFilter(filter) {
             var current = this.getStateCopy();
             current.filter.filter = filter;
             this.setState(current);
         }
     }, {
-        key: 'useDateRange',
-        value: function useDateRange() {
-            return this.state.useDateRange;
-        }
-    }, {
-        key: 'setDateRange',
+        key: "setDateRange",
         value: function setDateRange(value) {
             var current = this.getStateCopy();
             current.useDateRange = value;
             this.setState(current);
         }
     }, {
-        key: 'setFilter',
+        key: "setFilter",
         value: function setFilter(e) {
             var index = e.target.value;
             var filter = this.filters[index].filter;
@@ -74,48 +68,47 @@ var Dashboard = function (_React$Component) {
             }
         }
     }, {
-        key: 'useCustomFilter',
+        key: "useCustomFilter",
         value: function useCustomFilter(filter) {
             this._updateFilter(filter);
         }
     }, {
-        key: 'componentDidMount',
+        key: "componentDidMount",
         value: function componentDidMount() {
             this._updateFilter(this.state.filter.index);
-            $('.cust-dashboard-filter').on('change', this.setFilter.bind(this));
         }
     }, {
-        key: 'render',
+        key: "render",
         value: function render() {
             return React.createElement(
-                'div',
-                { className: 'cust-dashboard' },
+                "div",
+                { className: "cust-dashboard" },
                 React.createElement(
-                    'div',
-                    { className: 'cust-dashboard-header' },
+                    "div",
+                    { className: "cust-dashboard-header" },
                     React.createElement(
-                        'a',
-                        { href: '#', className: 'cust-dashboard-back-btn', onClick: this.backToMgr },
-                        '\u2039'
+                        "a",
+                        { href: "#", className: "cust-dashboard-back-btn", onClick: this.backToMgr },
+                        "\u2039"
                     ),
                     React.createElement(
-                        'h1',
-                        { className: 'cust-dashboard-title' },
+                        "h1",
+                        { className: "cust-dashboard-title" },
                         this.name
                     )
                 ),
                 React.createElement(
-                    'div',
-                    { className: 'cust-dashboard-tools' },
+                    "div",
+                    { className: "cust-dashboard-tools" },
                     React.createElement(
-                        'div',
-                        { className: 'cust-dashboard-tool' },
+                        "div",
+                        { className: "cust-dashboard-tool" },
                         this.data ? React.createElement(
-                            'select',
-                            { className: 'cust-dashboard-filter' },
+                            "select",
+                            { className: "cust-dashboard-filter", onChange: this.setFilter.bind(this) },
                             this.filters.map(function (filter, i) {
                                 return React.createElement(
-                                    'option',
+                                    "option",
                                     { value: i, key: 'filter-' + i },
                                     filter.name
                                 );
@@ -123,9 +116,9 @@ var Dashboard = function (_React$Component) {
                         ) : undefined
                     ),
                     React.createElement(
-                        'div',
-                        { className: 'cust-dashboard-tool' },
-                        React.createElement(DateRangePickerComponent, { id: this.dashboard_id + "-date-range", onApply: this.useCustomFilter.bind(this), hidden: !this.useDateRange() })
+                        "div",
+                        { className: "cust-dashboard-tool" },
+                        React.createElement(DateRangePickerComponent, { id: this.dashboard_id + "-date-range", onApply: this.useCustomFilter.bind(this), hidden: !this.state.useDateRange })
                     )
                 ),
                 React.createElement(ChartComponent, { name: this.name, dashboard_id: this.dashboard_id, queryId: this.queryId, filter: this.state.filter.filter, sortOn: this.sortOn, chartType: this.props.dashboard.chartType })

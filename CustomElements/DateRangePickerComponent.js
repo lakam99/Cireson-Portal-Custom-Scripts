@@ -9,7 +9,7 @@ function DateRangePickerComponent(_ref) {
     };
 
     useEffect(function () {
-        return elem().data('daterange', new DateRangePicker(elem()[0]));
+        elem().data('daterange', new DateRangePicker(elem()[0]));
     }, []);
 
     var applyFilter = function applyFilter() {

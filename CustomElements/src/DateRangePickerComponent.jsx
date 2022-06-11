@@ -2,7 +2,7 @@ function DateRangePickerComponent({id, onApply, hidden}) {
 
     var elem = () => $(`#${id}`);
 
-    useEffect(()=>elem().data('daterange', new DateRangePicker(elem()[0])),[]);
+    useEffect(()=>{elem().data('daterange', new DateRangePicker(elem()[0]))},[]);
 
     var applyFilter = () => {
         let start = $(`#${id} > input[name="start"]`).val();

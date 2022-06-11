@@ -5,7 +5,6 @@ class Dashboard extends React.Component {
         Object.assign(this, {filters, dashboard_id, queryId, sortOn, name, data:[]});
         Object.assign(this, {backToMgr: props.resetView})
         this.state = {filter: {index: 0, filter: this.filters[0].filter}, useDateRange: false};
-        this.setState(this.state);
     }
 
     getStateCopy() {
@@ -25,10 +24,6 @@ class Dashboard extends React.Component {
         let current = this.getStateCopy();
         current.filter.filter = filter;
         this.setState(current);
-    }
-
-    useDateRange() {
-        return this.state.useDateRange;
     }
 
     setDateRange(value) {
@@ -54,7 +49,6 @@ class Dashboard extends React.Component {
 
     componentDidMount() {
         this._updateFilter(this.state.filter.index);
-        $('.cust-dashboard-filter').on('change', this.setFilter.bind(this));
     }
 
     render() {
@@ -66,12 +60,12 @@ class Dashboard extends React.Component {
                 <div className="cust-dashboard-tools">
                     <div className="cust-dashboard-tool">
                         { this.data ? 
-                        <select className="cust-dashboard-filter">
+                        <select className="cust-dashboard-filter" onChange={this.setFilter.bind(this)}>
                             {this.filters.map((filter, i)=><option value={i} key={'filter-'+i}>{filter.name}</option>)}
                         </select> : undefined }
                     </div>
                     <div className="cust-dashboard-tool">
-                        <DateRangePickerComponent id={this.dashboard_id + "-date-range"} onApply={this.useCustomFilter.bind(this)} hidden={!this.useDateRange()}></DateRangePickerComponent>
+                        <DateRangePickerComponent id={this.dashboard_id + "-date-range"} onApply={this.useCustomFilter.bind(this)} hidden={!this.state.useDateRange}></DateRangePickerComponent>
                     </div>
                 </div>
                 <ChartComponent name={this.name} dashboard_id={this.dashboard_id} queryId={this.queryId} filter={this.state.filter.filter} sortOn={this.sortOn} chartType={this.props.dashboard.chartType}></ChartComponent>
