@@ -22,6 +22,10 @@ var customGlobalLoader = {
         return r;
     },
 
+    set_settings: function(settings) {
+        localStorage.setItem('settings', JSON.stringify(settings));
+    },
+
     get_current_version: function() {
         if ((s = customGlobalLoader.get_settings()) && s["scriptPatcher-data"]) {
             return s["scriptPatcher-data"].data.version;

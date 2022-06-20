@@ -18,10 +18,8 @@ var SocketLoader = {
 
     start: () => {
         SocketLoader.setup().then(()=>{
-            let provider_paths = SocketLoader.providers.map(provider=>({url:provider.classPath}));
-            Promise.all(customGlobalLoader.main.load_files({array:provider_paths})).then(()=>{
-                //do something
-            })
+            let provider_paths = SocketLoader.providers.map(provider=>eval(provider.condition || true) ? ({url:provider.classPath}) : 0).filter(i=>i);
+            Promise.all(customGlobalLoader.main.load_files({array:provider_paths}));
         })
     }
 }

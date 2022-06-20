@@ -35,6 +35,7 @@ function ChartComponent(_ref) {
                 }), backgroundColor: values.map(function () {
                     return randColor();
                 }) }] };
+        //let plugins = chartType == "line" ? {} : {plugins: {legend: {labels: {}}}}
         var config = { type: chartType || 'line', data: cdata, options: { aspectRatio: aspectRatio || 2.3 } };
         return config;
     };

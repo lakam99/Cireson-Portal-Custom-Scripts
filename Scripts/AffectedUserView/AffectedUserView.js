@@ -52,8 +52,10 @@
     var ticket_loaded = setInterval(()=>{
         if (get_tabs().length) {
             clearInterval(ticket_loaded);
-            build();
-            accentSuggest.getters.get_page_userpicker_objs()[0].bind('dataBound',build.bind(this));
+            if (session.user.Analyst) {
+                build();
+                accentSuggest.getters.get_page_userpicker_objs()[0].bind('dataBound',build.bind(this));
+            }
         }
     }, recheckRate);
     

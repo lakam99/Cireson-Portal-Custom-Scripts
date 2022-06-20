@@ -1,4 +1,5 @@
 [{
     "name": "Old Open Tickets",
-    "classPath": "/CustomSpace/Sockets/Providers/Old Open Tickets/OldOpenTickets.WebsocketProviderClient.js"
+    "classPath": "/CustomSpace/Sockets/Providers/Old Open Tickets/OldOpenTickets.WebsocketProviderClient.js",
+    "condition": "formTasks.user_has_permission(formTasks.permissions.sc)"
 }]

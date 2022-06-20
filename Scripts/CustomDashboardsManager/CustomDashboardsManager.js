@@ -18,6 +18,15 @@
         return [compiled, expressions];
     }
 
+    //get queryId
+    let queryId_retrieval = config.map(async (c)=>{
+        let query = await $.getJSON(window.location.origin + '/DashboardQuery/GetDashboardQueryByName', {name: c.queryName});
+        if (!query.length) throw "Failed to retrieve qeury " + c.queryName;
+        if (query.length > 1) throw `Query name ${c.queryName} returned ${query.length} results instead of 1.`;
+        c.queryId = query[0].Id;
+    })
+
+    //compile filters
     config.forEach((c)=>{
         c.filters.forEach(({filter}, i)=>{
             let [compiled, expressions] = compileFilter(filter);
@@ -29,6 +38,7 @@
     var root = $('#root')[0];
     var reactRoot = ReactDOM.createRoot(root);
     await Promise.all(assets);
+    await Promise.all(queryId_retrieval);
     reactRoot.render(React.createElement(DashboardsManager, {dashboards:config}))
 
 })()

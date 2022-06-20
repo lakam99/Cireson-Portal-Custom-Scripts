@@ -21,6 +21,7 @@ function ChartComponent({dashboard_id, queryId, filter, filters, sortOn, name, a
         let labels = Object.keys(countData);
         let values = Object.values(countData);
         let cdata = {labels, datasets: [{label: name, data:values, borderColor: values.map(()=>randColor()), backgroundColor: values.map(()=>randColor())}]};
+        //let plugins = chartType == "line" ? {} : {plugins: {legend: {labels: {}}}}
         let config = {type: chartType || 'line', data:cdata, options: {aspectRatio: aspectRatio || 2.3}};
         return config;
     }

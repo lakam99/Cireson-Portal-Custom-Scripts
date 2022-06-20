@@ -64,17 +64,17 @@ var OldTickets = function (_React$Component) {
 
             return React.createElement(
                 "div",
-                { "class": "old-ticket-app" },
+                { className: "old-ticket-app" },
                 React.createElement(
                     "h4",
-                    { "class": "old-ticket-counter" },
+                    { className: "old-ticket-counter" },
                     this.state.tickets.length,
                     "\xA0/\xA0",
                     this.original_count
                 ),
                 React.createElement(
                     "div",
-                    { "class": "old-ticket-list" },
+                    { className: "old-ticket-list" },
                     this.state.tickets.length > 0 ? this.state.tickets.map(function (ticket) {
                         return React.createElement(OldTicket, { key: ticket.Id, ticket: ticket, _close: _this3.close_ticket.bind(_this3) });
                     }) : React.createElement("img", { alt: "groovy", "class": "groovy", src: customGlobalLoader.get_str_url('/CustomSpace/CustomElements/groovy.png') })

@@ -1,6 +1,6 @@
 function textBoxPopup (title, min_chars, warn_msg) {
     Object.assign(this, {title, min_chars, warn_msg});
-    this.id = {container: formCreateCI.helperFunctions.create_UUID(), textarea: formCreateCI.helperFunctions.create_UUID()};
+    this.id = {container: create_UUID(), textarea: create_UUID()};
     this.comment_added = undefined;
 
     this.comment_model = () => {

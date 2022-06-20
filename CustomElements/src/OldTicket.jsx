@@ -34,9 +34,9 @@ class OldTicket extends React.Component {
 
     render() {
         return (
-            <div class='list-item'>
-                <a title={this.ticket.CreatedDate} class="old-ticket-title" onClick={this.open_ticket.bind(this)}>{this.ticket.Id}:{this.ticket.Title}</a>
-                <a class="close-ticket" onClick={this.close_ticket.bind(this)}>Close</a>
+            <div className='list-item'>
+                <a title={this.ticket.CreatedDate} className="old-ticket-title" onClick={this.open_ticket.bind(this)}>{this.ticket.Id}:{this.ticket.Title}</a>
+                <a className="close-ticket" onClick={this.close_ticket.bind(this)}>Close</a>
             </div>
         );
     }

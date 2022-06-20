@@ -1,6 +1,7 @@
 [
     {
         "name": "All tickets by date",
+        "queryName": "Z All WorkItems by Created",
         "dashboard_id": "all-tickets-by-date",
         "queryId": "d6ebc9a8-89ce-706e-a461-8deb8bf33f60",
         "filters": [ 
@@ -37,8 +38,8 @@
     },
     {
         "name": "All tickets by type",
+        "queryName": "Z All WorkItems by ClassName",
         "dashboard_id": "all-tickets-by-type",
-        "queryId": "e62cb83d-a4fc-558e-4017-22f24d9250a3",
         "chartType": "bar",
         "filters": [ 
             {
@@ -71,5 +72,79 @@
             }
         ],
         "sortOn": "ClassName"
+    },
+    {
+        "name": "All tickets by source",
+        "queryName": "Z All WorkItems by Source",
+        "dashboard_id": "all-tickets-by-source",
+        "chartType": "bar",
+        "filters": [ 
+            {
+                "name": "This Week",
+                "filter": "Created >= '{{moment().subtract(7,'d').format('yy/MM/DD')}}' and Created <= '{{moment().add(1,'d').format('yy/MM/DD')}}'"
+            },
+            {
+                "name": "This Month",
+                "filter": "Created >= '{{moment().format('yy/MM/01')}}' and Created <= '{{moment().add(1,'d').format('yy/MM/DD')}}'"
+            },
+            {
+                "name": "This Quarter",
+                "filter": "Created >= '{{moment().startOf('quarter').format('yy/MM/DD')}}' and Created <= '{{moment().endOf('quarter').format('yy/MM/DD')}}'"
+            },
+            {
+                "name": "Last Quarter",
+                "filter": "Created >= '{{moment().subtract(1, 'quarter').startOf('quarter').format('yy/MM/DD')}}' and Created <= '{{moment().subtract(1, 'quarter').endOf('quarter').format('yy/MM/DD')}}'"
+            },
+            {
+                "name": "This Year",
+                "filter": "Created >= '{{moment().format('yy/01/01')}}' and Created <= '{{moment().add(1,'d').format('yy/MM/DD')}}'"
+            },
+            {
+                "name": "Last Year",
+                "filter": "Created >= '{{moment().subtract(1,'y').format('yy/01/01')}}' and Created <= '{{moment().subtract(1,'y').format('yy/12/31')}}'"
+            },
+            {
+                "name": "Custom Range",
+                "filter": ""
+            }
+        ],
+        "sortOn": "Source"
+    },
+    {
+        "name": "All Tickets by Support Group",
+        "queryName": "Z All WorkItems by SupportGroup",
+        "dashboard_id": "all-tickets-by-suptgroup",
+        "chartType": "bar",
+        "filters": [ 
+            {
+                "name": "This Week",
+                "filter": "Created >= '{{moment().subtract(7,'d').format('yy/MM/DD')}}' and Created <= '{{moment().add(1,'d').format('yy/MM/DD')}}'"
+            },
+            {
+                "name": "This Month",
+                "filter": "Created >= '{{moment().format('yy/MM/01')}}' and Created <= '{{moment().add(1,'d').format('yy/MM/DD')}}'"
+            },
+            {
+                "name": "This Quarter",
+                "filter": "Created >= '{{moment().startOf('quarter').format('yy/MM/DD')}}' and Created <= '{{moment().endOf('quarter').format('yy/MM/DD')}}'"
+            },
+            {
+                "name": "Last Quarter",
+                "filter": "Created >= '{{moment().subtract(1, 'quarter').startOf('quarter').format('yy/MM/DD')}}' and Created <= '{{moment().subtract(1, 'quarter').endOf('quarter').format('yy/MM/DD')}}'"
+            },
+            {
+                "name": "This Year",
+                "filter": "Created >= '{{moment().format('yy/01/01')}}' and Created <= '{{moment().add(1,'d').format('yy/MM/DD')}}'"
+            },
+            {
+                "name": "Last Year",
+                "filter": "Created >= '{{moment().subtract(1,'y').format('yy/01/01')}}' and Created <= '{{moment().subtract(1,'y').format('yy/12/31')}}'"
+            },
+            {
+                "name": "Custom Range",
+                "filter": ""
+            }
+        ],
+        "sortOn": "SupportGroup"
     }
 ]

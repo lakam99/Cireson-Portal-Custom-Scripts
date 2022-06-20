@@ -56,17 +56,17 @@ var OldTicket = function (_React$Component) {
         value: function render() {
             return React.createElement(
                 'div',
-                { 'class': 'list-item' },
+                { className: 'list-item' },
                 React.createElement(
                     'a',
-                    { title: this.ticket.CreatedDate, 'class': 'old-ticket-title', onClick: this.open_ticket.bind(this) },
+                    { title: this.ticket.CreatedDate, className: 'old-ticket-title', onClick: this.open_ticket.bind(this) },
                     this.ticket.Id,
                     ':',
                     this.ticket.Title
                 ),
                 React.createElement(
                     'a',
-                    { 'class': 'close-ticket', onClick: this.close_ticket.bind(this) },
+                    { className: 'close-ticket', onClick: this.close_ticket.bind(this) },
                     'Close'
                 )
             );

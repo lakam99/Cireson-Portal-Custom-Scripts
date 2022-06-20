@@ -96,7 +96,11 @@
 
             {"name": "AffectedUserView",
             "url": "/CustomSpace/Scripts/AffectedUserView/AffectedUserView.js",
-            "condition": "window.location.pathname.includes('/ServiceRequest/Edit/') || window.location.pathname.includes('/Incident/Edit/') || window.location.pathname.includes('/New/')"}
+            "condition": "session.user.Analyst && window.location.pathname.includes('/ServiceRequest/Edit/') || window.location.pathname.includes('/Incident/Edit/') || window.location.pathname.includes('/New/')"},
+
+            {"name": "emailer",
+            "url": "/CustomSpace/Scripts/emailer/emailer.js",
+            "condition": "session.user.Analyst"}
         ]
     },
 
