@@ -180,6 +180,18 @@ html, body {
     color: #dcdcdc !important;
   }
 
+  nav#side_nav > ul {
+    background-color: #292929 !important;
+  }
+
+  ul#myTab > li > a {
+    color: white !important;
+  }
+
+  input {
+    color: white !important;
+  }
+
   /* width */
 ::-webkit-scrollbar {
   width: 10px;
