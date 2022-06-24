@@ -37,17 +37,31 @@
     };
 
     var get_tabs = () => {return $('#myTab')}
-    var get_container = () => {return $('#af-view')}
-    
-    var build = () => {
+    var get_grid = () => {return $('#af-view')}
+
+    var _build = () => {
         var id = get_affected_user_id();
         dataSource.transport.read.data.userId = id;
         if (id != '') {
             $('#af-view').remove();
-            get_tabs().append(`<li>${html}</li>`);
-            get_container().kendoGrid({columns, dataSource});
+            get_tabs().after(html);
+            get_grid().kendoGrid({columns, dataSource});
         }
     }
+
+    var UI_build_factory = () => {
+        var ui_ready = false;
+        return () => {
+            if (!ui_ready) {
+                $('.form-panel').prepend('<div id="cust-tab-container" class="flex-row"></div>');
+                get_tabs().detach().appendTo('#cust-tab-container');
+                ui_ready = true;
+            }
+            _build();
+        }
+    }
+
+    var build = UI_build_factory();
 
     var ticket_loaded = setInterval(()=>{
         if (get_tabs().length) {

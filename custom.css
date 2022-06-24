@@ -297,12 +297,15 @@ img[alt='loading'] {
   height: 3vh;
 }
 
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
 #af-view {
-  position: absolute;
-    width: 46vw;
-    height: 11vh;
+    width: 57%;
     border: 1px solid black;
-    top: -4vh;
+    margin: unset;
 }
 
 #af-view > div > table > tbody > tr > td[role="gridcell"] {

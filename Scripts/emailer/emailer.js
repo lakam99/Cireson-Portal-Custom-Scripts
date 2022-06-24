@@ -27,18 +27,26 @@
     }
 
     var get_verification_token = async (ticket_id) => {
-        let ticket_html = await get_ticket_page_html(ticket_id);
-        ticket_html = $(ticket_html);
-        return ticket_html.find('input[name="__RequestVerificationToken"]')[1].val();
+        let id = await ticket_id; //could be promise
+        let ticket_html = await get_ticket_page_html(id);
+        ticket_html = $($.parseHTML(ticket_html));
+        return $(ticket_html.find('input[name="__RequestVerificationToken"]')[1]).val();
+    }
+
+    var get_settings = () => {
+        return customGlobalLoader.get_settings();
     }
 
     const setting_name = "emailer-ticket";
-    var settings = customGlobalLoader.get_settings();
-    var my_setting = settings[setting_name];
+    let my_setting = get_settings()[setting_name];
     var ticket_id = '';
     if (!my_setting) {
-        //get new ticket id
-        //ticket_id = ...
+        ticket_id = get_any_ticket_id();
+        ticket_id.then((id)=>{
+            let settings = get_settings();
+            settings[setting_name] = id;
+            customGlobalLoader.set_settings(settings);
+        })
     }
 
     var verification_token = get_verification_token(ticket_id); //is a promise
