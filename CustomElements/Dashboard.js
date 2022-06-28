@@ -73,11 +73,6 @@ var Dashboard = function (_React$Component) {
             this._updateFilter(filter);
         }
     }, {
-        key: "componentDidMount",
-        value: function componentDidMount() {
-            this._updateFilter(this.state.filter.index);
-        }
-    }, {
         key: "render",
         value: function render() {
             return React.createElement(

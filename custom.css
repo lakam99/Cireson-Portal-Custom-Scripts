@@ -304,8 +304,15 @@ img[alt='loading'] {
 
 #af-view {
     width: 57%;
+    height: 11vh;
     border: 1px solid black;
     margin: unset;
+}
+
+@media (max-width: 768px) {
+  #af-view {
+    display: none;
+  }
 }
 
 #af-view > div > table > tbody > tr > td[role="gridcell"] {

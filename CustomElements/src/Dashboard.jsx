@@ -47,10 +47,6 @@ class Dashboard extends React.Component {
         this._updateFilter(filter);
     }
 
-    componentDidMount() {
-        this._updateFilter(this.state.filter.index);
-    }
-
     render() {
         return (
             <div className="cust-dashboard">
