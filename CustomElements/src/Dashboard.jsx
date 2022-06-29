@@ -1,10 +1,10 @@
 class Dashboard extends React.Component {
     constructor(props) {
         super();
-        var {filters, dashboard_id, queryId, sortOn, name, chartType} = props.dashboard;
-        Object.assign(this, {filters, dashboard_id, queryId, sortOn, name, data:[]});
-        Object.assign(this, {backToMgr: props.resetView})
-        this.state = {filter: {index: 0, filter: this.filters[0].filter}, useDateRange: false};
+        var {filters, dashboard_id, queryId, sortOn, name, chartType, useDatePicker, filterName} = props.dashboard;
+        Object.assign(this, {filters, dashboard_id, queryId, sortOn, name, data:[], useDatePicker, filterName, backToMgr: props.resetView, chartType});
+        this.state = {filter: {index: 0, filter: this.filters[0].filter}, useDateRange: false, useDatePicker: false};
+        this.applyFilter = this.useCustomFilter.bind(this);
     }
 
     getStateCopy() {
@@ -26,6 +26,12 @@ class Dashboard extends React.Component {
         this.setState(current);
     }
 
+    setDatePicker(value) {
+        let current = this.getStateCopy();
+        current.useDatePicker = value;
+        this.setState(current);
+    }
+
     setDateRange(value) {
         let current = this.getStateCopy();
         current.useDateRange = value;
@@ -35,16 +41,24 @@ class Dashboard extends React.Component {
     setFilter(e) {
         let index = e.target.value;
         let filter = this.filters[index].filter;
-        if (!filter)
-            this.setDateRange(true);
-        else {
-            let newState = {filter: {index, filter}, useDateRange:false};
+        if (!filter) {
+            if (this.useDatePicker) this.setDatePicker(true);
+            else this.setDateRange(true);
+        } else {
+            let newState = {filter: {index, filter}, useDateRange:false, useDatePicker: false};
             this.setState(newState);
         }
     }
 
     useCustomFilter(filter) {
         this._updateFilter(filter);
+    }
+
+    render_datepicker() {
+        if (this.state.useDateRange)
+            return <DateRangePickerComponent id={this.dashboard_id + "-date-range"} onApply={this.applyFilter} hidden={!this.state.useDateRange}></DateRangePickerComponent>
+        else if (this.state.useDatePicker)
+            return <DatePickerComponent onApply={this.applyFilter} hidden={!this.state.useDatePicker}></DatePickerComponent>
     }
 
     render() {
@@ -56,15 +70,19 @@ class Dashboard extends React.Component {
                 <div className="cust-dashboard-tools">
                     <div className="cust-dashboard-tool">
                         { this.data ? 
-                        <select className="cust-dashboard-filter" onChange={this.setFilter.bind(this)}>
+                        <div className="cust-dashboard-filter-select">
+                            <span>{this.filterName}&nbsp;</span>
+                            <select className="cust-dashboard-filter" onChange={this.setFilter.bind(this)}>
                             {this.filters.map((filter, i)=><option value={i} key={'filter-'+i}>{filter.name}</option>)}
-                        </select> : undefined }
+                        </select>
+                        </div>
+                        : undefined }
                     </div>
                     <div className="cust-dashboard-tool">
-                        <DateRangePickerComponent id={this.dashboard_id + "-date-range"} onApply={this.useCustomFilter.bind(this)} hidden={!this.state.useDateRange}></DateRangePickerComponent>
+                        {this.render_datepicker()}
                     </div>
                 </div>
-                <ChartComponent name={this.name} dashboard_id={this.dashboard_id} queryId={this.queryId} filter={this.state.filter.filter} sortOn={this.sortOn} chartType={this.props.dashboard.chartType}></ChartComponent>
+                <ChartComponent name={this.name} dashboard_id={this.dashboard_id} queryId={this.queryId} filter={this.state.filter.filter} sortOn={this.sortOn} chartType={this.chartType}></ChartComponent>
             </div>
         )
     }

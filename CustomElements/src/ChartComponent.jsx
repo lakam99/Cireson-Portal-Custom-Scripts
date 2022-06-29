@@ -1,10 +1,10 @@
 const {useEffect} = React;
 function ChartComponent({dashboard_id, queryId, filter, filters, sortOn, name, aspectRatio, chartType}) {
 
-    _filter = !filter ? (filters ? filters[0].filter : "") : filter;
+    filter = !filter ? (filters ? filters[0].filter : "") : filter;
 
     var getData = function getData() {
-        return $.getJSON(window.location.origin + "/Dashboard/GetDashboardDataById", {queryId, filter:_filter});
+        return $.getJSON(window.location.origin + "/Dashboard/GetDashboardDataById", {queryId, filter});
     }
 
     var getCountData = function getCountData(data) {

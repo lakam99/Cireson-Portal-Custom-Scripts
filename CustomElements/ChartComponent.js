@@ -12,10 +12,10 @@ function ChartComponent(_ref) {
         chartType = _ref.chartType;
 
 
-    _filter = !filter ? filters ? filters[0].filter : "" : filter;
+    filter = !filter ? filters ? filters[0].filter : "" : filter;
 
     var getData = function getData() {
-        return $.getJSON(window.location.origin + "/Dashboard/GetDashboardDataById", { queryId: queryId, filter: _filter });
+        return $.getJSON(window.location.origin + "/Dashboard/GetDashboardDataById", { queryId: queryId, filter: filter });
     };
 
     var getCountData = function getCountData(data) {

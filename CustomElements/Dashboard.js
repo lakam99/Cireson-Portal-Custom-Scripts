@@ -20,11 +20,13 @@ var Dashboard = function (_React$Component) {
             queryId = _props$dashboard.queryId,
             sortOn = _props$dashboard.sortOn,
             name = _props$dashboard.name,
-            chartType = _props$dashboard.chartType;
+            chartType = _props$dashboard.chartType,
+            useDatePicker = _props$dashboard.useDatePicker,
+            filterName = _props$dashboard.filterName;
 
-        Object.assign(_this, { filters: filters, dashboard_id: dashboard_id, queryId: queryId, sortOn: sortOn, name: name, data: [] });
-        Object.assign(_this, { backToMgr: props.resetView });
-        _this.state = { filter: { index: 0, filter: _this.filters[0].filter }, useDateRange: false };
+        Object.assign(_this, { filters: filters, dashboard_id: dashboard_id, queryId: queryId, sortOn: sortOn, name: name, data: [], useDatePicker: useDatePicker, filterName: filterName, backToMgr: props.resetView, chartType: chartType });
+        _this.state = { filter: { index: 0, filter: _this.filters[0].filter }, useDateRange: false, useDatePicker: false };
+        _this.applyFilter = _this.useCustomFilter.bind(_this);
         return _this;
     }
 
@@ -51,6 +53,13 @@ var Dashboard = function (_React$Component) {
             this.setState(current);
         }
     }, {
+        key: "setDatePicker",
+        value: function setDatePicker(value) {
+            var current = this.getStateCopy();
+            current.useDatePicker = value;
+            this.setState(current);
+        }
+    }, {
         key: "setDateRange",
         value: function setDateRange(value) {
             var current = this.getStateCopy();
@@ -62,8 +71,10 @@ var Dashboard = function (_React$Component) {
         value: function setFilter(e) {
             var index = e.target.value;
             var filter = this.filters[index].filter;
-            if (!filter) this.setDateRange(true);else {
-                var newState = { filter: { index: index, filter: filter }, useDateRange: false };
+            if (!filter) {
+                if (this.useDatePicker) this.setDatePicker(true);else this.setDateRange(true);
+            } else {
+                var newState = { filter: { index: index, filter: filter }, useDateRange: false, useDatePicker: false };
                 this.setState(newState);
             }
         }
@@ -71,6 +82,11 @@ var Dashboard = function (_React$Component) {
         key: "useCustomFilter",
         value: function useCustomFilter(filter) {
             this._updateFilter(filter);
+        }
+    }, {
+        key: "render_datepicker",
+        value: function render_datepicker() {
+            if (this.state.useDateRange) return React.createElement(DateRangePickerComponent, { id: this.dashboard_id + "-date-range", onApply: this.applyFilter, hidden: !this.state.useDateRange });else if (this.state.useDatePicker) return React.createElement(DatePickerComponent, { onApply: this.applyFilter, hidden: !this.state.useDatePicker });
         }
     }, {
         key: "render",
@@ -99,24 +115,34 @@ var Dashboard = function (_React$Component) {
                         "div",
                         { className: "cust-dashboard-tool" },
                         this.data ? React.createElement(
-                            "select",
-                            { className: "cust-dashboard-filter", onChange: this.setFilter.bind(this) },
-                            this.filters.map(function (filter, i) {
-                                return React.createElement(
-                                    "option",
-                                    { value: i, key: 'filter-' + i },
-                                    filter.name
-                                );
-                            })
+                            "div",
+                            { className: "cust-dashboard-filter-select" },
+                            React.createElement(
+                                "span",
+                                null,
+                                this.filterName,
+                                "\xA0"
+                            ),
+                            React.createElement(
+                                "select",
+                                { className: "cust-dashboard-filter", onChange: this.setFilter.bind(this) },
+                                this.filters.map(function (filter, i) {
+                                    return React.createElement(
+                                        "option",
+                                        { value: i, key: 'filter-' + i },
+                                        filter.name
+                                    );
+                                })
+                            )
                         ) : undefined
                     ),
                     React.createElement(
                         "div",
                         { className: "cust-dashboard-tool" },
-                        React.createElement(DateRangePickerComponent, { id: this.dashboard_id + "-date-range", onApply: this.useCustomFilter.bind(this), hidden: !this.state.useDateRange })
+                        this.render_datepicker()
                     )
                 ),
-                React.createElement(ChartComponent, { name: this.name, dashboard_id: this.dashboard_id, queryId: this.queryId, filter: this.state.filter.filter, sortOn: this.sortOn, chartType: this.props.dashboard.chartType })
+                React.createElement(ChartComponent, { name: this.name, dashboard_id: this.dashboard_id, queryId: this.queryId, filter: this.state.filter.filter, sortOn: this.sortOn, chartType: this.chartType })
             );
         }
     }]);

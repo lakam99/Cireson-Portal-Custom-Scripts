@@ -479,6 +479,10 @@ canvas {
   flex-wrap: wrap;
 }
 
+.datepicker-container {
+  display: inline-flex;
+}
+
   /* width */
   ::-webkit-scrollbar {
     width: 10px;

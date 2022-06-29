@@ -146,5 +146,32 @@
             }
         ],
         "sortOn": "SupportGroup"
+    },
+    {
+        "name": "Aging Tickets",
+        "queryName": "Z All Open WorkItems",
+        "dashboard_id": "aging-tickets-dashboard",
+        "chartType": "bar",
+        "sortOn": "SupportGroup",
+        "useDatePicker": true,
+        "filterName": "Older Than",
+        "filters": [
+            {
+                "name": "One Week",
+                "filter": "Created <= '{{moment().subtract(7,'d').format('yy/MM/DD')}}'"
+            },
+            {
+                "name": "One Month",
+                "filter": "Created <= '{{moment().format('yy/MM/01')}}'"
+            },
+            {
+                "name": "One Year",
+                "filter": "Created <= '{{moment().startOf('quarter').format('yy/MM/DD')}}'"
+            },
+            {
+                "name": "Custom Age",
+                "filter": ""
+            }
+        ]
     }
 ]

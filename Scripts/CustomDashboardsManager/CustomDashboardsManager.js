@@ -7,8 +7,9 @@
     var config = await $.getJSON(config_path);
     await customGlobalLoader.main.load_react();
     var assets = ["/CustomSpace/CustomElements/DashboardsManager.js","/CustomSpace/CustomElements/Dashboard.js",
-     "/CustomSpace/CustomElements/DateRangePickerComponent.js","/CustomSpace/CustomElements/ChartComponent.js",
-     "/CustomSpace/CustomElements/DashboardsView.js","/CustomSpace/Templates/Homepage/datepicker-full.min.js"];
+     "/CustomSpace/CustomElements/DateRangePickerComponent.js","/CustomSpace/CustomElements/DatePickerComponent.js",
+     "/CustomSpace/CustomElements/ChartComponent.js","/CustomSpace/CustomElements/DashboardsView.js",
+     "/CustomSpace/Templates/Homepage/datepicker-full.min.js"];
     assets = customGlobalLoader.main.load_files({array: assets.map((asset)=>new urlObj(asset))});
 
     window.compileFilter = (filter) => {
