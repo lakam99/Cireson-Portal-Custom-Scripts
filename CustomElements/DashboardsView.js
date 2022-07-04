@@ -31,7 +31,7 @@ function DashboardsView(_ref) {
                             { className: "lil-chart", key: dashboard.dashboard_id + '-lil', onClick: function onClick() {
                                     expandChart(dashboard);
                                 } },
-                            React.createElement(ChartComponent, dashboard)
+                            React.createElement(ChartComponent, Object.assign({}, dashboard, { displayLegend: false, displayTitle: true }))
                         );
                     })
                 )

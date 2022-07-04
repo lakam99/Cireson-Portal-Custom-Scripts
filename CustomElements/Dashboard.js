@@ -22,9 +22,12 @@ var Dashboard = function (_React$Component) {
             name = _props$dashboard.name,
             chartType = _props$dashboard.chartType,
             useDatePicker = _props$dashboard.useDatePicker,
-            filterName = _props$dashboard.filterName;
+            filterName = _props$dashboard.filterName,
+            multiDataset = _props$dashboard.multiDataset,
+            multiDatasetSortOn = _props$dashboard.multiDatasetSortOn,
+            usingDateAxis = _props$dashboard.usingDateAxis;
 
-        Object.assign(_this, { filters: filters, dashboard_id: dashboard_id, queryId: queryId, sortOn: sortOn, name: name, data: [], useDatePicker: useDatePicker, filterName: filterName, backToMgr: props.resetView, chartType: chartType });
+        Object.assign(_this, { filters: filters, dashboard_id: dashboard_id, queryId: queryId, sortOn: sortOn, name: name, data: [], useDatePicker: useDatePicker, filterName: filterName, backToMgr: props.resetView, chartType: chartType, multiDataset: multiDataset, multiDatasetSortOn: multiDatasetSortOn, usingDateAxis: usingDateAxis });
         _this.state = { filter: { index: 0, filter: _this.filters[0].filter }, useDateRange: false, useDatePicker: false };
         _this.applyFilter = _this.useCustomFilter.bind(_this);
         return _this;
@@ -142,7 +145,7 @@ var Dashboard = function (_React$Component) {
                         this.render_datepicker()
                     )
                 ),
-                React.createElement(ChartComponent, { name: this.name, dashboard_id: this.dashboard_id, queryId: this.queryId, filter: this.state.filter.filter, sortOn: this.sortOn, chartType: this.chartType })
+                React.createElement(ChartComponent, { name: this.name, dashboard_id: this.dashboard_id, queryId: this.queryId, filter: this.state.filter.filter, sortOn: this.sortOn, chartType: this.chartType, multiDataset: this.multiDataset, multiDatasetSortOn: this.multiDatasetSortOn, usingDateAxis: this.usingDateAxis })
             );
         }
     }]);

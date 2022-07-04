@@ -1,8 +1,8 @@
 class Dashboard extends React.Component {
     constructor(props) {
         super();
-        var {filters, dashboard_id, queryId, sortOn, name, chartType, useDatePicker, filterName} = props.dashboard;
-        Object.assign(this, {filters, dashboard_id, queryId, sortOn, name, data:[], useDatePicker, filterName, backToMgr: props.resetView, chartType});
+        var {filters, dashboard_id, queryId, sortOn, name, chartType, useDatePicker, filterName, multiDataset, multiDatasetSortOn, usingDateAxis} = props.dashboard;
+        Object.assign(this, {filters, dashboard_id, queryId, sortOn, name, data:[], useDatePicker, filterName, backToMgr: props.resetView, chartType, multiDataset, multiDatasetSortOn, usingDateAxis});
         this.state = {filter: {index: 0, filter: this.filters[0].filter}, useDateRange: false, useDatePicker: false};
         this.applyFilter = this.useCustomFilter.bind(this);
     }
@@ -82,7 +82,7 @@ class Dashboard extends React.Component {
                         {this.render_datepicker()}
                     </div>
                 </div>
-                <ChartComponent name={this.name} dashboard_id={this.dashboard_id} queryId={this.queryId} filter={this.state.filter.filter} sortOn={this.sortOn} chartType={this.chartType}></ChartComponent>
+                <ChartComponent name={this.name} dashboard_id={this.dashboard_id} queryId={this.queryId} filter={this.state.filter.filter} sortOn={this.sortOn} chartType={this.chartType} multiDataset={this.multiDataset} multiDatasetSortOn={this.multiDatasetSortOn} usingDateAxis={this.usingDateAxis}></ChartComponent>
             </div>
         )
     }

@@ -180,6 +180,9 @@
         "dashboard_id": "completed-tickets-dashboard",
         "chartType": "line",
         "sortOn": "CompletedDate",
+        "usingDateAxis": true,
+        "multiDataset":true,
+        "multiDatasetSortOn": "ClassName",
         "filterName": "Completed Within",
         "filters": [ 
             {

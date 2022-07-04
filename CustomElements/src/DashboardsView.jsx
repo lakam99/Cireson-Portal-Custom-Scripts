@@ -11,7 +11,7 @@ function DashboardsView({dashboards, aspectRatio, expandChart}) {
                             Object.assign(dashboard, {aspectRatio});
                             return (
                                 <div className="lil-chart" key={dashboard.dashboard_id+'-lil'} onClick={()=>{expandChart(dashboard)}}>
-                                    <ChartComponent {...dashboard}></ChartComponent>
+                                    <ChartComponent {...dashboard} displayLegend={false} displayTitle={true}></ChartComponent>
                                 </div>
                             )
                         })}
