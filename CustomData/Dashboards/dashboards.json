@@ -179,7 +179,7 @@
         "queryName": "Z All WorkItems by CompletedDate",
         "dashboard_id": "completed-tickets-dashboard",
         "chartType": "line",
-        "sortOn": "ClassName",
+        "sortOn": "CompletedDate",
         "filterName": "Completed Within",
         "filters": [ 
             {
