@@ -166,10 +166,48 @@
             },
             {
                 "name": "One Year",
-                "filter": "Created <= '{{moment().startOf('quarter').format('yy/MM/DD')}}'"
+                "filter": "Created <= '{{moment().format('yy/01/01')}}'"
             },
             {
                 "name": "Custom Age",
+                "filter": ""
+            }
+        ]
+    },
+    {
+        "name": "All Tickets by Completed Date",
+        "queryName": "Z All WorkItems by CompletedDate",
+        "dashboard_id": "completed-tickets-dashboard",
+        "chartType": "line",
+        "sortOn": "ClassName",
+        "filterName": "Completed Within",
+        "filters": [ 
+            {
+                "name": "This Week",
+                "filter": "CompletedDate >= '{{moment().subtract(7,'d').format('yy/MM/DD')}}' and CompletedDate <= '{{moment().add(1,'d').format('yy/MM/DD')}}'"
+            },
+            {
+                "name": "This Month",
+                "filter": "CompletedDate >= '{{moment().format('yy/MM/01')}}' and CompletedDate <= '{{moment().add(1,'d').format('yy/MM/DD')}}'"
+            },
+            {
+                "name": "This Quarter",
+                "filter": "CompletedDate >= '{{moment().startOf('quarter').format('yy/MM/DD')}}' and CompletedDate <= '{{moment().endOf('quarter').format('yy/MM/DD')}}'"
+            },
+            {
+                "name": "Last Quarter",
+                "filter": "CompletedDate >= '{{moment().subtract(1, 'quarter').startOf('quarter').format('yy/MM/DD')}}' and CompletedDate <= '{{moment().subtract(1, 'quarter').endOf('quarter').format('yy/MM/DD')}}'"
+            },
+            {
+                "name": "This Year",
+                "filter": "CompletedDate >= '{{moment().format('yy/01/01')}}' and CompletedDate <= '{{moment().add(1,'d').format('yy/MM/DD')}}'"
+            },
+            {
+                "name": "Last Year",
+                "filter": "CompletedDate >= '{{moment().subtract(1,'y').format('yy/01/01')}}' and CompletedDate <= '{{moment().subtract(1,'y').format('yy/12/31')}}'"
+            },
+            {
+                "name": "Custom Range",
                 "filter": ""
             }
         ]
