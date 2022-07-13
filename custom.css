@@ -369,7 +369,7 @@ td[role=gridcell] {
 }
 
 .cust-dashboard {
-  width: 85%;
+  width: 78%;
   margin: 2% auto auto auto;
 }
 
@@ -390,6 +390,16 @@ td[role=gridcell] {
 .cust-dashboard-tool {
   margin-right: 1%;
   width: fit-content;
+  display: flex;
+  flex-direction: column;
+}
+
+.float-right {
+  margin-left: auto;
+}
+
+.align-bottom {
+  margin-top: auto;
 }
 
 .cust-dashboard-header {

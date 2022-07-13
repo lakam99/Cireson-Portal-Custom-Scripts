@@ -61,6 +61,22 @@ class Dashboard extends React.Component {
             return <DatePickerComponent onApply={this.applyFilter} hidden={!this.state.useDatePicker}></DatePickerComponent>
     }
 
+    getChartElem() {
+        return $(`#${this.dashboard_id}`).data('chart');
+    }
+
+    hideAllLabels() {
+        var chart = this.getChartElem();
+        chart._metasets.forEach(d=>d.hidden = true);
+        chart.update();
+    }
+
+    showAllLabels() {
+        var chart = this.getChartElem();
+        chart._metasets.forEach(d=>d.hidden = false);
+        chart.update();
+    }
+
     render() {
         return (
             <div className="cust-dashboard">
@@ -79,7 +95,14 @@ class Dashboard extends React.Component {
                         : undefined }
                     </div>
                     <div className="cust-dashboard-tool">
+                        <span>&nbsp;</span>
                         {this.render_datepicker()}
+                    </div>
+                    <div className="cust-dashboard-tool float-right align-bottom">
+                        <a className="btn btn-primary" onClick={this.hideAllLabels.bind(this)}>Hide All</a>
+                    </div>
+                    <div className="cust-dashboard-tool align-bottom">
+                        <a className="btn btn-primary" onClick={this.showAllLabels.bind(this)}>Show All</a>
                     </div>
                 </div>
                 <ChartComponent name={this.name} dashboard_id={this.dashboard_id} queryId={this.queryId} filter={this.state.filter.filter} sortOn={this.sortOn} chartType={this.chartType} multiDataset={this.multiDataset} multiDatasetSortOn={this.multiDatasetSortOn} usingDateAxis={this.usingDateAxis}></ChartComponent>

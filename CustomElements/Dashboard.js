@@ -92,6 +92,29 @@ var Dashboard = function (_React$Component) {
             if (this.state.useDateRange) return React.createElement(DateRangePickerComponent, { id: this.dashboard_id + "-date-range", onApply: this.applyFilter, hidden: !this.state.useDateRange });else if (this.state.useDatePicker) return React.createElement(DatePickerComponent, { onApply: this.applyFilter, hidden: !this.state.useDatePicker });
         }
     }, {
+        key: "getChartElem",
+        value: function getChartElem() {
+            return $("#" + this.dashboard_id).data('chart');
+        }
+    }, {
+        key: "hideAllLabels",
+        value: function hideAllLabels() {
+            var chart = this.getChartElem();
+            chart._metasets.forEach(function (d) {
+                return d.hidden = true;
+            });
+            chart.update();
+        }
+    }, {
+        key: "showAllLabels",
+        value: function showAllLabels() {
+            var chart = this.getChartElem();
+            chart._metasets.forEach(function (d) {
+                return d.hidden = false;
+            });
+            chart.update();
+        }
+    }, {
         key: "render",
         value: function render() {
             return React.createElement(
@@ -142,7 +165,30 @@ var Dashboard = function (_React$Component) {
                     React.createElement(
                         "div",
                         { className: "cust-dashboard-tool" },
+                        React.createElement(
+                            "span",
+                            null,
+                            "\xA0"
+                        ),
                         this.render_datepicker()
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "cust-dashboard-tool float-right align-bottom" },
+                        React.createElement(
+                            "a",
+                            { className: "btn btn-primary", onClick: this.hideAllLabels.bind(this) },
+                            "Hide All"
+                        )
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "cust-dashboard-tool align-bottom" },
+                        React.createElement(
+                            "a",
+                            { className: "btn btn-primary", onClick: this.showAllLabels.bind(this) },
+                            "Show All"
+                        )
                     )
                 ),
                 React.createElement(ChartComponent, { name: this.name, dashboard_id: this.dashboard_id, queryId: this.queryId, filter: this.state.filter.filter, sortOn: this.sortOn, chartType: this.chartType, multiDataset: this.multiDataset, multiDatasetSortOn: this.multiDatasetSortOn, usingDateAxis: this.usingDateAxis })
