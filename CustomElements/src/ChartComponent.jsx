@@ -69,7 +69,18 @@ function ChartComponent({dashboard_id, queryId, filter, filters, sortOn, name, a
         }
 
         let cdata = {labels, datasets};
-        let config = {type: chartType || 'line', data:cdata, options: {aspectRatio: aspectRatio || 2.3, plugins: {legend: {display: (displayLegend != undefined ? displayLegend : true)}}}};
+        let config = {
+            type: chartType || 'line',
+            data: cdata,
+            options: {
+                aspectRatio: aspectRatio || 2.3,
+                plugins: {
+                    legend: {
+                        display: (displayLegend != undefined ? displayLegend : false)
+                    }
+                }
+            }
+        };
         return config;
     }
 

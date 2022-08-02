@@ -1,6 +1,6 @@
 [
     {
-        "name": "All tickets by date",
+        "name": "All Tickets Created by Date",
         "queryName": "Z All WorkItems by Created",
         "dashboard_id": "all-tickets-by-date",
         "queryId": "d6ebc9a8-89ce-706e-a461-8deb8bf33f60",
@@ -37,7 +37,7 @@
         "sortOn": "Created"
     },
     {
-        "name": "All tickets by type",
+        "name": "All Tickets Created by Type",
         "queryName": "Z All WorkItems by ClassName",
         "dashboard_id": "all-tickets-by-type",
         "chartType": "bar",
@@ -74,7 +74,7 @@
         "sortOn": "ClassName"
     },
     {
-        "name": "All tickets by source",
+        "name": "All Tickets Created by Source",
         "queryName": "Z All WorkItems by Source",
         "dashboard_id": "all-tickets-by-source",
         "chartType": "bar",
@@ -111,7 +111,7 @@
         "sortOn": "Source"
     },
     {
-        "name": "All Tickets by Support Group",
+        "name": "All Tickets by Assigned Support Group",
         "queryName": "Z All WorkItems by SupportGroup",
         "dashboard_id": "all-tickets-by-suptgroup",
         "chartType": "bar",
@@ -148,7 +148,7 @@
         "sortOn": "SupportGroup"
     },
     {
-        "name": "Aging Tickets",
+        "name": "Aging Tickets by Support Group",
         "queryName": "Z All Open WorkItems",
         "dashboard_id": "aging-tickets-dashboard",
         "chartType": "bar",

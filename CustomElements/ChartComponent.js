@@ -94,7 +94,18 @@ function ChartComponent(_ref) {
         }
 
         var cdata = { labels: labels, datasets: datasets };
-        var config = { type: chartType || 'line', data: cdata, options: { aspectRatio: aspectRatio || 2.3, plugins: { legend: { display: displayLegend != undefined ? displayLegend : true } } } };
+        var config = {
+            type: chartType || 'line',
+            data: cdata,
+            options: {
+                aspectRatio: aspectRatio || 2.3,
+                plugins: {
+                    legend: {
+                        display: displayLegend != undefined ? displayLegend : false
+                    }
+                }
+            }
+        };
         return config;
     };
 
