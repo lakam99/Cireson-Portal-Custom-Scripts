@@ -13,11 +13,7 @@
 
             {"name": "consistentFormTasks",
             "url": "/CustomSpace/Scripts/consistentFormTasks/consistentFormTasks.js",
-            "condition": "window.location.pathname.includes('/ServiceRequest/Edit/') || window.location.pathname.includes('/Incident/Edit/')"},
-
-            {"name": "customDashboardsManager",
-            "url": "/CustomSpace/Scripts/CustomDashboardsManager/CustomDashboardsManager.js",
-            "condition": "window.location.pathname.includes('/View/Dashboards')"}
+            "condition": "window.location.pathname.includes('/ServiceRequest/Edit/') || window.location.pathname.includes('/Incident/Edit/')"}
         ]
     },
 
@@ -100,7 +96,19 @@
 
             {"name": "emailer",
             "url": "/CustomSpace/Scripts/emailer/emailer.js",
-            "condition": "session.user.Analyst"}
+            "condition": "session.user.Analyst"},
+
+            {"name": "customDashboardsManager",
+            "url": "/CustomSpace/Scripts/CustomDashboardsManager/CustomDashboardsManager.js",
+            "condition": "window.location.pathname.includes('/View/Dashboards')"},
+
+            {"name": "newProblem",
+            "url": "/CustomSpace/Scripts/NewProblem/NewProblem.js",
+            "condition": "window.location.pathname.includes('/View/new-problem')"},
+
+            {"name": "AROMapper",
+            "url": "/CustomSpace/Scripts/AROMapper/AROMapper.js",
+            "condition": "window.location.pathname.includes('/SC/ServiceCatalog/RequestOffering/')"}
         ]
     },
 

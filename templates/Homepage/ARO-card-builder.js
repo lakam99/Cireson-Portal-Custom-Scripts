@@ -1,6 +1,8 @@
 var AROCardBuilder = {
     build_aro: function(aro_obj) {
         aro_obj.type = 'aro';
+        let url = window.location.origin + 
+            (aro_obj.RequestOfferingId == 'a6360a4e-2444-4270-47c5-f9a52bc3668a' ? '/View/new-problem' : `${aro_obj.RequestOfferingId},${aro_obj.ServiceOfferingId}`)
         return `
             <div class="ark-sm-3">
                 <div class="my-card">
@@ -13,7 +15,7 @@ var AROCardBuilder = {
                     </div>
                     </div>
                     <div class='aro-button-container'>
-                        <a target="_blank" href='${window.location.origin + "/SC/ServiceCatalog/RequestOffering/" + aro_obj.RequestOfferingId + "," + aro_obj.ServiceOfferingId}' class="btn btn-primary aro-btn">${ aro_obj.type == 'aro' ? 'Start request':'Start reading' }</a>
+                        <a target="_blank" href='${url}' class="btn btn-primary aro-btn">${ aro_obj.type == 'aro' ? 'Start request':'Start reading' }</a>
                     </div>
                 </div>
                 </div>

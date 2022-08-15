@@ -493,6 +493,60 @@ canvas {
   display: inline-flex;
 }
 
+/* Standalone Search Component */
+#sad-options {
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  background-color: rgb(255, 255, 255);
+  max-height: 37vh;
+  width: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.sad-option {
+  background-color: rgb(128 240 249 / 10%);
+  margin-bottom: 1px;
+  /* border-bottom: 1px solid rgba(158, 158, 158, 0.203); */
+  flex: 1 0 5vh;
+  display: flex;
+  font-family: 'Roboto', sans-serif;
+font-family: 'Ubuntu', sans-serif;
+}
+
+.sad-val {
+  flex: 0 1 1;
+}
+
+#sad-select-container {
+  position: relative;
+}
+
+.sad-option:hover {
+  filter: brightness(20%);
+  /* box-shadow: 0px 3px 11px 0px #000000; */
+  cursor: pointer;
+}
+
+.sad-option.sad-checked {
+background-color: rgb(128 171 249 / 35%);
+}
+
+#sad-options::-webkit-scrollbar {
+  width: 10px;
+}
+ 
+#sad-options::-webkit-scrollbar-track {
+  background-color: gray;
+}
+
+#sad-options::-webkit-scrollbar-thumb {
+  background-color: rgb(42, 42, 42);
+  width: 8px;
+}
+/* Standalone Search Component - end */
+
   /* width */
   ::-webkit-scrollbar {
     width: 10px;

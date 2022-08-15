@@ -3,7 +3,7 @@ class Dashboard extends React.Component {
         super();
         var {filters, dashboard_id, queryId, sortOn, name, chartType, useDatePicker, filterName, multiDataset, multiDatasetSortOn, usingDateAxis} = props.dashboard;
         Object.assign(this, {filters, dashboard_id, queryId, sortOn, name, data:[], useDatePicker, filterName, backToMgr: props.resetView, chartType, multiDataset, multiDatasetSortOn, usingDateAxis});
-        this.state = {filter: {index: 0, filter: this.filters[0].filter}, useDateRange: false, useDatePicker: false};
+        this.state = {filter: {index: 0, filter: this.filters[0].filter}, useDateRange: false, useDatePicker: false, labels: this.getAllLabels()};
         this.applyFilter = this.useCustomFilter.bind(this);
     }
 
@@ -65,16 +65,38 @@ class Dashboard extends React.Component {
         return $(`#${this.dashboard_id}`).data('chart');
     }
 
-    hideAllLabels() {
-        var chart = this.getChartElem();
-        chart._metasets.forEach(d=>d.hidden = true);
+    updateChart() {
+        let state = this.getStateCopy();
+        state.labels = this.getAllLabels();
+        this.setState(state);
+        this.getChartElem().update();
+    }
+
+    toggleLabel(index) {
+        let chart = this.getChartElem();
+        let value = chart._metasets[index].hidden;
+        chart._metasets[index].hidden = !value;
         chart.update();
     }
 
+    hideAllLabels() {
+        this.getChartElem()._metasets.forEach(d=>d.hidden = true);
+        this.updateChart();
+    }
+
     showAllLabels() {
-        var chart = this.getChartElem();
-        chart._metasets.forEach(d=>d.hidden = false);
-        chart.update();
+        this.getChartElem()._metasets.forEach(d=>d.hidden = false);
+        this.updateChart();
+    }
+
+    getAllLabels() {
+        return this.getChartElem()._metasets.map((label, i)=>{
+            let r = {text: '', value: false, index: undefined};
+            r.text = label.label;
+            r.value = label.visible;
+            r.index = i;
+            return r;
+        })
     }
 
     render() {
@@ -99,6 +121,11 @@ class Dashboard extends React.Component {
                         {this.render_datepicker()}
                     </div>
                     <div className="cust-dashboard-tool float-right align-bottom">
+                        <div id='label-list'>
+                            <StandaloneSearchDropdown options={this.state.labels} toggleVisibility={this.toggleLabel.bind(this)}></StandaloneSearchDropdown>
+                        </div>
+                    </div>
+                    <div className="cust-dashboard-tool align-bottom">
                         <a className="btn btn-primary" onClick={this.hideAllLabels.bind(this)}>Hide All</a>
                     </div>
                     <div className="cust-dashboard-tool align-bottom">

@@ -28,20 +28,20 @@ var Dashboard = function (_React$Component) {
             usingDateAxis = _props$dashboard.usingDateAxis;
 
         Object.assign(_this, { filters: filters, dashboard_id: dashboard_id, queryId: queryId, sortOn: sortOn, name: name, data: [], useDatePicker: useDatePicker, filterName: filterName, backToMgr: props.resetView, chartType: chartType, multiDataset: multiDataset, multiDatasetSortOn: multiDatasetSortOn, usingDateAxis: usingDateAxis });
-        _this.state = { filter: { index: 0, filter: _this.filters[0].filter }, useDateRange: false, useDatePicker: false };
+        _this.state = { filter: { index: 0, filter: _this.filters[0].filter }, useDateRange: false, useDatePicker: false, labels: _this.getAllLabels() };
         _this.applyFilter = _this.useCustomFilter.bind(_this);
         return _this;
     }
 
     _createClass(Dashboard, [{
-        key: "getStateCopy",
+        key: 'getStateCopy',
         value: function getStateCopy() {
             var current = {};
             Object.assign(current, this.state);
             return current;
         }
     }, {
-        key: "updateFilterByIndex",
+        key: 'updateFilterByIndex',
         value: function updateFilterByIndex(index) {
             var current = this.getStateCopy();
             current.filter.index = index;
@@ -49,28 +49,28 @@ var Dashboard = function (_React$Component) {
             this.setState(current);
         }
     }, {
-        key: "_updateFilter",
+        key: '_updateFilter',
         value: function _updateFilter(filter) {
             var current = this.getStateCopy();
             current.filter.filter = filter;
             this.setState(current);
         }
     }, {
-        key: "setDatePicker",
+        key: 'setDatePicker',
         value: function setDatePicker(value) {
             var current = this.getStateCopy();
             current.useDatePicker = value;
             this.setState(current);
         }
     }, {
-        key: "setDateRange",
+        key: 'setDateRange',
         value: function setDateRange(value) {
             var current = this.getStateCopy();
             current.useDateRange = value;
             this.setState(current);
         }
     }, {
-        key: "setFilter",
+        key: 'setFilter',
         value: function setFilter(e) {
             var index = e.target.value;
             var filter = this.filters[index].filter;
@@ -82,79 +82,104 @@ var Dashboard = function (_React$Component) {
             }
         }
     }, {
-        key: "useCustomFilter",
+        key: 'useCustomFilter',
         value: function useCustomFilter(filter) {
             this._updateFilter(filter);
         }
     }, {
-        key: "render_datepicker",
+        key: 'render_datepicker',
         value: function render_datepicker() {
             if (this.state.useDateRange) return React.createElement(DateRangePickerComponent, { id: this.dashboard_id + "-date-range", onApply: this.applyFilter, hidden: !this.state.useDateRange });else if (this.state.useDatePicker) return React.createElement(DatePickerComponent, { onApply: this.applyFilter, hidden: !this.state.useDatePicker });
         }
     }, {
-        key: "getChartElem",
+        key: 'getChartElem',
         value: function getChartElem() {
-            return $("#" + this.dashboard_id).data('chart');
+            return $('#' + this.dashboard_id).data('chart');
         }
     }, {
-        key: "hideAllLabels",
-        value: function hideAllLabels() {
+        key: 'updateChart',
+        value: function updateChart() {
+            var state = this.getStateCopy();
+            state.labels = this.getAllLabels();
+            this.setState(state);
+            this.getChartElem().update();
+        }
+    }, {
+        key: 'toggleLabel',
+        value: function toggleLabel(index) {
             var chart = this.getChartElem();
-            chart._metasets.forEach(function (d) {
+            var value = chart._metasets[index].hidden;
+            chart._metasets[index].hidden = !value;
+            chart.update();
+        }
+    }, {
+        key: 'hideAllLabels',
+        value: function hideAllLabels() {
+            this.getChartElem()._metasets.forEach(function (d) {
                 return d.hidden = true;
             });
-            chart.update();
+            this.updateChart();
         }
     }, {
-        key: "showAllLabels",
+        key: 'showAllLabels',
         value: function showAllLabels() {
-            var chart = this.getChartElem();
-            chart._metasets.forEach(function (d) {
+            this.getChartElem()._metasets.forEach(function (d) {
                 return d.hidden = false;
             });
-            chart.update();
+            this.updateChart();
         }
     }, {
-        key: "render",
+        key: 'getAllLabels',
+        value: function getAllLabels() {
+            return this.getChartElem()._metasets.map(function (label, i) {
+                var r = { text: '', value: false, index: undefined };
+                r.text = label.label;
+                r.value = label.visible;
+                r.index = i;
+                return r;
+            });
+        }
+    }, {
+        key: 'render',
         value: function render() {
             return React.createElement(
-                "div",
-                { className: "cust-dashboard" },
+                'div',
+                { className: 'cust-dashboard' },
                 React.createElement(
-                    "div",
-                    { className: "cust-dashboard-header" },
+                    'div',
+                    { className: 'cust-dashboard-header' },
                     React.createElement(
-                        "a",
-                        { href: "#", className: "cust-dashboard-back-btn", onClick: this.backToMgr },
-                        "\u2039"
+                        'a',
+                        { href: '#', className: 'cust-dashboard-back-btn', onClick: this.backToMgr },
+                        '\u2039'
                     ),
                     React.createElement(
-                        "h1",
-                        { className: "cust-dashboard-title" },
+                        'h1',
+                        { className: 'cust-dashboard-title' },
                         this.name
                     )
                 ),
                 React.createElement(
-                    "div",
-                    { className: "cust-dashboard-tools" },
+                    'div',
+                    { className: 'cust-dashboard-tools' },
                     React.createElement(
-                        "div",
-                        { className: "cust-dashboard-tool" },
+                        'div',
+                        { className: 'cust-dashboard-tool' },
                         this.data ? React.createElement(
-                            "div",
-                            { className: "cust-dashboard-filter-select" },
+                            'div',
+                            { className: 'cust-dashboard-filter-select' },
                             React.createElement(
-                                "span",
+                                'span',
                                 null,
                                 this.filterName,
-                                "\xA0"
+                                '\xA0'
                             ),
                             React.createElement(
-                                "select",
-                                { className: "cust-dashboard-filter", onChange: this.setFilter.bind(this) },
+                                'select',
+                                { className: 'cust-dashboard-filter', onChange: this.setFilter.bind(this) },
                                 this.filters.map(function (filter, i) {
                                     return React.createElement(
-                                        "option",
+                                        'option',
                                         { value: i, key: 'filter-' + i },
                                         filter.name
                                     );
@@ -163,31 +188,40 @@ var Dashboard = function (_React$Component) {
                         ) : undefined
                     ),
                     React.createElement(
-                        "div",
-                        { className: "cust-dashboard-tool" },
+                        'div',
+                        { className: 'cust-dashboard-tool' },
                         React.createElement(
-                            "span",
+                            'span',
                             null,
-                            "\xA0"
+                            '\xA0'
                         ),
                         this.render_datepicker()
                     ),
                     React.createElement(
-                        "div",
-                        { className: "cust-dashboard-tool float-right align-bottom" },
+                        'div',
+                        { className: 'cust-dashboard-tool float-right align-bottom' },
                         React.createElement(
-                            "a",
-                            { className: "btn btn-primary", onClick: this.hideAllLabels.bind(this) },
-                            "Hide All"
+                            'div',
+                            { id: 'label-list' },
+                            React.createElement(StandaloneSearchDropdown, { options: this.state.labels, toggleVisibility: this.toggleLabel.bind(this) })
                         )
                     ),
                     React.createElement(
-                        "div",
-                        { className: "cust-dashboard-tool align-bottom" },
+                        'div',
+                        { className: 'cust-dashboard-tool align-bottom' },
                         React.createElement(
-                            "a",
-                            { className: "btn btn-primary", onClick: this.showAllLabels.bind(this) },
-                            "Show All"
+                            'a',
+                            { className: 'btn btn-primary', onClick: this.hideAllLabels.bind(this) },
+                            'Hide All'
+                        )
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'cust-dashboard-tool align-bottom' },
+                        React.createElement(
+                            'a',
+                            { className: 'btn btn-primary', onClick: this.showAllLabels.bind(this) },
+                            'Show All'
                         )
                     )
                 ),

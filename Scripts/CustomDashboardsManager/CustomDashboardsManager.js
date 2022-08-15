@@ -9,7 +9,8 @@
     var assets = ["/CustomSpace/CustomElements/DashboardsManager.js","/CustomSpace/CustomElements/Dashboard.js",
      "/CustomSpace/CustomElements/DateRangePickerComponent.js","/CustomSpace/CustomElements/DatePickerComponent.js",
      "/CustomSpace/CustomElements/ChartComponent.js","/CustomSpace/CustomElements/DashboardsView.js",
-     "/CustomSpace/Templates/Homepage/datepicker-full.min.js"];
+     "/CustomSpace/Templates/Homepage/datepicker-full.min.js", "/CustomSpace/CustomData/Dashboards/plugins/customLabels.js",
+     "/CustomSpace/CustomElements/StandaloneSearchDropdown.js"];
     assets = customGlobalLoader.main.load_files({array: assets.map((asset)=>new urlObj(asset))});
 
     window.compileFilter = (filter) => {
