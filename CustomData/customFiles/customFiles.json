@@ -13,7 +13,10 @@
 
             {"name": "consistentFormTasks",
             "url": "/CustomSpace/Scripts/consistentFormTasks/consistentFormTasks.js",
-            "condition": "window.location.pathname.includes('/ServiceRequest/Edit/') || window.location.pathname.includes('/Incident/Edit/')"}
+            "condition": "window.location.pathname.includes('/ServiceRequest/Edit/') || window.location.pathname.includes('/Incident/Edit/')"},
+
+            {"name": "customAPI",
+            "url": "/CustomSpace/Scripts/CustomAPI/customAPI.js"}
         ]
     },
 
@@ -108,7 +111,11 @@
 
             {"name": "AROMapper",
             "url": "/CustomSpace/Scripts/AROMapper/AROMapper.js",
-            "condition": "window.location.pathname.includes('/SC/ServiceCatalog/RequestOffering/')"}
+            "condition": "window.location.pathname.includes('/SC/ServiceCatalog/RequestOffering/')"},
+
+            {"name": "CloseTicketEndpoint",
+            "url": "/CustomSpace/Scripts/CloseTicketEndpoint/closeTicketEndpoint.js",
+            "condition": "window.location.pathname.includes('/View/close-ticket')"}
         ]
     },
 

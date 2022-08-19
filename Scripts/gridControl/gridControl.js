@@ -32,8 +32,7 @@ function proper_grid_conditions() {
 }
 
 function start() {
-    dom_grid = $("div.grid-container[data-role='grid']")[0] || 
-    $('div[adf-grid-state-id="dashboard-grid_71dab6bd-ba26-4f14-a724-156dff8d5de8_fde873ae-ef48-430f-87f4-35aee5fa19b1_1"]')[0];
+    dom_grid = $("div.grid-container[data-role='grid']")[0] || $('div[adf-grid-state-id]')[0];
     if (dom_grid && proper_grid_conditions()) {
         if (dom_grid.id === "") {
             dom_grid.id = "watch_list";
