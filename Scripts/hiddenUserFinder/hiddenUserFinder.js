@@ -49,6 +49,10 @@ var hiddenUserFinder = {
     ],
 
     functionality: {
+        get_user_by_id: function(id) {
+            return $.getJSON(`${window.location.origin}/api/V3/User/GetUser?userId=${id}`);
+        },
+
         get_user: function(name){
             waiter.request("get", "/platform/api/GlobalSearch(EntitySets=@entitysets)?search="+name+"&%24top=10&%40entitysets=%27Cached_MT_System_Domain_User%27&languageFields=LanguageCode%2CLocaleID&languageCode=ENU&searchLimit=10?", {}, false);
             return waiter.get_return().value[0].EntityJson;

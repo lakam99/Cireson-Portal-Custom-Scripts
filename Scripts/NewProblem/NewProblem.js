@@ -4,13 +4,12 @@
     const frame = "#incARO";
     $(wrapper).html(`<iframe id='incARO' src='https://ottansm1.nserc.ca:5000/incidentARO.html' style='height:100%;width:100%;'>`)
 
-    var x = setInterval(()=>{
-        if ($(frame).length) {
-            clearInterval(x);
-            $('#incARO')[0].contentWindow.postMessage({name: session.user.FirstName}, '*');
-        }
-    }, 100)
 
+    existence_waiter(()=>{return $(frame).length > 0}, null, 100).then(()=>{
+        setTimeout(()=>{
+            $('#incARO')[0].contentWindow.postMessage({name: session.user.FirstName}, '*');
+        }, 1000)
+    })
 
     window.addEventListener('message', ({data}) => {
         if (data.open_inc) {

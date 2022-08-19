@@ -161,7 +161,11 @@ function loc(test) {
     return window.location.pathname == test;
 }
 
-function existence_waiter(criteria, resolveWithCallback=false, timeout, waitMS=1000) {
+function test_loc(test) {
+    return window.location.href.includes(test);
+}
+
+function existence_waiter(criteria, resolveWithCallback=false, waitMS=1000) {
     if (typeof criteria != 'function') throw 'Param must be a function returning a value to check if not 0/undefined/null';
     return new Promise((resolve,reject)=>{
         if (criteria()) resolve(!resolveWithCallback ? true : criteria());
@@ -194,3 +198,28 @@ async function sendNewEmail([To, ...Cc], Subject, Body) {
     });
     return new Promise((resolve,reject)=>{p = {resolve,reject}});
 }
+
+function assignToMe() {
+    pageForm.viewModel.AssignedWorkItem.set("DisplayName", session.user.Name);
+    pageForm.viewModel.AssignedWorkItem.set("BaseId", session.user.Id);
+    accentSuggest.getters.get_page_userpicker_objs()[1].dataSource._data.splice(0, 1);
+}
+
+(function(){
+    if (!(test_loc('ServiceRequest') || test_loc('Incident'))) return;
+    const condition = () => {return $('#ChangeStatusWindow.cireson-window:visible').length > 0}
+    let onChangeStatus;
+    const hookToStatusChange = async () => {
+        await existence_waiter(condition);
+        onChangeStatus();
+    }
+    onChangeStatus = () => {
+        const okBtn = () => $('#ChangeStatusWindow.cireson-window:visible').find('button.btn-primary');
+        okBtn().on('click', ()=>{
+            const newStatus = pageForm.viewModel.Status.Name;
+            if (newStatus == 'Completed' || newStatus == 'Resolved') assignToMe();
+        })
+    }
+
+    hookToStatusChange();
+})()
