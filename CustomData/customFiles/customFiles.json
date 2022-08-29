@@ -54,7 +54,8 @@
             "url": "/CustomSpace/Scripts/gridSaver/gridSaver.js"},
 
             {"name": "watchListControl",
-            "url": "/CustomSpace/Scripts/watchListControl/watchListControl.js"},
+            "url": "/CustomSpace/Scripts/watchListControl/watchListControl.js",
+            "condition": "false"},
 
             {"name": "autoGroupAssigner",
             "url": "/CustomSpace/Scripts/autoGroupAssigner/autoGroupAssigner.js"},

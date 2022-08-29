@@ -222,4 +222,27 @@ function assignToMe() {
     }
 
     hookToStatusChange();
-})()
+})();
+
+(function(){
+    const forbiddenOne = 'Please make a selection';
+    if (session.user.Analyst && formTasks.user_has_permission(formTasks.permissions.sc) && test_loc('ServiceRequest') && pageForm.viewModel.Area.Name == forbiddenOne) {
+        const getObj = () => {return $('div.form-group:has(label[for="Area"]) > div > div[data-role="treeview"]')};
+        const disableExit = () => {
+        $('#drawer-taskbar > button:visible:not(:nth(2))').attr('disabled', true);
+        $('label[for="Area"]').append(`<span id="area-warn" style="color:red;font-size:small">${forbiddenOne}</span>`)
+        }
+        const enableExit = () => {
+            $('#drawer-taskbar > button:visible:not(:nth(2))').attr('disabled', false);
+            $('#area-warn').remove();
+        }
+        existence_waiter(getObj).then(()=>{
+            disableExit();
+            getObj().data('kendoTreeView').bind('change', (e)=>{
+                const selectedArea = $('div.form-group:has(label[for="Area"]) > div > span > span > input.k-input.k-ext-dropdown').val();
+                if (selectedArea == forbiddenOne) disableExit();
+                else enableExit();
+            });
+        });
+    }
+})();
