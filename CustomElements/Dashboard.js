@@ -25,10 +25,11 @@ var Dashboard = function (_React$Component) {
             filterName = _props$dashboard.filterName,
             multiDataset = _props$dashboard.multiDataset,
             multiDatasetSortOn = _props$dashboard.multiDatasetSortOn,
-            usingDateAxis = _props$dashboard.usingDateAxis;
+            usingDateAxis = _props$dashboard.usingDateAxis,
+            click = _props$dashboard.click;
 
-        Object.assign(_this, { filters: filters, dashboard_id: dashboard_id, queryId: queryId, sortOn: sortOn, name: name, data: [], useDatePicker: useDatePicker, filterName: filterName, backToMgr: props.resetView, chartType: chartType, multiDataset: multiDataset, multiDatasetSortOn: multiDatasetSortOn, usingDateAxis: usingDateAxis });
-        _this.state = { filter: { index: 0, filter: _this.filters[0].filter }, useDateRange: false, useDatePicker: false, labels: _this.getAllLabels() };
+        Object.assign(_this, { filters: filters, dashboard_id: dashboard_id, queryId: queryId, sortOn: sortOn, name: name, data: [], useDatePicker: useDatePicker, filterName: filterName, backToMgr: props.resetView, chartType: chartType, multiDataset: multiDataset, multiDatasetSortOn: multiDatasetSortOn, usingDateAxis: usingDateAxis, click: click });
+        _this.state = { filter: { index: 0, filter: _this.filters[0].filter }, useDateRange: false, useDatePicker: false, labels: [] };
         _this.applyFilter = _this.useCustomFilter.bind(_this);
         return _this;
     }
@@ -225,7 +226,11 @@ var Dashboard = function (_React$Component) {
                         )
                     )
                 ),
-                React.createElement(ChartComponent, { name: this.name, dashboard_id: this.dashboard_id, queryId: this.queryId, filter: this.state.filter.filter, sortOn: this.sortOn, chartType: this.chartType, multiDataset: this.multiDataset, multiDatasetSortOn: this.multiDatasetSortOn, usingDateAxis: this.usingDateAxis })
+                React.createElement(ChartComponent, { name: this.name, dashboard_id: this.dashboard_id,
+                    queryId: this.queryId, filter: this.state.filter.filter,
+                    sortOn: this.sortOn, chartType: this.chartType,
+                    multiDataset: this.multiDataset, multiDatasetSortOn: this.multiDatasetSortOn,
+                    usingDateAxis: this.usingDateAxis, click: this.click })
             );
         }
     }]);

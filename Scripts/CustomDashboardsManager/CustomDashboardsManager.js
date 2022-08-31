@@ -28,6 +28,15 @@
         c.queryId = query[0].Id;
     })
 
+    //compile handlers 
+    let compile_handlers = config.map(async (c) => {
+        if (c.click) {
+            let temp = await fetch(customGlobalLoader.get_str_url(c.click));
+            temp = await temp.text();
+            eval('c.click = ' + temp);
+        }
+    })
+
     //compile filters
     config.forEach((c)=>{
         c.filters.forEach(({filter}, i)=>{
@@ -41,6 +50,11 @@
     var reactRoot = ReactDOM.createRoot(root);
     await Promise.all(assets);
     await Promise.all(queryId_retrieval);
-    reactRoot.render(React.createElement(DashboardsManager, {dashboards:config}))
+    await Promise.all(compile_handlers);
+    const resetView = ((type, props)=>{
+        reactRoot.render(React.createElement(type, props));
 
+    });
+    window._setView = resetView;
+    resetView(DashboardsManager, {dashboards:config});
 })()

@@ -8,6 +8,7 @@ function DashboardsView({dashboards, aspectRatio, expandChart}) {
                     </div>    
                     <div id="dashboard-mgr-dashboard-view">
                         {dashboards.map((dashboard)=>{
+                            if (dashboard.display === false) return;
                             Object.assign(dashboard, {aspectRatio});
                             return (
                                 <div className="lil-chart" key={dashboard.dashboard_id+'-lil'} onClick={()=>{expandChart(dashboard)}}>

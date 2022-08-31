@@ -9,13 +9,6 @@
     var recheckRate = 500; //ms
     var get_affected_user_id = () => {return accentSuggest.getters.get_page_userpicker_objs()[0].dataSource.data()[0].Id || ''}
 
-
-    var create_filter = (field, operator, ...values) => {
-        return [...values].map((value)=>{
-            return {field, operator, value};
-        })
-    }
-
     var dataSource = {
         transport: {
             read: {

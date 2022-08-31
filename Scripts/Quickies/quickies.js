@@ -217,7 +217,7 @@ function assignToMe() {
         const okBtn = () => $('#ChangeStatusWindow.cireson-window:visible').find('button.btn-primary');
         okBtn().on('click', ()=>{
             const newStatus = pageForm.viewModel.Status.Name;
-            if (newStatus == 'Completed' || newStatus == 'Resolved') assignToMe();
+            if (newStatus == 'Completed' || newStatus == 'Resolved' || newStatus == 'Cancelled') assignToMe();
         })
     }
 
@@ -246,3 +246,22 @@ function assignToMe() {
         });
     }
 })();
+
+const create_filter = (field, operator, ...values) => {
+    return [...values].map((value)=>{
+        return {field, operator, value};
+    })
+}
+
+!(function() {
+    if (!test_loc('/Page/0bc19d4f-ed58-4937-8997-1964409723cb')) return;
+    const filters = [{field:'AssignedUser', operator: 'equals', value: session.user.Name},
+                    {logic: 'or', filters:session.user.user_groups.map((group)=>({field:'SupportGroup', operator: 'equals', value: group.Name}))}];
+    
+    const setFilters = () => {grid.dataSource.filter(filters);grid.dataSource._filter.logic = 'and';} 
+
+    existence_waiter(()=>{try {return grid} catch {}}).then(()=>{
+        setFilters();
+        grid.bind('filter', setFilters);
+    })
+})()

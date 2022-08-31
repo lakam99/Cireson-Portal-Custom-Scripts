@@ -5,6 +5,7 @@ function DashboardsManager({dashboards}) {
     var expandChart = function expandChart(dashboard) {
         setView({ComponentName: Dashboard, data: {dashboard, resetView}});
     }
+    window._showChart = expandChart.bind(this);
     const defaultView = {ComponentName: DashboardsView, data: {dashboards, aspectRatio, expandChart}};
 
     var resetView = function resetView() {

@@ -1,9 +1,9 @@
 class Dashboard extends React.Component {
     constructor(props) {
         super();
-        var {filters, dashboard_id, queryId, sortOn, name, chartType, useDatePicker, filterName, multiDataset, multiDatasetSortOn, usingDateAxis} = props.dashboard;
-        Object.assign(this, {filters, dashboard_id, queryId, sortOn, name, data:[], useDatePicker, filterName, backToMgr: props.resetView, chartType, multiDataset, multiDatasetSortOn, usingDateAxis});
-        this.state = {filter: {index: 0, filter: this.filters[0].filter}, useDateRange: false, useDatePicker: false, labels: this.getAllLabels()};
+        var {filters, dashboard_id, queryId, sortOn, name, chartType, useDatePicker, filterName, multiDataset, multiDatasetSortOn, usingDateAxis, click} = props.dashboard;
+        Object.assign(this, {filters, dashboard_id, queryId, sortOn, name, data:[], useDatePicker, filterName, backToMgr: props.resetView, chartType, multiDataset, multiDatasetSortOn, usingDateAxis, click});
+        this.state = {filter: {index: 0, filter: this.filters[0].filter}, useDateRange: false, useDatePicker: false, labels: []};
         this.applyFilter = this.useCustomFilter.bind(this);
     }
 
@@ -132,7 +132,13 @@ class Dashboard extends React.Component {
                         <a className="btn btn-primary" onClick={this.showAllLabels.bind(this)}>Show All</a>
                     </div>
                 </div>
-                <ChartComponent name={this.name} dashboard_id={this.dashboard_id} queryId={this.queryId} filter={this.state.filter.filter} sortOn={this.sortOn} chartType={this.chartType} multiDataset={this.multiDataset} multiDatasetSortOn={this.multiDatasetSortOn} usingDateAxis={this.usingDateAxis}></ChartComponent>
+                <ChartComponent
+                    {...{name:this.name, dashboard_id: this.dashboard_id,
+                        queryId: this.queryId, filter: this.state.filter.filter,
+                        sortOn: this.sortOn, chartType: this.chartType,
+                        multiDataset: this.multiDataset, multiDatasetSortOn: this.multiDatasetSortOn,
+                        usingDateAxis: this.usingDateAxis, click: this.click}}>
+                        </ChartComponent>
             </div>
         )
     }

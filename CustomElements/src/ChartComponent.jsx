@@ -1,5 +1,5 @@
 const {useEffect} = React;
-function ChartComponent({dashboard_id, queryId, filter, filters, sortOn, name, aspectRatio, chartType, multiDataset, multiDatasetSortOn, usingDateAxis, displayLegend, displayTitle}) {
+function ChartComponent({dashboard_id, queryId, filter, filters, sortOn, name, aspectRatio, chartType, multiDataset, multiDatasetSortOn, usingDateAxis, displayLegend, displayTitle, click}) {
 
     filter = !filter ? (filters ? filters[0].filter : "") : filter;
 
@@ -93,7 +93,11 @@ function ChartComponent({dashboard_id, queryId, filter, filters, sortOn, name, a
                 dashboard_elem.data('chart').data = data.data;
                 dashboard_elem.data('chart').update();
             }
-            else dashboard_elem.data({chart: new Chart(dashboard_elem[0], data)});
+            else {
+                const chart = new Chart(dashboard_elem[0], data);
+                dashboard_elem.data({chart});
+                if (click) dashboard_elem.on('click', click(chart));
+            }
             ticketManipulator.remove_loading();
         })
     }, [filter]);

@@ -25,6 +25,7 @@ function DashboardsView(_ref) {
                     "div",
                     { id: "dashboard-mgr-dashboard-view" },
                     dashboards.map(function (dashboard) {
+                        if (dashboard.display === false) return;
                         Object.assign(dashboard, { aspectRatio: aspectRatio });
                         return React.createElement(
                             "div",

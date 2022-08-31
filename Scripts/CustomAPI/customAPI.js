@@ -11,5 +11,16 @@ const customAPI = {
         if (!pageForm) throw "Failed to retrieve " + id;
         if (pageForm?.WorkItemErrorMessage) throw pageForm.WorkItemErrorMessage;
         return rawJSON;
+    },
+
+    async getQueryId(queryName) {
+        const queryId = await $.getJSON(window.location.origin + '/DashboardQuery/GetDashboardQueryByName', {name: queryName});
+        if (!queryId) throw `Failed to find query with name ${queryName}.`;
+        return queryId[0].Id;
+    },
+
+    async getQueryResult(queryName, filter) {
+        const queryId = await customAPI.getQueryId(queryName);
+        return $.getJSON(window.location.origin + "/Dashboard/GetDashboardDataById", {queryId, filter});
     }
 }

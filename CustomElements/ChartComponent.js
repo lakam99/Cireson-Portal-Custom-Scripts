@@ -16,7 +16,8 @@ function ChartComponent(_ref) {
         multiDatasetSortOn = _ref.multiDatasetSortOn,
         usingDateAxis = _ref.usingDateAxis,
         displayLegend = _ref.displayLegend,
-        displayTitle = _ref.displayTitle;
+        displayTitle = _ref.displayTitle,
+        click = _ref.click;
 
 
     filter = !filter ? filters ? filters[0].filter : "" : filter;
@@ -117,7 +118,11 @@ function ChartComponent(_ref) {
             if (dashboard_elem.data('chart')) {
                 dashboard_elem.data('chart').data = data.data;
                 dashboard_elem.data('chart').update();
-            } else dashboard_elem.data({ chart: new Chart(dashboard_elem[0], data) });
+            } else {
+                var chart = new Chart(dashboard_elem[0], data);
+                dashboard_elem.data({ chart: chart });
+                if (click) dashboard_elem.on('click', click(chart));
+            }
             ticketManipulator.remove_loading();
         });
     }, [filter]);

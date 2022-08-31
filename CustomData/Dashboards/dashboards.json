@@ -172,7 +172,8 @@
                 "name": "Custom Age",
                 "filter": ""
             }
-        ]
+        ],
+        "click": "/CustomSpace/CustomData/Dashboards/handlers/age-ticket-supt-click.js"
     },
     {
         "name": "All Tickets by Completed Date",
