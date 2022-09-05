@@ -45,13 +45,15 @@
         })
     })
 
-    $(wrapper).html('<div id="root"></div>');
-    var root = $('#root')[0];
-    var reactRoot = ReactDOM.createRoot(root);
+    var root;
+    var reactRoot;
     await Promise.all(assets);
     await Promise.all(queryId_retrieval);
     await Promise.all(compile_handlers);
     const resetView = ((type, props)=>{
+        $(wrapper).html('<div id="root"></div>');
+        root = $('#root')[0];
+        reactRoot = ReactDOM.createRoot(root);
         reactRoot.render(React.createElement(type, props));
 
     });

@@ -1,6 +1,7 @@
 function generateHandler(chartReference) {
     const dashboard = {
         "name": "Aging Tickets by Analyst",
+        "subChart": true,
         "queryName": "Z Analyst Open WorkItems",
         "dashboard_id": "analyst-aging-tickets-dashboard",
         "chartType": "bar",
@@ -35,9 +36,10 @@ function generateHandler(chartReference) {
                 filter.filter = filter.filter.replace(match[0][0], compiled);
             });
             dashboard.queryId = await customAPI.getQueryId(dashboard.queryName);
+           const resetView = () => {_setView(Dashboard, window.previousDashboard)};
             console.log(clickedOn);
             console.log(chartReference.data.datasets[clickedOn.datasetIndex].label);
-            _setView(Dashboard, {dashboard});
+            _setView(Dashboard, {dashboard, resetView});
         }
     }
 }

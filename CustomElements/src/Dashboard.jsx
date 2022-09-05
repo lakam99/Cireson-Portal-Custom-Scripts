@@ -5,6 +5,7 @@ class Dashboard extends React.Component {
         Object.assign(this, {filters, dashboard_id, queryId, sortOn, name, data:[], useDatePicker, filterName, backToMgr: props.resetView, chartType, multiDataset, multiDatasetSortOn, usingDateAxis, click});
         this.state = {filter: {index: 0, filter: this.filters[0].filter}, useDateRange: false, useDatePicker: false, labels: []};
         this.applyFilter = this.useCustomFilter.bind(this);
+        if (props.dashboard.subChart !== true) window.previousDashboard = props;
     }
 
     getStateCopy() {
