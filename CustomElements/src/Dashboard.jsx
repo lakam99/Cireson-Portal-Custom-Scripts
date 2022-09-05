@@ -1,8 +1,8 @@
 class Dashboard extends React.Component {
     constructor(props) {
         super();
-        var {filters, dashboard_id, queryId, sortOn, name, chartType, useDatePicker, filterName, multiDataset, multiDatasetSortOn, usingDateAxis, click} = props.dashboard;
-        Object.assign(this, {filters, dashboard_id, queryId, sortOn, name, data:[], useDatePicker, filterName, backToMgr: props.resetView, chartType, multiDataset, multiDatasetSortOn, usingDateAxis, click});
+        var {defaultFilter, filters, dashboard_id, queryId, sortOn, name, chartType, useDatePicker, filterName, multiDataset, multiDatasetSortOn, usingDateAxis, click} = props.dashboard;
+        Object.assign(this, {defaultFilter, filters, dashboard_id, queryId, sortOn, name, data:[], useDatePicker, filterName, backToMgr: props.resetView, chartType, multiDataset, multiDatasetSortOn, usingDateAxis, click});
         this.state = {filter: {index: 0, filter: this.filters[0].filter}, useDateRange: false, useDatePicker: false, labels: []};
         this.applyFilter = this.useCustomFilter.bind(this);
         if (props.dashboard.subChart !== true) window.previousDashboard = props;
@@ -23,7 +23,7 @@ class Dashboard extends React.Component {
 
     _updateFilter(filter) {
         let current = this.getStateCopy();
-        current.filter.filter = filter;
+        current.filter.filter = this.defaultFilter + filter;
         this.setState(current);
     }
 
@@ -41,12 +41,12 @@ class Dashboard extends React.Component {
 
     setFilter(e) {
         let index = e.target.value;
-        let filter = this.filters[index].filter;
-        if (!filter) {
+        let filter = this.filters[index];
+        if (!filter.filter || filter.name.includes('Custom')) {
             if (this.useDatePicker) this.setDatePicker(true);
             else this.setDateRange(true);
         } else {
-            let newState = {filter: {index, filter}, useDateRange:false, useDatePicker: false};
+            let newState = {filter: {index, filter: filter.filter}, useDateRange:false, useDatePicker: false};
             this.setState(newState);
         }
     }
@@ -122,8 +122,9 @@ class Dashboard extends React.Component {
                         {this.render_datepicker()}
                     </div>
                     <div className="cust-dashboard-tool float-right align-bottom">
+                    <label for="labels">Labels</label>
                         <div id='label-list'>
-                            <StandaloneSearchDropdown options={this.state.labels} toggleVisibility={this.toggleLabel.bind(this)}></StandaloneSearchDropdown>
+                            <StandaloneSearchDropdown id='labels' options={this.state.labels} toggleVisibility={this.toggleLabel.bind(this)}></StandaloneSearchDropdown>
                         </div>
                     </div>
                     <div className="cust-dashboard-tool align-bottom">

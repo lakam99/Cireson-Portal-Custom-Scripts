@@ -15,6 +15,7 @@ var Dashboard = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (Dashboard.__proto__ || Object.getPrototypeOf(Dashboard)).call(this));
 
         var _props$dashboard = props.dashboard,
+            defaultFilter = _props$dashboard.defaultFilter,
             filters = _props$dashboard.filters,
             dashboard_id = _props$dashboard.dashboard_id,
             queryId = _props$dashboard.queryId,
@@ -28,7 +29,7 @@ var Dashboard = function (_React$Component) {
             usingDateAxis = _props$dashboard.usingDateAxis,
             click = _props$dashboard.click;
 
-        Object.assign(_this, { filters: filters, dashboard_id: dashboard_id, queryId: queryId, sortOn: sortOn, name: name, data: [], useDatePicker: useDatePicker, filterName: filterName, backToMgr: props.resetView, chartType: chartType, multiDataset: multiDataset, multiDatasetSortOn: multiDatasetSortOn, usingDateAxis: usingDateAxis, click: click });
+        Object.assign(_this, { defaultFilter: defaultFilter, filters: filters, dashboard_id: dashboard_id, queryId: queryId, sortOn: sortOn, name: name, data: [], useDatePicker: useDatePicker, filterName: filterName, backToMgr: props.resetView, chartType: chartType, multiDataset: multiDataset, multiDatasetSortOn: multiDatasetSortOn, usingDateAxis: usingDateAxis, click: click });
         _this.state = { filter: { index: 0, filter: _this.filters[0].filter }, useDateRange: false, useDatePicker: false, labels: [] };
         _this.applyFilter = _this.useCustomFilter.bind(_this);
         if (props.dashboard.subChart !== true) window.previousDashboard = props;
@@ -54,7 +55,7 @@ var Dashboard = function (_React$Component) {
         key: '_updateFilter',
         value: function _updateFilter(filter) {
             var current = this.getStateCopy();
-            current.filter.filter = filter;
+            current.filter.filter = this.defaultFilter + filter;
             this.setState(current);
         }
     }, {
@@ -75,11 +76,11 @@ var Dashboard = function (_React$Component) {
         key: 'setFilter',
         value: function setFilter(e) {
             var index = e.target.value;
-            var filter = this.filters[index].filter;
-            if (!filter) {
+            var filter = this.filters[index];
+            if (!filter.filter || filter.name.includes('Custom')) {
                 if (this.useDatePicker) this.setDatePicker(true);else this.setDateRange(true);
             } else {
-                var newState = { filter: { index: index, filter: filter }, useDateRange: false, useDatePicker: false };
+                var newState = { filter: { index: index, filter: filter.filter }, useDateRange: false, useDatePicker: false };
                 this.setState(newState);
             }
         }
@@ -203,9 +204,14 @@ var Dashboard = function (_React$Component) {
                         'div',
                         { className: 'cust-dashboard-tool float-right align-bottom' },
                         React.createElement(
+                            'label',
+                            { 'for': 'labels' },
+                            'Labels'
+                        ),
+                        React.createElement(
                             'div',
                             { id: 'label-list' },
-                            React.createElement(StandaloneSearchDropdown, { options: this.state.labels, toggleVisibility: this.toggleLabel.bind(this) })
+                            React.createElement(StandaloneSearchDropdown, { id: 'labels', options: this.state.labels, toggleVisibility: this.toggleLabel.bind(this) })
                         )
                     ),
                     React.createElement(

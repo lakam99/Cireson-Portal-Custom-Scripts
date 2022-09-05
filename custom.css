@@ -506,7 +506,7 @@ canvas {
 }
 
 .sad-option {
-  background-color: rgb(128 240 249 / 10%);
+  background-color: rgba(136, 166, 168, 0.883);
   margin-bottom: 1px;
   /* border-bottom: 1px solid rgba(158, 158, 158, 0.203); */
   flex: 1 0 5vh;
@@ -524,13 +524,13 @@ font-family: 'Ubuntu', sans-serif;
 }
 
 .sad-option:hover {
-  filter: brightness(20%);
+  filter: brightness(90%);
   /* box-shadow: 0px 3px 11px 0px #000000; */
   cursor: pointer;
 }
 
 .sad-option.sad-checked {
-background-color: rgb(128 171 249 / 35%);
+background-color: rgba(207, 224, 255, 0.35);
 }
 
 #sad-options::-webkit-scrollbar {

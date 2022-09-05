@@ -116,7 +116,16 @@ function StandaloneSearchDropdown(props) {
     return React.createElement(
         'div',
         { id: 'sad-select-container', style: { width: props.container_width || '100%', height: props.container_height || '25%' } },
-        React.createElement('input', { placeholder: 'Search...', onKeyUp: filterResults, onFocus: showDropdown, title: 'd', type: 'text', id: 'sad-select', style: { width: props.input_width || '100%' } }),
+        React.createElement(
+            'span',
+            { style: { display: 'flex', width: '100%', border: '1px solid #a3b7c1', borderRadius: '3px' } },
+            React.createElement('input', { placeholder: 'Search', onKeyUp: filterResults, onFocus: showDropdown, title: 'd', type: 'text', id: 'sad-select', style: { border: '0' } }),
+            React.createElement(
+                'a',
+                { 'class': 'dropdowntree-button k-button', style: { top: '4px' }, onClick: showDropdown },
+                React.createElement('span', { 'class': 'k-icon k-i-arrow-s' })
+            )
+        ),
         React.createElement(
             'div',
             { id: 'sad-options', style: { display: 'none' } },

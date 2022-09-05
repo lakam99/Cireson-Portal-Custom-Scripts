@@ -21,6 +21,10 @@ function generateHandler(chartReference) {
             {
                 "name": "One Year",
                 "filter": "Created <= '{{moment().format('yy/01/01')}}'"
+            },
+            {
+                "name": "Custom Age",
+                "filter": ""
             }
         ]
     }
@@ -36,6 +40,7 @@ function generateHandler(chartReference) {
                 filter.filter = filter.filter.replace(match[0][0], compiled);
             });
             dashboard.queryId = await customAPI.getQueryId(dashboard.queryName);
+            dashboard.defaultFilter = defaultFilter;
            const resetView = () => {_setView(Dashboard, window.previousDashboard)};
             console.log(clickedOn);
             console.log(chartReference.data.datasets[clickedOn.datasetIndex].label);
