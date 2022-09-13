@@ -77,7 +77,7 @@ var OldTickets = function (_React$Component) {
                     { className: "old-ticket-list" },
                     this.state.tickets.length > 0 ? this.state.tickets.map(function (ticket) {
                         return React.createElement(OldTicket, { key: ticket.Id, ticket: ticket, _close: _this3.close_ticket.bind(_this3) });
-                    }) : React.createElement("img", { alt: "groovy", "class": "groovy", src: customGlobalLoader.get_str_url('/CustomSpace/CustomElements/groovy.png') })
+                    }) : React.createElement("img", { alt: "groovy", className: "groovy", src: customGlobalLoader.get_str_url('/CustomSpace/CustomElements/groovy.png') })
                 )
             );
         }

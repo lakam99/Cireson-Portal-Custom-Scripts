@@ -1,7 +1,8 @@
 function DateRangePickerComponent(_ref) {
     var id = _ref.id,
         onApply = _ref.onApply,
-        hidden = _ref.hidden;
+        hidden = _ref.hidden,
+        filterOn = _ref.filterOn;
 
 
     var elem = function elem() {
@@ -18,7 +19,7 @@ function DateRangePickerComponent(_ref) {
         if (start && end) {
             start = moment(start).format('yy/MM/DD');
             end = moment(end).format('yy/MM/DD');
-            var filter = 'Created >= \'' + start + '\' and Created <= \'' + end + '\'';
+            var filter = (filterOn || 'Created') + ' >= \'' + start + '\' and ' + (filterOn || 'Created') + ' <= \'' + end + '\'';
             onApply(filter);
         } else kendo.alert("Date range cannot have empty values.");
     };

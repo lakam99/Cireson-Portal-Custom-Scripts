@@ -55,7 +55,7 @@ var Dashboard = function (_React$Component) {
         key: '_updateFilter',
         value: function _updateFilter(filter) {
             var current = this.getStateCopy();
-            current.filter.filter = this.defaultFilter + filter;
+            current.filter.filter = (this.defaultFilter || '') + filter;
             this.setState(current);
         }
     }, {
@@ -92,7 +92,7 @@ var Dashboard = function (_React$Component) {
     }, {
         key: 'render_datepicker',
         value: function render_datepicker() {
-            if (this.state.useDateRange) return React.createElement(DateRangePickerComponent, { id: this.dashboard_id + "-date-range", onApply: this.applyFilter, hidden: !this.state.useDateRange });else if (this.state.useDatePicker) return React.createElement(DatePickerComponent, { onApply: this.applyFilter, hidden: !this.state.useDatePicker });
+            if (this.state.useDateRange) return React.createElement(DateRangePickerComponent, { filterOn: this.filters[this.state.filter.index].filterOn, id: this.dashboard_id + "-date-range", onApply: this.applyFilter, hidden: !this.state.useDateRange });else if (this.state.useDatePicker) return React.createElement(DatePickerComponent, { filterOn: this.filters[this.state.filter.index].filterOn, onApply: this.applyFilter, hidden: !this.state.useDatePicker });
         }
     }, {
         key: 'getChartElem',
@@ -205,7 +205,7 @@ var Dashboard = function (_React$Component) {
                         { className: 'cust-dashboard-tool float-right align-bottom' },
                         React.createElement(
                             'label',
-                            { 'for': 'labels' },
+                            { htmlFor: 'labels' },
                             'Labels'
                         ),
                         React.createElement(

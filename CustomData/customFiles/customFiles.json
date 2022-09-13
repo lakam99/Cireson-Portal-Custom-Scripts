@@ -116,7 +116,11 @@
 
             {"name": "CloseTicketEndpoint",
             "url": "/CustomSpace/Scripts/CloseTicketEndpoint/closeTicketEndpoint.js",
-            "condition": "window.location.pathname.includes('/View/close-ticket')"}
+            "condition": "window.location.pathname.includes('/View/close-ticket')"},
+
+            {"name": "ClosedTicketView",
+            "url": "/CustomSpace/CustomData/CustomViews/closedTickets.js",
+            "condition": "window.location.pathname.includes('/View/closed-tickets')"}
         ]
     },
 

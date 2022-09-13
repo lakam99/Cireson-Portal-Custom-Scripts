@@ -39,7 +39,7 @@ class OldTickets extends React.Component {
                 <h4 className='old-ticket-counter'>{this.state.tickets.length}&nbsp;/&nbsp;{this.original_count}</h4>
                 <div className='old-ticket-list'>
                     {
-                        this.state.tickets.length > 0 ? this.state.tickets.map(ticket=><OldTicket key={ticket.Id} ticket={ticket} _close={this.close_ticket.bind(this)}></OldTicket>) : <img alt='groovy' class='groovy' src={customGlobalLoader.get_str_url('/CustomSpace/CustomElements/groovy.png')}></img>
+                        this.state.tickets.length > 0 ? this.state.tickets.map(ticket=><OldTicket key={ticket.Id} ticket={ticket} _close={this.close_ticket.bind(this)}></OldTicket>) : <img alt='groovy' className='groovy' src={customGlobalLoader.get_str_url('/CustomSpace/CustomElements/groovy.png')}></img>
                     }
                 </div>
             </div>

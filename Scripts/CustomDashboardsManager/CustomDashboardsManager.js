@@ -1,3 +1,25 @@
+function generateDashboardClickHandler(suptGroupColumnName, dashboard) {
+    return function generateClickHandler(chartReference) {
+        return async (clickEvent) => {
+            const clickedOn = chartReference.getElementsAtEventForMode(clickEvent, 'nearest', {intersect: true}, true)[0];
+            if (!clickedOn) return;
+            const label = chartReference.data.datasets[clickedOn.datasetIndex].label;
+            const defaultFilter = `${suptGroupColumnName} = '${label}' and `; 
+            dashboard.filters.forEach((filter)=>{
+                if (!filter.compiled) filter.original = filter.filter;
+                filter.filter = defaultFilter + completeCompileFilter(filter.original);
+                filter.compiled = true;
+            });
+            dashboard.queryId = await customAPI.getQueryId(dashboard.queryName);
+            dashboard.defaultFilter = defaultFilter;
+            const resetView = () => {setView(Dashboard, window.previousDashboard)};
+            console.log(clickedOn);
+            console.log(chartReference.data.datasets[clickedOn.datasetIndex].label);
+            setView(Dashboard, {dashboard, resetView});
+        }
+    }
+}
+
 !(async function() {
     $('head').append(`<link rel='stylesheet' href="${window.location.origin}/CustomSpace/Templates/Homepage/datepicker.min.css">
     <style>html, body, #root, #main_wrapper, #dashboard-mgr-view {height: 100%; width: 100%;} #root {margin: auto; margin-top: 3vh; overflow:hidden;}</style>`);
@@ -20,6 +42,13 @@
         return [compiled, expressions];
     }
 
+    window.completeCompileFilter = (filter) => {
+        const [compiled, expressions] = compileFilter(filter);
+        if (!expressions.length) return filter;
+        var r = filter; expressions.forEach((expression,j)=>r = r.replace(expression[0], compiled[j]));
+        return r;
+    }
+
     //get queryId
     let queryId_retrieval = config.map(async (c)=>{
         let query = await $.getJSON(window.location.origin + '/DashboardQuery/GetDashboardQueryByName', {name: c.queryName});
@@ -40,8 +69,7 @@
     //compile filters
     config.forEach((c)=>{
         c.filters.forEach(({filter}, i)=>{
-            let [compiled, expressions] = compileFilter(filter);
-            expressions.forEach((expression,j)=>c.filters[i].filter = c.filters[i].filter.replace(expression[0], compiled[j])); //need to test
+            c.filters[i].filter = completeCompileFilter(filter);
         })
     })
 
@@ -50,13 +78,12 @@
     await Promise.all(assets);
     await Promise.all(queryId_retrieval);
     await Promise.all(compile_handlers);
-    const resetView = ((type, props)=>{
+    window.setView = ((type, props)=>{
         $(wrapper).html('<div id="root"></div>');
         root = $('#root')[0];
         reactRoot = ReactDOM.createRoot(root);
         reactRoot.render(React.createElement(type, props));
-
     });
-    window._setView = resetView;
-    resetView(DashboardsManager, {dashboards:config});
+    window.resetView = () => {setView(DashboardsManager, {dashboards: config})}
+    resetView();
 })()

@@ -23,7 +23,7 @@ class Dashboard extends React.Component {
 
     _updateFilter(filter) {
         let current = this.getStateCopy();
-        current.filter.filter = this.defaultFilter + filter;
+        current.filter.filter = (this.defaultFilter || '') + filter;
         this.setState(current);
     }
 
@@ -57,9 +57,9 @@ class Dashboard extends React.Component {
 
     render_datepicker() {
         if (this.state.useDateRange)
-            return <DateRangePickerComponent id={this.dashboard_id + "-date-range"} onApply={this.applyFilter} hidden={!this.state.useDateRange}></DateRangePickerComponent>
+            return <DateRangePickerComponent filterOn={this.filters[this.state.filter.index].filterOn} id={this.dashboard_id + "-date-range"} onApply={this.applyFilter} hidden={!this.state.useDateRange}></DateRangePickerComponent>
         else if (this.state.useDatePicker)
-            return <DatePickerComponent onApply={this.applyFilter} hidden={!this.state.useDatePicker}></DatePickerComponent>
+            return <DatePickerComponent filterOn={this.filters[this.state.filter.index].filterOn} onApply={this.applyFilter} hidden={!this.state.useDatePicker}></DatePickerComponent>
     }
 
     getChartElem() {
@@ -122,7 +122,7 @@ class Dashboard extends React.Component {
                         {this.render_datepicker()}
                     </div>
                     <div className="cust-dashboard-tool float-right align-bottom">
-                    <label for="labels">Labels</label>
+                    <label htmlFor="labels">Labels</label>
                         <div id='label-list'>
                             <StandaloneSearchDropdown id='labels' options={this.state.labels} toggleVisibility={this.toggleLabel.bind(this)}></StandaloneSearchDropdown>
                         </div>

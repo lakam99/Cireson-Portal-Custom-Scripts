@@ -1,6 +1,7 @@
 function DatePickerComponent(_ref) {
     var onApply = _ref.onApply,
-        hidden = _ref.hidden;
+        hidden = _ref.hidden,
+        filterOn = _ref.filterOn;
 
     var getElem = function getElem() {
         return $('input[name="datepicker"]');
@@ -13,7 +14,7 @@ function DatePickerComponent(_ref) {
 
     function applyFilter() {
         var date = moment(getElem().val()).format('yy/MM/DD');
-        var filter = 'Created <= \'' + date + '\'';
+        var filter = (filterOn || 'Created') + ' <= \'' + date + '\'';
         onApply(filter);
     }
 

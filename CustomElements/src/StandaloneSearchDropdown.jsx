@@ -2,7 +2,7 @@ const {useState, useEffect} = React;
 
 function Option(props) {
     return (
-        <div className={'sad-option ' + (props.value ? 'sad-checked': '')} onClick={props.toggle}>
+        <div style={{backgroundColor: props.backgroundColor}} className={'sad-option ' + (props.value ? 'sad-checked': '')} onClick={props.toggle}>
             {/* <input className='sad-val' title="select" type="checkbox" checked={props.value} onChange={(e)=>{}}/>&nbsp; */}
             <span>{props.text}</span>
         </div>
@@ -97,10 +97,10 @@ function StandaloneSearchDropdown(props) {
         <div id='sad-select-container' style={{width: props.container_width || '100%', height: props.container_height || '25%'}}>
             <span style={{display: 'flex', width: '100%', border: '1px solid #a3b7c1', borderRadius: '3px'}}>
                 <input placeholder="Search" onKeyUp={filterResults} onFocus={showDropdown} title="d" type="text" id='sad-select' style={{border: '0'}}></input>
-                <a class="dropdowntree-button k-button" style={{top: '4px'}} onClick={showDropdown}><span class="k-icon k-i-arrow-s"></span></a>
+                <a className="dropdowntree-button k-button" style={{top: '4px'}} onClick={showDropdown}><span className="k-icon k-i-arrow-s"></span></a>
             </span>
             <div id='sad-options' style={{display:'none'}}>
-                {options.map((option, i)=><Option key={i} text={option.text} value={option.value} toggle={genToggleMethod(option)}></Option>)}
+                {options.map((option, i)=><Option key={i} backgroundColor={option.backgroundColor} text={option.text} value={option.value} toggle={genToggleMethod(option)}></Option>)}
                 {options.length == 0 ? <span>Sorry, no results.</span> : ''}
             </div>
         </div>

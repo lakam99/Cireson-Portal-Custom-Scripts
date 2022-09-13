@@ -1,4 +1,4 @@
-function DatePickerComponent({onApply, hidden}) {
+function DatePickerComponent({onApply, hidden, filterOn}) {
     const getElem  = () => $('input[name="datepicker"]');
 
     useEffect(()=>{
@@ -8,7 +8,7 @@ function DatePickerComponent({onApply, hidden}) {
 
     function applyFilter() {
         const date = moment(getElem().val()).format('yy/MM/DD');
-        const filter = `Created <= '${date}'`;
+        const filter = `${filterOn || 'Created'} <= '${date}'`;
         onApply(filter);
     }
 

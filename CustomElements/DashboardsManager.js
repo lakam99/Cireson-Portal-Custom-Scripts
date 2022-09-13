@@ -14,9 +14,9 @@ function DashboardsManager(_ref) {
     window._showChart = expandChart.bind(this);
     var defaultView = { ComponentName: DashboardsView, data: { dashboards: dashboards, aspectRatio: aspectRatio, expandChart: expandChart } };
 
-    var resetView = function resetView() {
-        setView(defaultView);
-    };
+    // var resetView = function resetView() {
+    //     setView(defaultView);
+    // }
 
     var _useState = useState(defaultView),
         _useState2 = _slicedToArray(_useState, 2),

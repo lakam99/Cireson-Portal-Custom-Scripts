@@ -1,7 +1,7 @@
 {
-    "Id": "close-ticket",
+    "Id": "closed-tickets",
     "layoutType": "semantic",
-    "pageTitle": "Close Ticket",
+    "pageTitle": "Closed Tickets",
     "view": {
         "cssClass": "container-fluid",
         "content": []

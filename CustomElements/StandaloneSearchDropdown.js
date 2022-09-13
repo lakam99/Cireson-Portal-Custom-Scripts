@@ -10,7 +10,7 @@ var _React = React,
 function Option(props) {
     return React.createElement(
         'div',
-        { className: 'sad-option ' + (props.value ? 'sad-checked' : ''), onClick: props.toggle },
+        { style: { backgroundColor: props.backgroundColor }, className: 'sad-option ' + (props.value ? 'sad-checked' : ''), onClick: props.toggle },
         React.createElement(
             'span',
             null,
@@ -122,15 +122,15 @@ function StandaloneSearchDropdown(props) {
             React.createElement('input', { placeholder: 'Search', onKeyUp: filterResults, onFocus: showDropdown, title: 'd', type: 'text', id: 'sad-select', style: { border: '0' } }),
             React.createElement(
                 'a',
-                { 'class': 'dropdowntree-button k-button', style: { top: '4px' }, onClick: showDropdown },
-                React.createElement('span', { 'class': 'k-icon k-i-arrow-s' })
+                { className: 'dropdowntree-button k-button', style: { top: '4px' }, onClick: showDropdown },
+                React.createElement('span', { className: 'k-icon k-i-arrow-s' })
             )
         ),
         React.createElement(
             'div',
             { id: 'sad-options', style: { display: 'none' } },
             options.map(function (option, i) {
-                return React.createElement(Option, { key: i, text: option.text, value: option.value, toggle: genToggleMethod(option) });
+                return React.createElement(Option, { key: i, backgroundColor: option.backgroundColor, text: option.text, value: option.value, toggle: genToggleMethod(option) });
             }),
             options.length == 0 ? React.createElement(
                 'span',

@@ -215,5 +215,45 @@
                 "filter": ""
             }
         ]
+    },
+    {
+        "name": "Tickets Completed by Support Group",
+        "queryName": "Z All Completed WorkItems",
+        "dashboard_id": "supt-completed-tickets-dashboard",
+        "chartType": "bar",
+        "sortOn": "SupportGroup",
+        "filterName": "Completed Within",
+        "filters": [ 
+            {
+                "name": "This Week",
+                "filter": "Completed >= '{{moment().subtract(7,'d').format('yy/MM/DD')}}' and Completed <= '{{moment().add(1,'d').format('yy/MM/DD')}}'"
+            },
+            {
+                "name": "This Month",
+                "filter": "Completed >= '{{moment().format('yy/MM/01')}}' and Completed <= '{{moment().add(1,'d').format('yy/MM/DD')}}'"
+            },
+            {
+                "name": "This Quarter",
+                "filter": "Completed >= '{{moment().startOf('quarter').format('yy/MM/DD')}}' and Completed <= '{{moment().endOf('quarter').format('yy/MM/DD')}}'"
+            },
+            {
+                "name": "Last Quarter",
+                "filter": "Completed >= '{{moment().subtract(1, 'quarter').startOf('quarter').format('yy/MM/DD')}}' and Completed <= '{{moment().subtract(1, 'quarter').endOf('quarter').format('yy/MM/DD')}}'"
+            },
+            {
+                "name": "This Year",
+                "filter": "Completed >= '{{moment().format('yy/01/01')}}' and Completed <= '{{moment().add(1,'d').format('yy/MM/DD')}}'"
+            },
+            {
+                "name": "Last Year",
+                "filter": "Completed >= '{{moment().subtract(1,'y').format('yy/01/01')}}' and Completed <= '{{moment().subtract(1,'y').format('yy/12/31')}}'"
+            },
+            {
+                "name": "Custom Range",
+                "filter": "",
+                "filterOn": "Completed"
+            }
+        ],
+        "click": "/CustomSpace/CustomData/Dashboards/handlers/completed-ticket-supt-click.js"
     }
 ]
