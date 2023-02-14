@@ -100,6 +100,19 @@ class Dashboard extends React.Component {
         })
     }
 
+    getData() {
+        return $.getJSON(window.location.origin + "/Dashboard/GetDashboardDataById", {queryId: this.queryId, filter: this.state.filter.filter});
+    }
+
+    exportData() {
+        ticketManipulator.show_loading();
+        this.getData().then((data) => {
+            ticketManipulator.remove_loading();
+            const csvData = jsonToCsv(data);
+            saveFile('csv', 'text/csv', csvData);
+        })   
+    }
+
     render() {
         return (
             <div className="cust-dashboard">
@@ -126,6 +139,9 @@ class Dashboard extends React.Component {
                         <div id='label-list'>
                             <StandaloneSearchDropdown id='labels' options={this.state.labels} toggleVisibility={this.toggleLabel.bind(this)}></StandaloneSearchDropdown>
                         </div>
+                    </div>
+                    <div className="cust-dashboard-tool align-bottom">
+                        <a className="btn btn-primary" onClick={this.exportData.bind(this)}>Export</a>
                     </div>
                     <div className="cust-dashboard-tool align-bottom">
                         <a className="btn btn-primary" onClick={this.hideAllLabels.bind(this)}>Hide All</a>

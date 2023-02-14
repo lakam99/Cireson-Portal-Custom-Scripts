@@ -257,3 +257,26 @@ const create_wi_url = (id) => {
     const type = id.substring(0,3).toLowerCase() == 'srq' ? 'ServiceRequest' : 'Incident';
     return `${window.location.origin}/${type}/Edit/${id}`;
 }
+
+/**
+ * @param {string} extension
+ * Represents what the acceptable file extension is
+ */
+async function saveFile(extension, mimetype, data) {
+    const accept = {};
+    accept[mimetype] = [`.${extension}`];
+    const pickerOpts = {
+        types: [
+          {
+            description: extension,
+            accept
+          },
+        ],
+        excludeAcceptAllOption: true,
+        multiple: false
+      };
+    const handle = await window.showSaveFilePicker(pickerOpts);
+    const stream = await handle.createWritable();
+    await stream.write(data);
+    await stream.close();
+}

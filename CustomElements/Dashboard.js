@@ -143,6 +143,21 @@ var Dashboard = function (_React$Component) {
             });
         }
     }, {
+        key: 'getData',
+        value: function getData() {
+            return $.getJSON(window.location.origin + "/Dashboard/GetDashboardDataById", { queryId: this.queryId, filter: this.state.filter.filter });
+        }
+    }, {
+        key: 'exportData',
+        value: function exportData() {
+            ticketManipulator.show_loading();
+            this.getData().then(function (data) {
+                ticketManipulator.remove_loading();
+                var csvData = jsonToCsv(data);
+                saveFile('csv', 'text/csv', csvData);
+            });
+        }
+    }, {
         key: 'render',
         value: function render() {
             return React.createElement(
@@ -212,6 +227,15 @@ var Dashboard = function (_React$Component) {
                             'div',
                             { id: 'label-list' },
                             React.createElement(StandaloneSearchDropdown, { id: 'labels', options: this.state.labels, toggleVisibility: this.toggleLabel.bind(this) })
+                        )
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'cust-dashboard-tool align-bottom' },
+                        React.createElement(
+                            'a',
+                            { className: 'btn btn-primary', onClick: this.exportData.bind(this) },
+                            'Export'
                         )
                     ),
                     React.createElement(

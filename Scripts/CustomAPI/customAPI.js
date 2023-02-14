@@ -1,16 +1,22 @@
 const customAPI = {
     
     async loadTicketJSON(id) {
+        const urlMap = {'srq': 'ServiceRequest', 'inc': 'Incident', 'mna': 'Activity'};
         const _id = id.toLowerCase();
-        if (!_id.startsWith('srq') && !_id.startsWith('inc')) throw "Only srq and incident is supported.";
+        const ticketClass = urlMap[_id.substring(0, 3)];
+        if (!ticketClass) throw "Only srq, incident, and mna is supported.";
 
-        const page = await fetch(window.location.origin + (id.toLowerCase().startsWith('srq') ? '/ServiceRequest/' : '/Incident/') + '/Edit/' + id);
+        const page = await fetch(`${window.location.origin}/${ticketClass}/Edit/${_id}`);
         const html = await page.text();
         const scripts = $(html).find('script')[2];
         eval($(scripts).text());
-        if (!pageForm) throw "Failed to retrieve " + id;
-        if (pageForm?.WorkItemErrorMessage) throw pageForm.WorkItemErrorMessage;
-        return rawJSON;
+        try {
+            if (!pageForm) throw "Failed to retrieve " + id;
+            if (pageForm?.WorkItemErrorMessage) throw pageForm.WorkItemErrorMessage;
+            return pageForm?.rawJSON || pageForm?.jsonRaw;
+        } catch {
+            return null;
+        }
     },
 
     async getQueryId(queryName) {

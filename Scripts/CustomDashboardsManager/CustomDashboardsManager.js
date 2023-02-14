@@ -20,6 +20,21 @@ function generateDashboardClickHandler(suptGroupColumnName, dashboard) {
     }
 }
 
+/**
+ * 
+ * @param {Array<Object>} obj Array of objects containing uniform headers
+ */
+function jsonToCsv(obj) {
+    if (!Array.isArray(obj)) throw "Object must be array of objects.";
+    const headers = Object.keys(obj[0]);
+    let csv = headers.join(',') + '\n';
+    obj.forEach((o) => {
+        headers.forEach((header, i) => csv += o[header] + (i != headers.length - 1 ? ',' : ''));
+        csv += '\r\n';
+    });
+    return csv;
+}
+
 !(async function() {
     $('head').append(`<link rel='stylesheet' href="${window.location.origin}/CustomSpace/Templates/Homepage/datepicker.min.css">
     <style>html, body, #root, #main_wrapper, #dashboard-mgr-view {height: 100%; width: 100%;} #root {margin: auto; margin-top: 3vh; overflow:hidden;}</style>`);
