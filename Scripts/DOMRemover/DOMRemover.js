@@ -42,8 +42,9 @@ var DOMRemover = {
                                 item.granted = true;
                             }
                         }
-                        if ($(item.identify).length) {
-                            $(item.identify).remove();
+                        const identity = typeof(item.identify) === 'function' ? item.identify() : $(item.identify);
+                        if(identity.length) {
+                            $(identity).remove();
                             item.remove = true;
                         }
                     }

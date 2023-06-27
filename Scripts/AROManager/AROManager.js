@@ -28,7 +28,7 @@ var AROManager = {
                 success: function(re) {
                     AROManager.config = re;
                     AROManager.queue = AROManager.config.steal.service_offerings;
-                    //AROManager.ready();
+                    AROManager.ready();
                 }
             });
         }
@@ -38,10 +38,8 @@ var AROManager = {
          for (var i = 0, so = AROManager.queue[i]; i < AROManager.queue.length; i++, so = AROManager.queue[i]) {
             var so_obj = AROManager.get_SO_from_name(so.service_offering_name);
             if (so_obj.ro.length == 0) {return}
-            var name = so_obj.Category.replaceAll(" ", "-").toLowerCase();
-            var category_id = so_obj.CategoryId;
-            DOMRemover.new_queue_item(`div.cat:has(h4#${so.service_offering_id}),div.cat-${name}`, undefined, so.steal_from, true, "inclusive");
-            DOMRemover.new_queue_item(`li:has(a.cat-link[data-target='#${category_id}'])`, undefined, so.steal_from, true, "inclusive");
+            const identifier = () => {return $(`h4#${so_obj.service_offering_id}`).parent()};
+            DOMRemover.new_queue_item(identifier, undefined, so.steal_from, true, "inclusive");
         }
         AROManager.run_listener();
     },
@@ -92,7 +90,7 @@ var AROManager = {
     },
 
     start: function() {
-        //AROManager.UI_Builder.setup();
+        AROManager.UI_Builder.setup();
         AROManager.setup.forEach(function(f){f()});
     },
 

@@ -545,6 +545,13 @@ background-color: rgba(207, 224, 255, 0.35);
   background-color: rgb(42, 42, 42);
   width: 8px;
 }
+
+#grid-view-select-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15%;
+}
+
 /* Standalone Search Component - end */
 
   /* width */

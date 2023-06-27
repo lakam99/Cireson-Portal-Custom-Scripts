@@ -44,18 +44,7 @@ $(document).ready(function() {
                 </style>
         `);
     }
-    if (loc("/View/02efdc70-55c7-4ba8-9804-ca01631c1a54") && enabled) {
-        //disabled
-        var key_replace = setInterval(function() {
-            imgs.forEach(function(img){
-                var key = $("#"+img.id);
-                if (key.length) {
-                    key.find("img").attr("src", img.img);
-                    clearInterval(key_replace);
-                }
-            });
-        }, 800);
-    }
+
     var dropdown_resizer = {
         dropdown_height: 550,
         dropdown_font_size: 13,
@@ -164,7 +153,13 @@ function loc(test) {
 function test_loc(test) {
     return window.location.href.includes(test);
 }
-
+/**
+ * 
+ * @param {Function} criteria 
+ * @param {boolean} resolveWithCallback 
+ * @param {Number} waitMS 
+ * @returns 
+ */
 function existence_waiter(criteria, resolveWithCallback=false, waitMS=1000) {
     if (typeof criteria != 'function') throw 'Param must be a function returning a value to check if not 0/undefined/null';
     return new Promise((resolve,reject)=>{
@@ -247,6 +242,33 @@ function assignToMe() {
     }
 })();
 
+const translate_elem = async (identity) => {
+    const index = session.user.LanguageCode === 'ENU' ? 0 : 1;
+    const condition = () => $(identity).length !== 0;
+        await existence_waiter(condition, false, 100);
+        [...$(identity)].forEach((e) => {
+            const translation = e.innerText.split(' | ')[index];
+            if (translation) e.innerText = translation;
+        });
+}
+
+(() => {
+    if (loc("/View/02efdc70-55c7-4ba8-9804-ca01631c1a54")) {
+        translate_elem('.sc-item-title, h4[data-service]');
+    }
+    translate_elem('span.nav_title');
+})();
+
+exec_if_loc("/SC/ServiceCatalog/RequestOffering/0bb887bd-cb5c-457a-b255-c822075ad658,ab4fb738-09b1-148c-3f6f-6addeac0d694", async () => {
+    return;
+    const condition = () => $('div[data-control-valuetargetid="fba0cce1-9439-479a-a726-e93a445c5723"]').is(":visible");
+    await existence_waiter(condition, false, 100);
+    const list = $('div[data-control-valuetargetid="fba0cce1-9439-479a-a726-e93a445c5723"] > div.k-ext-treeview').data('kendoTreeView');
+    const filteredClassificationEnumObs = list.dataSource.data().filter((item) => ['Application', 'Hardware'].includes(item.Name));
+    const newEnumList = new kendo.data.HierarchicalDataSource({data: filteredClassificationEnumObs});
+    list.setDataSource(newEnumList);
+});
+
 const create_filter = (field, operator, ...values) => {
     return [...values].map((value)=>{
         return {field, operator, value};
@@ -279,4 +301,13 @@ async function saveFile(extension, mimetype, data) {
     const stream = await handle.createWritable();
     await stream.write(data);
     await stream.close();
+}
+
+/**
+ * 
+ * @param {String} url 
+ * @param {Function} exec 
+ */
+function exec_if_loc(url, exec) {
+    if (loc(url)) exec();
 }

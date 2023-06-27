@@ -98,10 +98,6 @@
             "url": "/CustomSpace/Scripts/AffectedUserView/AffectedUserView.js",
             "condition": "formTasks.user_has_permission(formTasks.permissions.sc) && window.location.pathname.includes('/ServiceRequest/Edit/') || window.location.pathname.includes('/Incident/Edit/') || window.location.pathname.includes('/New/')"},
 
-            {"name": "emailer",
-            "url": "/CustomSpace/Scripts/emailer/emailer.js",
-            "condition": "session.user.Analyst"},
-
             {"name": "customDashboardsManager",
             "url": "/CustomSpace/Scripts/CustomDashboardsManager/CustomDashboardsManager.js",
             "condition": "window.location.pathname.includes('/View/Dashboards')"},
@@ -113,6 +109,9 @@
             {"name": "AROMapper",
             "url": "/CustomSpace/Scripts/AROMapper/AROMapper.js",
             "condition": "window.location.pathname.includes('/SC/ServiceCatalog/RequestOffering/')"},
+
+            {"name": "TranslationToggle",
+            "url": "/CustomSpace/Scripts/TranslationToggle/translationToggle.js"},
 
             {"name": "CloseTicketEndpoint",
             "url": "/CustomSpace/Scripts/CloseTicketEndpoint/closeTicketEndpoint.js",
